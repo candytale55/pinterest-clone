@@ -11,6 +11,7 @@ body {
   line-height: 1.5;
   background: #fff;
   color: #111;
+  width: 100vw;
 }
 
 #app {
