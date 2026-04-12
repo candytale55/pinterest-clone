@@ -1,7 +1,4 @@
-/* ==========================================================================
-   Pinterest Clone - Global Styles & Reset
-   Import order: style.css (base) → header.css → gallery.css
-   ========================================================================== */
+/* Global Styles & Reset | Import order: style.css → header.css → gallery.css */
 
 /* Basic reset - prefer this over full reset libs for small projects */
 * {

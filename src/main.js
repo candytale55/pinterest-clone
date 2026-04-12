@@ -20,12 +20,12 @@ let currentPage = 1; //
 const imagesPerPage = 15; // 
 
 
-async function fetchImages(query = "random", page = 1) { 
+async function fetchImages(query = "random", page = 1) {
   console.log("Attempting to get images");
   const url = `https://api.unsplash.com/photos?client_id=${UNSPLASH_ACCESS_KEY}&page=${page}&per_page=${imagesPerPage}`;
 
   try {
-    
+
     const response = await fetch(url);
 
     // Check if the network request was successful, throw an error if not
@@ -37,14 +37,14 @@ async function fetchImages(query = "random", page = 1) {
     const data = await response.json(); // Parse the JSON response
     console.log("Received API data:", data);
     return data; // Return feched data
-    
+
   } catch (error) {
     console.error("Error fetching images from Unsplash API:", error);
     return []; // Return empty array on error
   }
-} 
+}
 
-function displayImages(images) { 
+function displayImages(images) {
   // Clear existing images before displaying new ones
   // TODO: Important later on when adding search, load more, etc.
   while (imageGallery.firstChild) {
@@ -57,7 +57,7 @@ function displayImages(images) {
     return;
   }
 
-  images.forEach(image => { 
+  images.forEach(image => {
     // Create container
     const galleryItem = document.createElement("div");
     galleryItem.classList.add("gallery-item");
@@ -81,12 +81,12 @@ function displayImages(images) {
 
 
 // Call fetchImages on page load to display initial set of images
-document.addEventListener("DOMContentLoaded", async () => { 
+document.addEventListener("DOMContentLoaded", async () => {
   if (UNSPLASH_ACCESS_KEY) { // Only fetch if there's an API Key present
-    const imageData = await fetchImages(); 
-    displayImages(imageData); 
+    const imageData = await fetchImages();
+    displayImages(imageData);
   } else {
-    
+
     console.error("Cannot fetch images: Unsplash API Key is missing")
   }
 });

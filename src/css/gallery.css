@@ -1,7 +1,4 @@
-/* ==========================================================================
-   GALLERY - Pinterest-style responsive grid layout
-   Uses CSS Grid with auto-fill for dynamic column count based on viewport.
-   ========================================================================== */
+/* GALLERY - Pinterest-style responsive grid (auto-fill columns) */
 
 .gallery-container {
     display: grid;
