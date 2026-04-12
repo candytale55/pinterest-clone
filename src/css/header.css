@@ -7,4 +7,4 @@
     justify-content: space-between; /* logo left, nav/actions right */
     align-items: center;
     padding-inline: 1rem; /* logical property: works for LTR and RTL layouts */
-}
+}   
