@@ -59,17 +59,17 @@ function displayImages(images) {
 
   images.forEach(image => { 
     // Create container
-    const galleryItem = document.create("div");
+    const galleryItem = document.createElement("div");
     galleryItem.classList.add("gallery-item");
 
     // Create <img> element
-    const img = document.create("img");
-    img.src = image.url.small; // Previeview size 
+    const img = document.createElement("img");
+    img.src = image.urls.small; // Preview size
     img.alt = image.alt_description || "Unsplash Image"; // Fallback alt text
     img.loading = "lazy"; // for performance improvement (lazy-loading)
 
     // Append img to its container
-    galleryItem.appendchild(img);
+    galleryItem.appendChild(img);
 
     // Get image container into the gallery
     imageGallery.appendChild(galleryItem);
@@ -83,8 +83,10 @@ function displayImages(images) {
 // Call fetchImages on page load to display initial set of images
 document.addEventListener("DOMContentLoaded", async () => { 
   if (UNSPLASH_ACCESS_KEY) { // Only fetch if there's an API Key present
-    await fetchImages();
+    const imageData = await fetchImages(); 
+    displayImages(imageData); 
   } else {
+    
     console.error("Cannot fetch images: Unsplash API Key is missing")
   }
 });
