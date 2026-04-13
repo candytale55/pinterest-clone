@@ -24,6 +24,7 @@ async function fetchImages(query = "latest", page = 1) {
   console.log(`Attempting to get images for query: ${query} on page: ${page}`);
 
   let url;
+  let isSearch = false; // Flag to track if we're performing a search or fetching general photos
 
   // TODO: Remove - Left temp for reference
   /*  const url = `https://api.unsplash.com/photos?client_id=${UNSPLASH_ACCESS_KEY}&page=${page}&per_page=${imagesPerPage}`; */
@@ -110,7 +111,10 @@ function displayImages(images) {
 // Call fetchImages on page load to display initial set of images
 document.addEventListener("DOMContentLoaded", async () => {
   if (UNSPLASH_ACCESS_KEY) { // Only fetch if there's an API Key present
-    const imageData = await fetchImages("latest"); // Call with 'latest' explicitly for initial load
+
+    // Calling fetchImages() with no arguments will trigger the 'general photos' endpoint
+
+    const imageData = await fetchImages(); // Call with 'latest' explicitly for initial load
     displayImages(imageData);
   } else {
     console.error("Cannot fetch images: Unsplash API Key is missing")
@@ -119,18 +123,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Search button
 searchButton.addEventListener("click", async (e) => {
-  e.preventdefault();  // Prevent default form submission behavior (page reload)
+  e.preventDefault();  // Prevent default form submission behavior (page reload)
 
   if (UNSPLASH_ACCESS_KEY) {
     const query = searchBox.value.trim(); // Get the value from the search input, remove whitespace
-    if (query) { // Only search if the query is not empty
-      console.log(`Performing search for: ${query}`); 
 
-      // Reset currentPage to 1 (important for future pagination)
+    if (query) { // Only search if the query is not empty
+      
+      console.log(`Performing search for: ${query}`); 
       currentPage = 1;
+      // Reset currentPage to 1 (important for future pagination)
       const searchResults = await fetchImages(query, currentPage);
       displayImages(searchResults); // Display the new search results
+
     } else {
+
       console.log("Search is empty, fetching latest photos");
       currentPage = 1; // Also reset page for general photos
       const latestPhotos = await fetchImages("latest", currentPage);
