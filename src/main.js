@@ -14,6 +14,7 @@ if (!UNSPLASH_ACCESS_KEY) {
 const imageGallery = document.getElementById("image-gallery");
 const searchBox = document.getElementById("search-box");
 const searchButton = document.getElementById("search-button");
+const appLogo = document.getElementById("app-logo");
 
 
 let currentPage = 1; // 
@@ -121,7 +122,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Search button
+
+/* ======================= */
+/* ==== Search button ==== */
+/* ======================= */
+
 searchButton.addEventListener("click", async (e) => {
   e.preventDefault();  // Prevent default form submission behavior (page reload)
 
@@ -135,6 +140,7 @@ searchButton.addEventListener("click", async (e) => {
       // Reset currentPage to 1 (important for future pagination)
       const searchResults = await fetchImages(query, currentPage);
       displayImages(searchResults); // Display the new search results
+      
 
     } else {
 
@@ -143,7 +149,24 @@ searchButton.addEventListener("click", async (e) => {
       const latestPhotos = await fetchImages("latest", currentPage);
       displayImages(latestPhotos);
     }
+    searchBox.value = ""; // Clear the search box after performing the search
   } else {
     console.log("Cannot perform search: Unsplash Access Key is missing.");
   }
 })
+
+// App logo (reset to initial state)
+appLogo.addEventListener("click", async (e) => {
+  e.preventDefault(); // Prevent default link behavior
+  console.log("Logo clicked. Resetting to initial state (latest photos)")
+
+  if (UNSPLASH_ACCESS_KEY) {
+    currentPage = 1; // Reset page for initial load
+    searchBox.value = ""; //Clear input box
+    const latestPhotos = await fetchImages("latest", currentPage);
+    displayImages(latestPhotos);
+  } else {
+    console.error("Cannot reset to initial state: Unsplash Access Key is missing.");
+  }
+
+});
