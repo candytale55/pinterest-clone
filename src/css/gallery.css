@@ -20,7 +20,7 @@
 }
 
 
-
+/* //TODO: Check which are duplicated values with style.css and decide if it makes sense to consolidate or keep separated */
 .gallery-item img {
     width: 100%;
     height: 250px; /* fixed height keeps grid uniform; adjust if varying heights needed */

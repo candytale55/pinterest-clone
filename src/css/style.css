@@ -67,10 +67,6 @@ input, button, textarea, select {
   color: inherit; /* Inherit color from body */
 }
 
-button {
-  cursor: pointer; /* Ensure buttons have a pointer cursor */
-}
-
 /* Layout Primitives (as per your rules) */
 
 .section {

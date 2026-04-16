@@ -73,11 +73,14 @@
   --color-bg-search-button: var(--color-gray-150); /* Background for the small search button */
   --color-bg-nav-active: var(--color-black);       /* Background for active navigation item (e.g., "Inicio" pill) */
   --color-bg-nav-item-hover: var(--color-gray-150); /* Background for navigation item on hover */
+
   --color-bg-button-icon: var(--color-gray-150);   /* Background for notification, message, profile icons */
   --color-bg-button-primary: var(--color-black);   /* Main button background (e.g., "Buscar" button, or other primary action) */
   --color-bg-button-primary-hover: var(--color-gray-600); /* Hover state for primary buttons */
   --color-bg-button-cta: var(--color-red-primary); /* Call-to-action button (e.g., "Visitar" on pins) */
   --color-bg-button-cta-hover: #CC0000;            /* Darker red for CTA hover (slight adjustment from FF0000) */
+  
+  
   --color-bg-overlay: rgba(0, 0, 0, 0.4);          /* Dark overlay on pin hover */
   --color-bg-gallery-item: var(--color-white);     /* Background for individual pin cards */
 
