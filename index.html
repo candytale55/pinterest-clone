@@ -25,19 +25,19 @@
 <body>
   <header class="header" id="header">
 
-    <a 
-      href="#" 
-      id="app-logo"
-      class="logo" 
-      aria-label="Gallery Home">
-      <img src="./src/assets/images/pintrest-logo.png" alt="Logo">
-    </a>
+    <div class="header-left">
+      <a href="#" id="app-logo" class="logo" aria-label="Gallery Home">
+        <img src="./src/assets/images/pintrest-logo.png" alt="Logo">
+      </a>
+      <nav class="main-nav hidden">
+        <ul>
+          <li><a href="#header" class="btn btn-pill btn-dark nav-link nav-link-active">Inicio</a></li>
+          <li><a href="#header" class="btn btn-pill">Explorar</a></li>
+          <li><a href="#header" class="btn btn-pill">Crear</a></li>
+        </ul>
+      </nav>
+    </div>
 
-    <nav class="hidden">
-      <a href="#header" class="">Inicio</a>
-      <a href="#header" class="">Explorar</a>
-      <a href="#header" class="">Crear</a>
-    </nav>
 
     <div class="search-container">
       <label for="search-box" class="sr-only">Buscar en Galería </label>
@@ -56,8 +56,14 @@
     </div>
 
     <div class="header-right hidden">
-      <img src="./src/assets/images/bell-svg.svg" alt="bell icon">
-      <img src="./src/assets/images/blurb-svg.svg " alt="blurb icon">
+      <!-- Bell Icon Button -->
+      <button class="icon-button" aria-label="Ver notificaciones">
+        <img src="./src/assets/images/bell-svg.svg" alt="bell icon">
+      </button>
+      <!-- Blurb Icon Button -->
+      <button class="icon-button" aria-label="Abrir mensajes">
+        <img src="./src/assets/images/blurb-svg.svg " alt="blurb icon">
+      </button>
     </div>
 
     <a 
