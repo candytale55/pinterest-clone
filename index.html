@@ -19,28 +19,44 @@
   <link rel="stylesheet" href="./src/css/gallery.css">
   <link rel="stylesheet" href="./src/css/button.css">
   <link rel="stylesheet" href="./src/css/navigation.css">
+  <link rel="stylesheet" href="./src/css/utilities.css">
 </head>
 
 <body>
-  <header class="header">
-    <div class="logo" id="app-logo">
+  <header class="header" id="header">
+
+    <a href="#header" class="logo" aria-label="Gallery Home">
       <img src="./src/assets/images/pintrest-logo.png" alt="Logo">
-    </div>
-    <nav>
-      <a href="#" class="">Inicio</a>
-      <a href="#" class="">Explorar</a>
-      <a href="#" class="">Crear</a>
+    </a>
+
+    <nav class="hidden">
+      <a href="#header" class="">Inicio</a>
+      <a href="#header" class="">Explorar</a>
+      <a href="#header" class="">Crear</a>
     </nav>
-    <form>
-      <label for="search-box"></label>
-      <input type="text" id="search-box">
-      <button type="submit" id="search-button">Search</button>
-    </form>
-    <div>
+
+    <div class="search-container">
+      <label for="search-box" class="sr-only">Buscar en Galería </label>
+      <div class="search-input-wrapper">
+        <img 
+          src="./src/assets/images/mag-glass.png" 
+          alt="" 
+          aria-hidden="true" 
+          class="search-icon">
+        <input 
+          type="text" 
+          id="search-box" 
+          class="search-input" 
+          placeholder="Buscar">
+      </div>
+    </div>
+
+    <div class="header-right hidden">
       <img src="./src/assets/images/bell-svg.svg" alt="bell icon">
       <img src="./src/assets/images/blurb-svg.svg " alt="blurb icon">
     </div>
-    <div>US</div>
+
+    <a href="#header" class="profile-circle" aria-label="Ver perfil de usuario"><span class="profile-text">CT</span></a>
   </header>
 
 

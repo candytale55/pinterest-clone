@@ -3,8 +3,76 @@
 .header {
     width: 100%;
     display: flex;
-    flex-direction: row;
     justify-content: space-between; /* logo left, nav/actions right */
     align-items: center;
-    padding-inline: 1rem; /* logical property: works for LTR and RTL layouts */
+
+    position: sticky; /* keeps the header at the top of the viewport when scrolling */
+    top: 0; /* required for position: sticky to work */
+
+    background-color: var(--color-bg-page); /* same as page background for seamless look */
+
+    padding-inline: var(--spacing-md); /* horizontal padding */
+    padding-block: var(--spacing-sm); /* vertical padding */
 }   
+
+.logo img {
+    height: 2.5rem; /* 40px */
+    width: auto; /* maintain aspect ratio */
+}
+
+.search-container {
+    display: flex;
+    flex-grow: 1; /* allows to take up all available space */
+    margin-inline: var(--spacing-sm); /* space between logo and search */
+}
+
+.search-input-wrapper {
+    display: flex; /* Arrange icon and input horizontally */
+    align-items: center; /* Vertically center the icon and input */
+    width: 100%; /* Take up all available space */
+    background-color: var(--color-bg-search-input);
+    border: 1px solid var(--color-border-light); /* light border for the search input */
+    border-radius: var(--border-radius-pill);
+}
+
+.search-icon {
+    height: 2rem; /* 32px */
+    width: auto; /* maintain aspect ratio */
+    margin-inline-start: var(--spacing-xs);
+    margin-inline-end: var(--spacing-xxs); /* space between icon and input */
+}
+
+.search-input {
+    background-color: transparent; /* transparent to show the wrapper's background */
+    color: var(--color-text-light); /* lighter text color for placeholder */
+    font-size: var(--font-size-base);
+    border-radius: var(--border-radius-pill);
+    padding: var(--spacing-xs) var(--spacing-xs); /* vertical and horizontal padding */
+    border: none;
+}
+
+.search-input:focus {
+    outline: none; /* remove default focus outline */
+}
+
+.search-input::placeholder {
+    color: var(--color-text-light); /* lighter text color for placeholder */
+    opacity: 1; /* ensure placeholder is fully opaque */
+}
+
+.profile-circle {
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 50%; /* makes it a circle */
+    background-color: var(--color-bg-button-icon); /* background for profile icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-text {
+    color: var(--color-text-light); /* lighter text color for profile initials */
+    font-size: 0.875rem; /* smaller font size for initials */
+    font-weight: 600; /* semi-bold for better readability */
+}
+

@@ -14,7 +14,7 @@ body {
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
-  background: var(--color-bg-page);
+  background-color: var(--color-bg-page);
   color: var(--color-text-primary);
   width: 100vw; /* TODO: caution: can cause horizontal scroll if content overflows */
   /* //TODO: check if these are still needed */
@@ -50,7 +50,7 @@ a {
 a:hover,
 a:focus {
   color: var(--color-text-link-hover);
-  text-decoration: underline;
+  /* text-decoration: underline; */ /* TODO: Check where and how to add underline to elements - here or in each one on hover/focus for better affordance */ 
 }
 
 /* Images */

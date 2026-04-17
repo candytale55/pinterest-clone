@@ -18,7 +18,7 @@ const appLogo = document.getElementById("app-logo");
 
 
 let currentPage = 1; // 
-const imagesPerPage = 15; //
+const imagesPerPage = 16; //
 
 /*  //TODO (remove when done): The query="latest" default is just a placeholder that isn't affecting the API call yet. */
 async function fetchImages(query = "latest", page = 1) {
@@ -127,33 +127,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* ==== Search button ==== */
 /* ======================= */
 
-searchButton.addEventListener("click", async (e) => {
-  e.preventDefault();  // Prevent default form submission behavior (page reload)
+searchBox.addEventListener("keydown", async (e) => {
+  if (e.key === "Enter") {
 
-  if (UNSPLASH_ACCESS_KEY) {
-    const query = searchBox.value.trim(); // Get the value from the search input, remove whitespace
+    e.preventDefault();  // Prevent default form submission behavior (page reload)
 
-    if (query) { // Only search if the query is not empty
+    if (UNSPLASH_ACCESS_KEY) {
+      const query = searchBox.value.trim(); // Get the value from the search input, remove whitespace
+
+      if (query) { // Only search if the query is not empty
       
-      console.log(`Performing search for: ${query}`); 
-      currentPage = 1;
-      // Reset currentPage to 1 (important for future pagination)
-      const searchResults = await fetchImages(query, currentPage);
-      displayImages(searchResults); // Display the new search results
+        console.log(`Performing search for: ${query}`);
+        currentPage = 1;
+        // Reset currentPage to 1 (important for future pagination)
+        const searchResults = await fetchImages(query, currentPage);
+        displayImages(searchResults); // Display the new search results
       
 
+      } else {
+
+        console.log("Search is empty, fetching latest photos");
+        currentPage = 1; // Also reset page for general photos
+        const latestPhotos = await fetchImages("latest", currentPage);
+        displayImages(latestPhotos);
+      }
+      searchBox.value = ""; // Clear the search box after performing the search
     } else {
-
-      console.log("Search is empty, fetching latest photos");
-      currentPage = 1; // Also reset page for general photos
-      const latestPhotos = await fetchImages("latest", currentPage);
-      displayImages(latestPhotos);
+      console.log("Cannot perform search: Unsplash Access Key is missing.");
     }
-    searchBox.value = ""; // Clear the search box after performing the search
-  } else {
-    console.log("Cannot perform search: Unsplash Access Key is missing.");
   }
-})
+  });
 
 // App logo (reset to initial state)
 appLogo.addEventListener("click", async (e) => {
