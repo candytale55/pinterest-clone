@@ -3,7 +3,7 @@
 .header {
     width: 100%;
     display: flex;
-    justify-content: space-between; /* logo left, nav/actions right */
+    justify-content: flex-start; /* Align items to the start of the flex container - Changed to fix the logo appearance */
     align-items: center;
 
     position: sticky; /* keeps the header at the top of the viewport when scrolling */
@@ -13,7 +13,20 @@
 
     padding-inline: var(--spacing-md); /* horizontal padding */
     padding-block: var(--spacing-sm); /* vertical padding */
+
+    min-height: 3.5rem; /* Example: 56px, slightly larger than logo */
 }   
+
+.logo {
+    /* Ensure the link itself doesn't shrink or collapse */
+    flex-shrink: 0; /* Prevent shrinking */
+    display: flex; /* Use flex to center the image if needed */
+    align-items: center; /* Vertically center the logo image */
+    justify-content: center; /* Horizontally center the logo image */
+    padding: 0; /* Remove default padding from the link */
+    height: 2.5rem; /* Ensure the clickable area is fixed */
+    width: 2.5rem; /* Match logo image size */
+}
 
 .logo img {
     height: 2.5rem; /* 40px */
@@ -35,6 +48,15 @@
     border-radius: var(--border-radius-pill);
 }
 
+/* Accessibility focus feedback */
+.search-input-wrapper:focus-within {
+    border-color: var(--color-text-link);  /* Highlights the entire search bar when focused */
+}
+
+.search-input-wrapper:focus-visible{
+    outline: 0.0125rem solid var(--color-text-light); /* add custom focus outline for accessibility */
+}
+
 .search-icon {
     height: 2rem; /* 32px */
     width: auto; /* maintain aspect ratio */
@@ -42,18 +64,24 @@
     margin-inline-end: var(--spacing-xxs); /* space between icon and input */
 }
 
+
 .search-input {
     background-color: transparent; /* transparent to show the wrapper's background */
-    color: var(--color-text-light); /* lighter text color for placeholder */
+    color: var(--color-text-light); /* lighter text for input text */
+
     font-size: var(--font-size-base);
-    border-radius: var(--border-radius-pill);
+    
     padding: var(--spacing-xs) var(--spacing-xs); /* vertical and horizontal padding */
     border: none;
+
+    border-radius: var(--border-radius-pill); /* match the wrapper's rounded shape */
+    flex-grow: 1; /* Make input take remaining space in wrapper */
 }
 
 .search-input:focus {
     outline: none; /* remove default focus outline */
 }
+
 
 .search-input::placeholder {
     color: var(--color-text-light); /* lighter text color for placeholder */
@@ -68,11 +96,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.2s ease-in-out; /* Added for hover/focus */
+    text-decoration: none; /* Ensure no underline on link */
+
+    flex-shrink: 0; /* Prevent shrinking */
 }
+
+.profile-circle:hover,
+.profile-circle:focus-visible {
+    background-color: var(--color-bg-button-primary-hover); /* Change background on hover/focus */
+    outline: 0.125rem solid var(--color-text-link); /* Custom focus outline */
+    outline-offset: 0.125rem;
+}
+
 
 .profile-text {
-    color: var(--color-text-light); /* lighter text color for profile initials */
+    color: var(--color-gray-medium); /* lighter text color for profile initials */
     font-size: 0.875rem; /* smaller font size for initials */
     font-weight: 600; /* semi-bold for better readability */
+    transition: color 0.2s ease-in-out; /* Smooth color change */
 }
 
+/* TODO: Remove before final deployment - 
+This is a descendant selector. It means: "When .profile-circle is hovered OR focused, apply this style to any .profile-text element inside it."*/
+.profile-circle:hover .profile-text,
+.profile-circle:focus-visible .profile-text {
+    color: var(--color-white); /* Change text color on hover/focus for better contrast */
+}

@@ -33,8 +33,19 @@
   --color-white: #F0F0F0;
   --color-black: #111111;
 
-  --color-gray-light: #E5E5E5;
-  --color-gray-medium: #757575;
+
+
+  /* TODO: Remove the ones not used */
+  --color-gray-light: #E5E5E5;       /* Formerly gray-200 (your previous --color-gray-light) */
+  --color-gray-medium: #757575;      /* Formerly gray-600 (your previous --color-gray-medium) */
+  --color-gray-dark: #333333;        /* Example: If you need a darker gray later, just add it */
+
+  --color-gray-50: #F2F2F2; /* Very light, almost white */
+  --color-gray-100: #ECECEC; /* Slightly darker */
+  --color-gray-150: #E7E7E7; /* Even darker, good for subtle backgrounds */
+  --color-gray-200: #E5E5E5; /* Your --color-gray-light (good base) */
+  --color-gray-250: #DCDCDC; /* NEW: A slightly darker gray for hover effects */
+  --color-gray-600: #757575; /* Your --color-gray-medium */
 
   /* === RED / PINK === */
   --color-red-primary: #FF0000;
@@ -59,7 +70,7 @@
   /* Text Colors */
   --color-text-primary: var(--color-black);       /* Main readable text */
   --color-text-light: var(--color-gray-medium);      /* Secondary text, e.g., metadata, dates */
-  --color-text-link: var(--color-black);          /* Default navigation links, button text on light background */
+  --color-text-link: var(--color-gray-medium);          /* Default navigation links, button text on light background */
   --color-text-link-hover: var(--color-black);    /* Hover state for links (could be `var(--color-red-primary)` or just `var(--color-black)` for nav) */
   --color-text-button-on-dark: var(--color-white); /* Text on dark buttons (e.g., "Visitar" on red) */
   --color-text-button-on-red: var(--color-white);  /* Text on red buttons */
