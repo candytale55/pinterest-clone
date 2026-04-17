@@ -31,12 +31,14 @@
 .logo img {
     height: 2.5rem; /* 40px */
     width: auto; /* maintain aspect ratio */
+    object-fit: contain; /* Ensure the image fits within the container without distortion */
 }
 
 .search-container {
     display: flex;
     flex-grow: 1; /* allows to take up all available space */
-    margin-inline: var(--spacing-sm); /* space between logo and search */
+    margin-inline-start: var(--spacing-sm); /* space between logo and search */
+    min-width: 5rem; /* Minimum width for search bar on mobile */
 }
 
 .search-input-wrapper {
@@ -46,6 +48,7 @@
     background-color: var(--color-bg-search-input);
     border: 1px solid var(--color-border-light); /* light border for the search input */
     border-radius: var(--border-radius-pill);
+    transition: border-color 0.2s ease-in-out; /* Added for focus effect */
 }
 
 /* Accessibility focus feedback */
@@ -78,10 +81,11 @@
     flex-grow: 1; /* Make input take remaining space in wrapper */
 }
 
+
+/* Remove default focus outline from input for all interactions */
 .search-input:focus {
     outline: none; /* remove default focus outline */
 }
-
 
 .search-input::placeholder {
     color: var(--color-text-light); /* lighter text color for placeholder */
@@ -122,4 +126,57 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
 .profile-circle:hover .profile-text,
 .profile-circle:focus-visible .profile-text {
     color: var(--color-white); /* Change text color on hover/focus for better contrast */
+}
+
+.main-nav,
+.header-right {
+    display: none; /* Hidden by default, shown on mobile */
+}
+
+@media (min-width:768px) {
+
+    .header {
+        justify-content: space-between; /* Spread items across the header */
+        padding-inline: var(--spacing-md); /* Adjust horizontal padding for larger screens */
+        gap: var(--spacing-sm); /* Add gap between main sections of the header */
+        min-height: auto; /* Allow height to adjust based on content */
+    }
+
+    /* Grouping for logo and nav */
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs); /* Space between logo and nav */
+        flex-shrink: 0; /* Prevent shrinking to maintain logo visibility */
+    }
+    
+    /* Show and style the main navigation */
+    .main-nav {
+        display: flex;
+        align-items: center;
+    }
+
+    .main-nav ul {
+        display: flex; 
+        gap: var(--spacing-xxs); /* Space between nav items */
+    }
+
+    /* Target specifically links with nav-link class */
+    .main-nav a.nav-link {
+        font-weight: 600;
+        padding-inline: var(--spacing-md);
+        padding-block: var(--spacing-xs);
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Smooth transition for hover effects */
+    }
+
+
+    .search-container {
+
+    }
+
+    .header-right {
+        display: flex;
+    }
+
+
 }

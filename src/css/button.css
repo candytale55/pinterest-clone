@@ -12,18 +12,19 @@
     cursor: pointer;
 
     border: 0;
-    background-color: var(--color-bg-button-light);
-    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-
-    
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;    
 }
 
-.btn:hover,
-.btn:focus {
-    background-color: var(--color-bg-button-hover);
-    transform: translateY(-0.0625rem); /* 1px equivalent using rem (1/16 = 0.0625) */
-    box-shadow: var(--box-shadow-sm);
+.btn:hover {
     outline: none; /* Remove default focus outline */
+}
+
+
+/* TODO: Remove comment before deploying   
+To prevent default browser outline for mouse clicks if :focus-visible is not widely supported or for specific interactions. Always pair with a :focus-visible rule for accessibility. */
+
+.btn:focus {
+  outline: none; /* Remove default focus outline */
 }
 
 .btn:focus-visible {
@@ -37,21 +38,10 @@
     color: var(--color-text-button-on-dark);
 }
 
+.btn-dark:hover {
+  background-color: var(--color-bg-button-primary-hover);
+}
+
 .btn-pill {
   border-radius: 999px; /* "infinite" radius */
-}
-
-
-/* Example of a secondary button style */
-.btn-secondary {
-  background: var(--color-bg-secondary);
-  color: var(--color-text-primary);
-  border: 0.0625rem solid var(--color-border-light); /* 1px equivalent */
-}
-
-.btn-secondary:hover,
-.btn-secondary:focus {
-  background-color: var(--color-border-light);
-  transform: translateY(-0.0625rem);
-  box-shadow: var(--box-shadow-sm);
 }
