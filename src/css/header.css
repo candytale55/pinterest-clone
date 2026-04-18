@@ -1,28 +1,45 @@
-/* HEADER - Top navigation bar */
+/* ====== Navigation elements ======*/
+
+/* Base unordered list reset for nav context */
+nav ul {
+    list-style: none; /* Remove default bullet points */
+}
+
+/* Hidden by default on mobile */
+.main-nav,
+.header-right {
+    display: none; 
+}
+
+/* ======== HEADER - Top navigation bar ======= */
+
 
 .header {
     width: 100%;
     display: flex;
-    justify-content: flex-start; /* Align items to the start of the flex container - Changed to fix the logo appearance */
+    justify-content: flex-start; /* Align items to the start of the flex container - to fix the logo appearance */
     align-items: center;
 
-    position: sticky; /* keeps the header at the top of the viewport when scrolling */
+    min-height: 3.5rem; /* Slightly larger than logo */
+
+    /* Keeps the header at the top of the viewport when scrolling */
+    position: sticky; 
     top: 0; /* required for position: sticky to work */
 
     background-color: var(--color-bg-page); /* same as page background for seamless look */
 
     padding-inline: var(--spacing-md); /* horizontal padding */
     padding-block: var(--spacing-sm); /* vertical padding */
-
-    min-height: 3.5rem; /* Example: 56px, slightly larger than logo */
 }   
 
 .logo {
     /* Ensure the link itself doesn't shrink or collapse */
     flex-shrink: 0; /* Prevent shrinking */
-    display: flex; /* Use flex to center the image if needed */
+    
+    display: flex; /* to center the image*/
     align-items: center; /* Vertically center the logo image */
     justify-content: center; /* Horizontally center the logo image */
+    
     padding: 0; /* Remove default padding from the link */
     height: 2.5rem; /* Ensure the clickable area is fixed */
     width: 2.5rem; /* Match logo image size */
@@ -34,10 +51,12 @@
     object-fit: contain; /* Ensure the image fits within the container without distortion */
 }
 
+/* ======== SEARCH BAR ======= */
+
 .search-container {
     display: flex;
     flex-grow: 1; /* allows to take up all available space */
-    margin-inline-start: var(--spacing-sm); /* space between logo and search */
+    margin-inline: var(--spacing-xs); /* space between logo and search */
     min-width: 5rem; /* Minimum width for search bar on mobile */
 }
 
@@ -46,18 +65,19 @@
     align-items: center; /* Vertically center the icon and input */
     width: 100%; /* Take up all available space */
     background-color: var(--color-bg-search-input);
-    border: 1px solid var(--color-border-light); /* light border for the search input */
+    
+    /* light border for the search input - Right now its the same as the background */ /* TODO */
+    border: 1px solid var(--color-border-search-input);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     border-radius: var(--border-radius-pill);
-    transition: border-color 0.2s ease-in-out; /* Added for focus effect */
+
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Added for focus effect */
 }
 
 /* Accessibility focus feedback */
 .search-input-wrapper:focus-within {
-    border-color: var(--color-text-link);  /* Highlights the entire search bar when focused */
-}
-
-.search-input-wrapper:focus-visible{
-    outline: 0.0125rem solid var(--color-text-light); /* add custom focus outline for accessibility */
+    border-color: var(--color-focusable-outline);  /* Highlights the entire search bar when focused */
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05); /* Subtle shadow to enhance focus visibility */
 }
 
 .search-icon {
@@ -67,30 +87,28 @@
     margin-inline-end: var(--spacing-xxs); /* space between icon and input */
 }
 
-
 .search-input {
-    background-color: transparent; /* transparent to show the wrapper's background */
+    background-color: transparent; /* to show the wrapper's background */
     color: var(--color-text-light); /* lighter text for input text */
-
     font-size: var(--font-size-base);
     
     padding: var(--spacing-xs) var(--spacing-xs); /* vertical and horizontal padding */
     border: none;
-
     border-radius: var(--border-radius-pill); /* match the wrapper's rounded shape */
     flex-grow: 1; /* Make input take remaining space in wrapper */
 }
 
-
-/* Remove default focus outline from input for all interactions */
+/* Remove default focus outline => search-input-wrapper:focus-within does the job */
 .search-input:focus {
-    outline: none; /* remove default focus outline */
+    outline: none;  /* Removes the default browser focus outline for ALL interactions */
 }
 
 .search-input::placeholder {
-    color: var(--color-text-light); /* lighter text color for placeholder */
+    color: var(--color-text-light); 
     opacity: 1; /* ensure placeholder is fully opaque */
 }
+
+/* ======== USER PROFILE CIRCLE ======= */
 
 .profile-circle {
     width: 2.5rem; /* 40px */
@@ -102,14 +120,12 @@
     justify-content: center;
     transition: background-color 0.2s ease-in-out; /* Added for hover/focus */
     text-decoration: none; /* Ensure no underline on link */
-
     flex-shrink: 0; /* Prevent shrinking */
 }
 
-.profile-circle:hover,
-.profile-circle:focus-visible {
-    background-color: var(--color-bg-button-primary-hover); /* Change background on hover/focus */
-    outline: 0.125rem solid var(--color-text-link); /* Custom focus outline */
+.profile-circle:hover, .profile-circle:focus-visible {
+    background-color: var(--color-bg-button-primary-hover);
+    outline: 0.125rem solid var(--color-text-link);
     outline-offset: 0.125rem;
 }
 
@@ -128,10 +144,7 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
     color: var(--color-white); /* Change text color on hover/focus for better contrast */
 }
 
-.main-nav,
-.header-right {
-    display: none; /* Hidden by default, shown on mobile */
-}
+
 
 @media (min-width:768px) {
 
@@ -142,11 +155,11 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
         min-height: auto; /* Allow height to adjust based on content */
     }
 
+
     /* Grouping for logo and nav */
     .header-left {
         display: flex;
         align-items: center;
-        gap: var(--spacing-xs); /* Space between logo and nav */
         flex-shrink: 0; /* Prevent shrinking to maintain logo visibility */
     }
     
@@ -158,7 +171,6 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
 
     .main-nav ul {
         display: flex; 
-        gap: var(--spacing-xxs); /* Space between nav items */
     }
 
     /* Target specifically links with nav-link class */
@@ -167,11 +179,6 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
         padding-inline: var(--spacing-md);
         padding-block: var(--spacing-xs);
         transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Smooth transition for hover effects */
-    }
-
-
-    .search-container {
-
     }
 
     .header-right {
