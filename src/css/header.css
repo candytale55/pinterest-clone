@@ -118,6 +118,31 @@ nav ul {
     opacity: 1; /* ensure placeholder is fully opaque */
 }
 
+/* ======== RIGHT NAVIGATION SECTION ======= */
+
+.header-right {
+    align-items: center; /* Vertically center items */
+    gap: var(--spacing-sm); /* Space between profile and other icons */
+}
+
+.icon-button {
+    /* Remove default button styling */
+    border: 0;
+    background: none; 
+}
+
+.icon-button img {
+    height: 2rem; /* 32px */
+    width: auto; /* maintain aspect ratio */
+    transition: filter 0.2s ease-in-out; /* Smooth transition for hover effect */
+    flex-shrink: 0; /* Prevent shrinking to maintain icon visibility */
+}
+
+.icon-button:hover img,
+.icon-button:focus-visible img {
+    filter: brightness(0.8); /* Darken the icon on hover/focus for better affordance */
+}
+
 /* ======== USER PROFILE CIRCLE ======= */
 
 .profile-circle {
@@ -176,14 +201,8 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
     }
     
     /* Show and style the main navigation */
-    .main-nav {
+    .main-nav, .header-right {
         display: flex; /* Show the main navigation on larger screens */
     }
-
-
-    .header-right {
-        display: flex;
-    }
-
 
 }
