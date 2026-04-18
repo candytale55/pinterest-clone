@@ -1,18 +1,5 @@
-/* ====== Navigation elements ======*/
-
-/* Base unordered list reset for nav context */
-nav ul {
-    list-style: none; /* Remove default bullet points */
-}
-
-/* Hidden by default on mobile */
-.main-nav,
-.header-right {
-    display: none; 
-}
 
 /* ======== HEADER - Top navigation bar ======= */
-
 
 .header {
     width: 100%;
@@ -50,6 +37,29 @@ nav ul {
     width: auto; /* maintain aspect ratio */
     object-fit: contain; /* Ensure the image fits within the container without distortion */
 }
+
+/* ====== Navigation elements - Main ======*/
+
+/* Hidden by default on mobile */
+.main-nav,
+.header-right {
+    display: none; 
+}
+
+/* Base unordered list reset for nav context */
+nav ul {
+    display: flex; /* Arrange nav items horizontally */
+    list-style: none; /* Remove default bullet points */
+}
+
+.main-nav {
+   padding-inline-start: var(--spacing-sm); /* space between logo and nav */
+}
+
+.main-nav ul{
+    gap: var(--spacing-xs); /* space between nav items */
+}
+
 
 /* ======== SEARCH BAR ======= */
 
@@ -146,6 +156,8 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
 
 
 
+
+
 @media (min-width:768px) {
 
     .header {
@@ -165,21 +177,9 @@ This is a descendant selector. It means: "When .profile-circle is hovered OR foc
     
     /* Show and style the main navigation */
     .main-nav {
-        display: flex;
-        align-items: center;
+        display: flex; /* Show the main navigation on larger screens */
     }
 
-    .main-nav ul {
-        display: flex; 
-    }
-
-    /* Target specifically links with nav-link class */
-    .main-nav a.nav-link {
-        font-weight: 600;
-        padding-inline: var(--spacing-md);
-        padding-block: var(--spacing-xs);
-        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Smooth transition for hover effects */
-    }
 
     .header-right {
         display: flex;
