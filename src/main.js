@@ -98,15 +98,27 @@ function displayImages(images) {
     // Append img to its container
     galleryItem.appendChild(img);
 
-    // Create overlay for photographer's name
+
+    // Create overlay for photographer's name, image and image creation date
+    const userPhoto = document.createElement("div");
+    userPhoto.classList.add("gallery-item-user-photo");
+    userPhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
+
     const overlay = document.createElement("div");
     overlay.classList.add("gallery-item-overlay");
     overlay.textContent = image.user.name; // Photographer's name
     
+    const imageDate = document.createElement("div");
+    imageDate.textContent = image.created_at; // Image creation date 
+    imageDate.classList.add("gallery-item-date"); // Add class for styling
 
 
-    // Append the overlay to the gallery item
+    // Append the overlay and date to the gallery item
+    galleryItem.appendChild(userPhoto);
     galleryItem.appendChild(overlay);
+    galleryItem.appendChild(imageDate); 
+
+    
 
     // Get image container into the gallery
     imageGallery.appendChild(galleryItem);

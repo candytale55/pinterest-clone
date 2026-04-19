@@ -49,9 +49,25 @@
 }
 
 
+.gallery-item-user-photo{
+    display: flex;
+    margin: auto;
+    background-size: cover;
+    background-position: center;
+    height: 4.5rem;
+    width: 4.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid green;
+}
+
 /* Create the overlay container for buttons and profile info */
 .gallery-item-overlay {
     border: 2px solid red;
     text-align: center;
 }
 
+.gallery-item-date {
+    border: 2px solid blue;
+    text-align: center
+}
