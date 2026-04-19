@@ -99,6 +99,23 @@ function displayImages(images) {
     galleryItem.appendChild(img);
 
 
+
+    // Top section of the overlay (save button and visit button)
+    const topOverlay = document.createElement("div");
+    topOverlay.classList.add("gallery-item-top-overlay");
+
+    // Visit button (link to Unsplash page for the image)
+    const visitButton = document.createElement("a");
+    visitButton.href = image.links.html; // Link to the image's Unsplash page
+    visitButton.target = "_blank"; // Open in new tab
+    visitButton.textContent = "Visit"; // Button text
+    visitButton.classList.add("btn", "btn-pill", "btn-cta"); // Add button classes for styling
+
+
+    topOverlay.appendChild(visitButton); // Add visit button to the top overlay
+    
+
+
     // Create overlay for photographer's name, image and image creation date
     const userPhoto = document.createElement("div");
     userPhoto.classList.add("gallery-item-user-photo");
@@ -114,12 +131,13 @@ function displayImages(images) {
 
 
     // Append the overlay and date to the gallery item
+    galleryItem.appendChild(topOverlay); // Add the top overlay (visit button) to the gallery item
+
     galleryItem.appendChild(userPhoto);
     galleryItem.appendChild(overlay);
-    galleryItem.appendChild(imageDate); 
+    galleryItem.appendChild(imageDate);
 
     
-
     // Get image container into the gallery
     imageGallery.appendChild(galleryItem);
   });

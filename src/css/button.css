@@ -20,5 +20,17 @@
 .btn-dark {
   background-color: var(--color-bg-button-primary);
   color: var(--color-white);
-  font-weight: 400;;
+  font-weight: 400;
+}
+
+.btn-cta {
+  background-color: var(--color-bg-button-cta);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.btn-cta:hover,
+.btn-cta:focus {
+  background-color: var(--color-bg-button-cta-hover);
+  color: var(--color-white);
 }
