@@ -49,6 +49,14 @@
 }
 
 
+.gallery-item-overlay {
+    border: 2px solid fuchsia;
+}
+
+
+
+
+
 
 
 .gallery-item-top-overlay {
@@ -69,6 +77,15 @@
     border-radius: 50%;
     border: 5px solid green;
 }
+
+
+.camera-counter img, .heart-counter img {
+    height: 1rem;
+    width: auto;
+}
+
+
+
 
 /* Create the overlay container for buttons and profile info */
 .gallery-item-overlay {

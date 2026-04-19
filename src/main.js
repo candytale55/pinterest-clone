@@ -68,6 +68,29 @@ async function fetchImages(query = "latest", page = 1) {
 
 
 
+/* //TODO: Move to a separate module for better organization after it is working */
+/* Function to create a counter element with an icon and count */
+function createCounterElement(iconPath, count) {
+  const counterWrapper = document.createElement("div");
+  counterWrapper.classList.add("counter-wrapper");
+  counterWrapper.setAttribute("aria-label", `Counter with ${count} items`); // Accessibility label
+
+  const icon = document.createElement("img");
+  icon.src = iconPath;
+  icon.alt = ""; // decorative icon, so alt is empty
+  icon.ariaHidden = "true"; // Hide from screen readers
+  icon.classList.add("counter-icon");
+
+  const countSpan = document.createElement("span");
+  countSpan.textContent = count;
+  countSpan.classList.add("counter-text");
+
+  counterWrapper.appendChild(icon);
+  counterWrapper.appendChild(countSpan);
+  return counterWrapper;
+}
+
+
 
 
 function displayImages(images) {
@@ -100,9 +123,26 @@ function displayImages(images) {
 
 
 
-    // Top section of the overlay (save button and visit button)
+    // Main overlay container for all elements 
+    const overlay = document.createElement("div");
+    overlay.classList.add("gallery-item-overlay");
+
+    //  Create the TOP section of the overlay for all elements that appear on hover (contains the "Visit" button and counters)
     const topOverlay = document.createElement("div");
     topOverlay.classList.add("gallery-item-top-overlay");
+
+
+    // Create counters. Random numbers for now .
+    // TODO: Use views from API for one of the counters later.
+
+    // Camera counter
+    const cameraCounter = createCounterElement("./src/assets/images/camera-icon.svg", Math.floor(Math.random() * 1000));
+    cameraCounter.classList.add("camera-counter");
+
+    // Heart counter
+    const heartCounter = createCounterElement("./src/assets/images/heart-icon.svg", Math.floor(Math.random() * 1000));
+    heartCounter.classList.add("heart-counter");
+
 
     // Visit button (link to Unsplash page for the image)
     const visitButton = document.createElement("a");
@@ -112,6 +152,9 @@ function displayImages(images) {
     visitButton.classList.add("btn", "btn-pill", "btn-cta"); // Add button classes for styling
 
 
+    // Append counters to the top overlay
+    topOverlay.appendChild(cameraCounter);
+    topOverlay.appendChild(heartCounter);
     topOverlay.appendChild(visitButton); // Add visit button to the top overlay
     
 
@@ -121,9 +164,9 @@ function displayImages(images) {
     userPhoto.classList.add("gallery-item-user-photo");
     userPhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
 
-    const overlay = document.createElement("div");
-    overlay.classList.add("gallery-item-overlay");
-    overlay.textContent = image.user.name; // Photographer's name
+    const bottomOverlay = document.createElement("div");
+    bottomOverlay.classList.add("gallery-item-overlay");
+    bottomOverlay.textContent = image.user.name; // Photographer's name
     
     const imageDate = document.createElement("div");
     imageDate.textContent = image.created_at; // Image creation date 
@@ -134,7 +177,7 @@ function displayImages(images) {
     galleryItem.appendChild(topOverlay); // Add the top overlay (visit button) to the gallery item
 
     galleryItem.appendChild(userPhoto);
-    galleryItem.appendChild(overlay);
+    galleryItem.appendChild(bottomOverlay);
     galleryItem.appendChild(imageDate);
 
     
