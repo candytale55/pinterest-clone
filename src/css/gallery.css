@@ -88,7 +88,7 @@
 
 
 /* Create the overlay container for buttons and profile info */
-.gallery-item-overlay {
+.gallery-item-bottom-overlay {
     border: 2px solid red;
     text-align: center;
 }

@@ -127,6 +127,9 @@ function displayImages(images) {
     const overlay = document.createElement("div");
     overlay.classList.add("gallery-item-overlay");
 
+
+    /* --- --- --- --- --- */
+
     //  Create the TOP section of the overlay for all elements that appear on hover (contains the "Visit" button and counters)
     const topOverlay = document.createElement("div");
     topOverlay.classList.add("gallery-item-top-overlay");
@@ -143,42 +146,62 @@ function displayImages(images) {
     const heartCounter = createCounterElement("./src/assets/images/heart-icon.svg", Math.floor(Math.random() * 1000));
     heartCounter.classList.add("heart-counter");
 
-
     // Visit button (link to Unsplash page for the image)
     const visitButton = document.createElement("a");
     visitButton.href = image.links.html; // Link to the image's Unsplash page
     visitButton.target = "_blank"; // Open in new tab
-    visitButton.textContent = "Visit"; // Button text
+    visitButton.textContent = "Visitar"; // Button text
     visitButton.classList.add("btn", "btn-pill", "btn-cta"); // Add button classes for styling
-
+    visitButton.setAttribute("aria-label", `Visit Unsplash page for image by ${image.user.name}`); // Accessibility label
 
     // Append counters to the top overlay
     topOverlay.appendChild(cameraCounter);
     topOverlay.appendChild(heartCounter);
     topOverlay.appendChild(visitButton); // Add visit button to the top overlay
-    
 
+    // Append top section to main overlay
+    overlay.appendChild(topOverlay);
 
-    // Create overlay for photographer's name, image and image creation date
-    const userPhoto = document.createElement("div");
-    userPhoto.classList.add("gallery-item-user-photo");
-    userPhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
+    /* --- --- --- --- --- */
 
+    // Create the BOTTOM section of the overlay for all elements that appear at the bottom of the image (photographer's name, profile picture and image creation date)
     const bottomOverlay = document.createElement("div");
-    bottomOverlay.classList.add("gallery-item-overlay");
-    bottomOverlay.textContent = image.user.name; // Photographer's name
+    bottomOverlay.classList.add("gallery-item-bottom-overlay");
+
+    overlay.appendChild(bottomOverlay); // Add bottom overlay to main overlay
+
+    // User Profile Picture (Circular, centered below the image)
+    
+        
+    const userProfilePhoto = document.createElement("div");
+    userProfilePhoto.classList.add("gallery-item-user-photo");
+    userProfilePhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
+
+    bottomOverlay.appendChild(userProfilePhoto); // Add profile picture to the bottom overlay
+
+    /* --- */
+
+    const userProfileName = document.createElement("div");
+    userProfileName.classList.add("gallery-item-user-profile");
+    userProfileName.textContent = image.user.name; // Photographer's name
+    userProfileName.setAttribute("aria-label", `Photographer: ${image.user.name}`); // Accessibility label
+
+    bottomOverlay.appendChild(userProfileName); // Add photographer's name to the bottom overlay
+
+    /* --- */
     
     const imageDate = document.createElement("div");
     imageDate.textContent = image.created_at; // Image creation date 
     imageDate.classList.add("gallery-item-date"); // Add class for styling
 
+    bottomOverlay.appendChild(imageDate); // Add image creation date to the bottom overlay
+
+    /* --- --- --- --- --- */
 
     // Append the overlay and date to the gallery item
-    galleryItem.appendChild(topOverlay); // Add the top overlay (visit button) to the gallery item
+    galleryItem.appendChild(overlay); // Add the top overlay (visit button) to the gallery item
 
-    galleryItem.appendChild(userPhoto);
-    galleryItem.appendChild(bottomOverlay);
-    galleryItem.appendChild(imageDate);
+    
 
     
     // Get image container into the gallery
