@@ -49,15 +49,18 @@
 }
 
 
+
+
+
+/* Overlay contains Top Overlay with buttons and counters and Bottom Overlay with profile info and date */
+
 .gallery-item-overlay {
     border: 2px solid fuchsia;
 }
 
 
 
-
-
-
+/* Top Overlay contains buttons and counters that appear on hover */
 
 .gallery-item-top-overlay {
     border: 2px solid orange;
@@ -65,8 +68,25 @@
     background-size: cover;
 }
 
+.camera-counter img, .heart-counter img{
+    height: 1rem;
+    width: auto;
+}
 
-.gallery-item-user-photo{
+
+
+
+/* Bottom Overlay contains profile info and date */
+
+.gallery-item-bottom-overlay {
+    border: 2px solid red;
+    text-align: center;
+}
+
+
+
+
+.gallery-user-photo{
     display: flex;
     margin: auto;
     background-size: cover;
@@ -79,21 +99,21 @@
 }
 
 
-.camera-counter img, .heart-counter img {
-    height: 1rem;
+/* Date container (contains download icon + date text) */
+
+.image-date-container {
+    border: 2px solid yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+img.download-icon {
+    height: 1.5rem;
     width: auto;
 }
 
-
-
-
-/* Create the overlay container for buttons and profile info */
-.gallery-item-bottom-overlay {
-    border: 2px solid red;
-    text-align: center;
-}
-
-.gallery-item-date {
-    border: 2px solid blue;
+.gallery-image-date {
     text-align: center
 }

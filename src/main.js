@@ -170,31 +170,64 @@ function displayImages(images) {
 
     overlay.appendChild(bottomOverlay); // Add bottom overlay to main overlay
 
-    // User Profile Picture (Circular, centered below the image)
+    // User Profile Link (wraps the profile picture so that if you click on the profile picture, it takes you to the photographer's Unsplash profile)
+    const userProfileLink = document.createElement("a");
+    userProfileLink.href = image.user.links.html; // Link to photographer's Unsplash profile
+    userProfileLink.target = "_blank"; // Open in new tab
+    userProfileLink.rel = "noopener noreferrer"; // Security best practice for external links
+    userProfileLink.setAttribute("aria-label", `Visit Unsplash profile of photographer ${image.user.name}`); // Accessibility label for the link
+
+    bottomOverlay.appendChild(userProfileLink); // Add the user profile link to the bottom overlay
     
-        
+
+    // User Profile Photo (Circular, centered below the image)
+            
     const userProfilePhoto = document.createElement("div");
-    userProfilePhoto.classList.add("gallery-item-user-photo");
+    userProfilePhoto.classList.add("gallery-user-photo");
     userProfilePhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
 
-    bottomOverlay.appendChild(userProfilePhoto); // Add profile picture to the bottom overlay
+    userProfileLink.appendChild(userProfilePhoto); // Add profile picture to the user profile link
 
     /* --- */
 
-    const userProfileName = document.createElement("div");
-    userProfileName.classList.add("gallery-item-user-profile");
+
+    /* Contains all user information */
+    const userInfoContainer = document.createElement("div");
+    userInfoContainer.classList.add("user-info-container");
+
+    const userProfileName = document.createElement("p");
+    userProfileName.classList.add("user-profile-name");
     userProfileName.textContent = image.user.name; // Photographer's name
     userProfileName.setAttribute("aria-label", `Photographer: ${image.user.name}`); // Accessibility label
 
     bottomOverlay.appendChild(userProfileName); // Add photographer's name to the bottom overlay
-
-    /* --- */
     
-    const imageDate = document.createElement("div");
-    imageDate.textContent = image.created_at; // Image creation date 
-    imageDate.classList.add("gallery-item-date"); // Add class for styling
+    /* --- */
 
-    bottomOverlay.appendChild(imageDate); // Add image creation date to the bottom overlay
+    // Date container (contains download icon + date text)
+
+    const imageDateContainer = document.createElement("div");
+    imageDateContainer.classList.add("image-date-container");
+
+    /* Download icon */
+    const downloadIcon = document.createElement("img");
+    downloadIcon.src = "./src/assets/images/download-icon.svg"; // Download icon
+    downloadIcon.alt = ""; // Decorative icon, so alt is empty
+    downloadIcon.ariaHidden = "true"; // Hide from screen readers
+    downloadIcon.classList.add("download-icon");
+
+  
+    /* Image date - formatted */
+    const imageDate = document.createElement("span");
+    const dateObj = new Date(image.created_at);
+    imageDate.textContent = dateObj.toLocaleDateString(); 
+    imageDate.classList.add("gallery-image-date"); 
+
+    imageDateContainer.appendChild(downloadIcon); // Add download icon to the date container
+    imageDateContainer.appendChild(imageDate); // Add date text to the date container
+
+
+    bottomOverlay.appendChild(imageDateContainer); // Add image creation date to the bottom overlay
 
     /* --- --- --- --- --- */
 
