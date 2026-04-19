@@ -1,5 +1,3 @@
-/* GALLERY - Pinterest-style responsive grid (auto-fill columns) */
-
 .gallery-container {
     display: grid;
     /* auto-fill creates as many 250px+ columns as fit; 1fr distributes leftover space */
@@ -10,110 +8,63 @@
     margin: 20px auto;
 }
 
+
 /* Individual pin card */
 .gallery-item {
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    overflow: hidden; /* clips child img corners to match border-radius */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    background-color: var(--color-bg-gallery-item);
+    border-radius: var(--border-radius-md); /* 8px */
+    overflow: hidden; /*clips child img corners to match border-radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+    transition: transform 0.2s ease-in-out; /* smooth hover effect */
+    position: relative; /* Crucial for absolute positioning of the overlay */
+    display: flex; /* Helps to manage height, important when image height is auto */
+    flex-direction: column;
 }
 
-
-/* //TODO: Check which are duplicated values with style.css and decide if it makes sense to consolidate or keep separated */
 .gallery-item img {
     width: 100%;
-    height: 250px; /* fixed height keeps grid uniform; adjust if varying heights needed */
-    object-fit: cover; /* crops image to fill area - may hide parts of image */
-    display: block; /* removes bottom whitespace from inline img */
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Removes default inline spacing */
+    min-height: 150px; /* Ensures a minimum height for the image, preventing layout shifts */ /* TODO: Check if responsive unit can be used */
+    /* TODO: object-fit: cover; ? */
 }
 
-/* Metadata section below image */
-.gallery-item-info {
-    padding: 10px;
-    font-size: 0.9em;
-    color: #555;
-}
-
-.gallery-item-info p {
-    margin: 0 0 5px 0;
-}
-
-.gallery-item-info a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.gallery-item-info a:hover {
-    text-decoration: underline;
-}
-
-
-
-
-
-/* Overlay contains Top Overlay with buttons and counters and Bottom Overlay with profile info and date */
-
+/* Main Overlay Styles */
 .gallery-item-overlay {
-    border: 2px solid fuchsia;
+    
 }
-
-
-
-/* Top Overlay contains buttons and counters that appear on hover */
 
 .gallery-item-top-overlay {
-    border: 2px solid orange;
-    display: flex;
-    background-size: cover;
+    position: absolute; 
+    top: 0;
+    left: 0;
 }
 
-.camera-counter img, .heart-counter img{
-    height: 1rem;
-    width: auto;
-}
-
-
-
-
-/* Bottom Overlay contains profile info and date */
-
-.gallery-item-bottom-overlay {
-    border: 2px solid red;
-    text-align: center;
-}
-
-
-
-
-.gallery-user-photo{
-    display: flex;
-    margin: auto;
-    background-size: cover;
-    background-position: center;
-    height: 4.5rem;
-    width: 4.5rem;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid green;
-}
-
-
-/* Date container (contains download icon + date text) */
-
-.image-date-container {
-    border: 2px solid yellow;
-    display: flex;
-    justify-content: center;
+/* Counter Styling (Camera and Heart) */
+.counter-wrapper {
+    display: flex; 
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-xxs); /* space between icon and count */
 }
 
+/* Left-aligned counter icon - Camera */
+.counter-icon-left {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+/* Right-aligned counter icon - Heart */
+.counter-icon-right {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+/* TODO: Why img.download-icon ? it doesn't work other ways */
 img.download-icon {
-    height: 1.5rem;
-    width: auto;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }
 
-.gallery-image-date {
-    text-align: center
-}

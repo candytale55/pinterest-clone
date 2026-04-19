@@ -78,15 +78,17 @@
 
   /* Background Colors */
   --color-bg-page: var(--color-white);             /* Overall page background, main header background */
-    --color-bg-search-input: var(--color-gray-light);  /* Background for the search input field */
+  --color-bg-gallery-item: var(--color-white);     /* Background for individual pin cards */
+
+  
+  --color-bg-search-input: var(--color-gray-light);  /* Background for the search input field */
   --color-border-search-input: var(--color-gray-light); /* Light border for search input */
   --color-focusable-outline: var(--color-gray-medium);          /* Default navigation links, button text on light background */
-
-
+  
   /* Buttons */
   --color-bg-button-primary: var(--color-black);   /* Main button background (e.g., "Buscar" button, or other primary action) */
   --color-bg-button-primary-hover: var(--color-gray-dark  ); /* Hover state for primary buttons */
-  
+
   --color-bg-button-cta: var(--color-red-primary); /* Call-to-action button (e.g., "Visitar" on pins) */
   --color-bg-button-cta-hover: var(--color-pink-coral);            /* Darker red for CTA hover (slight adjustment from FF0000) */
 
@@ -115,7 +117,7 @@
   
   
   --color-bg-overlay: rgba(0, 0, 0, 0.4);          /* Dark overlay on pin hover */
-  --color-bg-gallery-item: var(--color-white);     /* Background for individual pin cards */
+
 
 
   /* Border Colors */

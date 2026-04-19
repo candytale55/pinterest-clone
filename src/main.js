@@ -140,11 +140,11 @@ function displayImages(images) {
 
     // Camera counter
     const cameraCounter = createCounterElement("./src/assets/images/camera-icon.svg", Math.floor(Math.random() * 1000));
-    cameraCounter.classList.add("camera-counter");
+    cameraCounter.classList.add("camera-counter", "counter-icon-left"); // Add specific class for camera counter and a general class for left-aligned counters
 
     // Heart counter
     const heartCounter = createCounterElement("./src/assets/images/heart-icon.svg", Math.floor(Math.random() * 1000));
-    heartCounter.classList.add("heart-counter");
+    heartCounter.classList.add("heart-counter", "counter-icon-right"); // Add specific class for heart counter and a general class for right-aligned counters
 
     // Visit button (link to Unsplash page for the image)
     const visitButton = document.createElement("a");
@@ -181,7 +181,6 @@ function displayImages(images) {
     
 
     // User Profile Photo (Circular, centered below the image)
-            
     const userProfilePhoto = document.createElement("div");
     userProfilePhoto.classList.add("gallery-user-photo");
     userProfilePhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
@@ -226,18 +225,15 @@ function displayImages(images) {
     imageDateContainer.appendChild(downloadIcon); // Add download icon to the date container
     imageDateContainer.appendChild(imageDate); // Add date text to the date container
 
-
     bottomOverlay.appendChild(imageDateContainer); // Add image creation date to the bottom overlay
 
     /* --- --- --- --- --- */
 
-    // Append the overlay and date to the gallery item
+    // Append the overlay  gallery item
     galleryItem.appendChild(overlay); // Add the top overlay (visit button) to the gallery item
 
-    
-
-    
-    // Get image container into the gallery
+        
+    // Append the gallery item to the gallery
     imageGallery.appendChild(galleryItem);
   });
 
