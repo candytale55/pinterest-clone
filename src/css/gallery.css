@@ -47,3 +47,11 @@
 .gallery-item-info a:hover {
     text-decoration: underline;
 }
+
+
+/* Create the overlay container for buttons and profile info */
+.gallery-item-overlay {
+    border: 2px solid red;
+    text-align: center;
+}
+

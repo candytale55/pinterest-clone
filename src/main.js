@@ -19,21 +19,19 @@ const appLogo = document.getElementById("app-logo");
 
 let currentPage = 1; // 
 const imagesPerPage = 16; //
+let url;
+
 
 /*  //TODO (remove when done): The query="latest" default is just a placeholder that isn't affecting the API call yet. */
 async function fetchImages(query = "latest", page = 1) {
   console.log(`Attempting to get images for query: ${query} on page: ${page}`);
 
-  let url;
-  let isSearch = false; // Flag to track if we're performing a search or fetching general photos
-
-  // TODO: Remove - Left temp for reference
-  /*  const url = `https://api.unsplash.com/photos?client_id=${UNSPLASH_ACCESS_KEY}&page=${page}&per_page=${imagesPerPage}`; */
 
   // Determine which Unsplash API endpoint to use
   if (query.trim() === "") {
     // If the query is empty, fetch general latest photos
     url = `https://api.unsplash.com/photos?client_id=${UNSPLASH_ACCESS_KEY}&page=${page}&per_page=${imagesPerPage}`;
+    // TODO: Remove after testing.
     console.log("Using Unsplash general photos endpoint for initial load or empty search.");
   } else {
     // If there's a search query, use the search endpoint
@@ -42,13 +40,10 @@ async function fetchImages(query = "latest", page = 1) {
   }
 
   try {
-
     const response = await fetch(url);
-
     // Check if the network request was successful, throw an error if not
     if (!response.ok) {
       console.error(`HTTP error! status: ${response.status}`);
-
       // Provide more specific error for 403 (Forbidden)
       if (response.status === 403) {
         console.error("Unsplash API Rate Limit Exceeded or Invalid Key. Please check your key and try again later.");
@@ -57,14 +52,12 @@ async function fetchImages(query = "latest", page = 1) {
     }
 
     const data = await response.json(); // Parse the JSON response
-
-    // IMPORTANT: For /search/photos, the actual images are in data.results
+    // TODO: IMPORTANT: 
+    // For /search/photos, the actual images are in data.results
     // For /photos (general endpoint), the data is directly the array of images.
-
-
     const imagesToReturn = (query.trim() === "") ? data : data.results;
-
     console.log("Received API data:", imagesToReturn);
+
     return imagesToReturn; // Return feched data
 
   } catch (error) {
@@ -72,6 +65,10 @@ async function fetchImages(query = "latest", page = 1) {
     return []; // Return empty array on error
   }
 }
+
+
+
+
 
 function displayImages(images) {
   // Clear existing images before displaying new ones
@@ -85,6 +82,7 @@ function displayImages(images) {
     // TODO: Fix message later
     return;
   }
+
 
   images.forEach(image => {
     // Create container
@@ -100,11 +98,21 @@ function displayImages(images) {
     // Append img to its container
     galleryItem.appendChild(img);
 
+    // Create overlay for photographer's name
+    const overlay = document.createElement("div");
+    overlay.classList.add("gallery-item-overlay");
+    overlay.textContent = image.user.name; // Photographer's name
+    
+
+
+    // Append the overlay to the gallery item
+    galleryItem.appendChild(overlay);
+
     // Get image container into the gallery
     imageGallery.appendChild(galleryItem);
   });
 
-  console.log("Images displayed in the gallery");
+  console.log("Images displayed in the gallery"); // TODO: Remove after testing
 }
 
 
@@ -146,7 +154,7 @@ searchBox.addEventListener("keydown", async (e) => {
 
       } else {
 
-        console.log("Search is empty, fetching latest photos");
+        console.log("Search is empty, fetching latest photos"); // TODO: REMOVE after testing
         currentPage = 1; // Also reset page for general photos
         const latestPhotos = await fetchImages("latest", currentPage);
         displayImages(latestPhotos);
@@ -161,7 +169,7 @@ searchBox.addEventListener("keydown", async (e) => {
 // App logo (reset to initial state)
 appLogo.addEventListener("click", async (e) => {
   e.preventDefault(); // Prevent default link behavior
-  console.log("Logo clicked. Resetting to initial state (latest photos)")
+  console.log("Logo clicked. Resetting to initial state (latest photos)") // TODO: REMOVE after testing
 
   if (UNSPLASH_ACCESS_KEY) {
     currentPage = 1; // Reset page for initial load
