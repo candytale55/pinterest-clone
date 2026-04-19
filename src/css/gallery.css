@@ -31,6 +31,7 @@
 
 /* Main Overlay Styles */
 .gallery-item-overlay {
+    border: 2px solid red; /* TODO: Temporary red border for debugging */
     
 }
 
@@ -45,20 +46,50 @@
     display: flex; 
     align-items: center;
     gap: var(--spacing-xxs); /* space between icon and count */
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    padding: var(--spacing-xxs);
 }
 
 /* Left-aligned counter icon - Camera */
 .counter-icon-left {
-    width: 16px;
-    height: 16px;
+    width: 2rem;
+    height: 2rem;
     object-fit: contain;
 }
 
 /* Right-aligned counter icon - Heart */
 .counter-icon-right {
-    width: 16px;
-    height: 16px;
+    width: 2rem;
+    height: 2rem;
     object-fit: contain;
+}
+
+
+/* Bottom Overlay contains profile info and date */
+.gallery-item-bottom-overlay {
+   text-align: center;
+}
+
+.gallery-user-photo{
+    display: flex;
+    margin: auto;
+    background-size: cover;
+    background-position: center;
+    height: 4.5rem;
+    width: 4.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid green;
+}
+
+/* Date container (contains download icon + date text) */
+
+.image-date-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
 }
 
 /* TODO: Why img.download-icon ? it doesn't work other ways */
