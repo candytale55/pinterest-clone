@@ -26,11 +26,28 @@
 .btn-cta {
   background-color: var(--color-bg-button-cta);
   color: var(--color-white);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .btn-cta:hover,
 .btn-cta:focus {
   background-color: var(--color-bg-button-cta-hover);
   color: var(--color-white);
+}
+
+/* Button btn-visit is used for the visit button in the gallery overlay */
+.btn-visit {
+    position: absolute; 
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
+    pointer-events: none; /* Prevent interaction when hidden */
+}
+
+.gallery-item:hover .btn-visit, 
+.gallery-item .btn-visit:focus {
+    opacity: 1; /* Show the button on hover/focus */
+    pointer-events: auto; /* Allow interaction when visible */
 }

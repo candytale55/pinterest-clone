@@ -1,3 +1,5 @@
+
+/* Gallery Container (main) */
 .gallery-container {
     display: grid;
     /* auto-fill creates as many 250px+ columns as fit; 1fr distributes leftover space */
@@ -23,22 +25,36 @@
 
 .gallery-item img {
     width: 100%;
-    height: auto; /* Maintains aspect ratio */
+    height: auto; /* Allow dynamic image heights */ /* TODO: Probably needs to be adjusted for visual consistency - horizontal and vertical fixed */
     display: block; /* Removes default inline spacing */
-    min-height: 150px; /* Ensures a minimum height for the image, preventing layout shifts */ /* TODO: Check if responsive unit can be used */
-    /* TODO: object-fit: cover; ? */
+    min-height: 150px; /* Ensures a minimum height for the image, preventing layout shifts */ /* TODO: Check if responsive unit can be used instead */
+
+    /* TODO: Old values removed - Left for reference */
+    /* height: 250px; */ /* fixed height keeps grid uniform; adjust if varying heights needed */
+    /* width: 100%; */
+    /* object-fit: cover; */ /* Ensures the image covers the area without distortion */
+    /* TODO - End of old values - Remove after review */
 }
 
 /* Main Overlay Styles */
 .gallery-item-overlay {
     border: 2px solid red; /* TODO: Temporary red border for debugging */
-    
+    position: absolute; 
+    top: 0;
+    left: 0;   
+    width: 100%;
+    height: 100%;
+
 }
 
 .gallery-item-top-overlay {
-    position: absolute; 
-    top: 0;
-    left: 0;
+    display: flex;
+    justify-content: flex-end; /* Aligns the visit button to the top-right corner */
+    align-items: center;
+    gap: var(--spacing-xs); /* space between visit button and counters */
+    position: relative; /* For absolute positioning of visit button */
+    width: 100%;
+    height: 250px; /* TODO: Match the fixed height of the image for consistent overlay coverage */
 }
 
 /* Counter Styling (Camera and Heart) */
@@ -98,4 +114,5 @@ img.download-icon {
     height: 16px;
     object-fit: contain;
 }
+
 

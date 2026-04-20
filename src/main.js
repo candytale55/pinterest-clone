@@ -151,7 +151,7 @@ function displayImages(images) {
     visitButton.href = image.links.html; // Link to the image's Unsplash page
     visitButton.target = "_blank"; // Open in new tab
     visitButton.textContent = "Visitar"; // Button text
-    visitButton.classList.add("btn", "btn-pill", "btn-cta"); // Add button classes for styling
+    visitButton.classList.add("btn", "btn-pill", "btn-cta", "btn-visit"); // Add button classes for styling
     visitButton.setAttribute("aria-label", `Visit Unsplash page for image by ${image.user.name}`); // Accessibility label
 
     // Append counters to the top overlay
