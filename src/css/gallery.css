@@ -27,7 +27,7 @@
     width: 100%;
     height: auto;  /* Allow dynamic image heights */ /* TODO: Probably needs to be adjusted for visual consistency - horizontal and vertical fixed */
     display: block; /* Removes default inline spacing */
-    min-height: 150px; /* Ensures a minimum height for the image, preventing layout shifts */ /* TODO: Check if responsive unit can be used instead */
+    min-height: 10rem; /* Ensures a minimum height for the image, preventing layout shifts */ 
 
     /* TODO: Old values removed - Left for reference */
     /* height: 250px; */ /* fixed height keeps grid uniform; adjust if varying heights needed */
@@ -38,7 +38,6 @@
 
 /* Main Overlay Styles */
 .gallery-item-overlay {
-    border: 2px solid red; /* TODO: Temporary red border for debugging */
     position: absolute; 
     top: 0;
     left: 0;   
@@ -54,7 +53,6 @@
     gap: var(--spacing-xs); /* space between visit button and counters */
     position: relative; /* For absolute positioning of visit button */
     width: 100%;
-    height: 250px; /* TODO: Match the fixed height of the image for consistent overlay coverage */
     padding-inline: var(--spacing-sm); /* horizontal padding */
     padding-block: var(--spacing-sm); /* vertical padding */
 }
@@ -64,18 +62,19 @@
 .counter-wrapper {
     display: flex; 
     align-items: center;
-    gap: var(--spacing-xxs); /* space between icon and count */
+    /* gap: var(--spacing-xxs); */ /* space between icon and count */
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    padding: var(--spacing-xxs);
+    padding-inline: var(--spacing-xxs);
+    padding-block: var(--spacing-xs);
     font-size: var(--font-size-sm);
     z-index: 1; /* Ensure they are above other overlay content */
 }
 
-/* TODO: make them clickable links */
+/* TODO: make them clickable links? - if not remove pointer events*/
 .counter-icon {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     object-fit: contain;
     opacity: 0; /* Initially hidden */
     transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
@@ -105,26 +104,40 @@
     margin-bottom: auto; /* Align to top */
 }
 
-
-
-
-
-
 /* Bottom Overlay contains profile info and date */
 .gallery-item-bottom-overlay {
-   text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    gap: var(--spacing-xs); /* Space between profile and date container */
 }
 
 .gallery-user-photo{
-    display: flex;
-    margin: auto;
-    background-size: cover;
-    background-position: center;
     height: 4.5rem;
     width: 4.5rem;
     object-fit: cover;
     border-radius: 50%;
-    border: 5px solid green;
+    border: 4px solid green; /* TODO: In variables, there are a number of color options. When the design is finalized, the green should be replaced by those colors so that the border color matches the design (changing colors) */
+}
+
+
+
+/* USER INFO SECTION (BOTTOM OVERLAY) */
+
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    text-align: center; /* Center text */
+}
+
+
+.user-profile-name {
+    margin: 0;
+    white-space: nowrap; /* Prevents the name from breaking into multiple lines */
+    overflow: hidden; /* Hides overflow text */
+    text-overflow: ellipsis; /* Adds "..." for overflow text */
+    max-width: 120px; /* Adjust based on design needs */
 }
 
 /* Date container (contains download icon + date text) */
@@ -133,7 +146,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-xs); /* Space between download icon and date text */
 }
 
 /* TODO: Why img.download-icon ? it doesn't work other ways */

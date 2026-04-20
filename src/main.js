@@ -176,6 +176,7 @@ function displayImages(images) {
     userProfileLink.target = "_blank"; // Open in new tab
     userProfileLink.rel = "noopener noreferrer"; // Security best practice for external links
     userProfileLink.setAttribute("aria-label", `Visit Unsplash profile of photographer ${image.user.name}`); // Accessibility label for the link
+    userProfileLink.classList.add("user-profile-link"); // Add class for styling (if needed)
 
     bottomOverlay.appendChild(userProfileLink); // Add the user profile link to the bottom overlay
     
