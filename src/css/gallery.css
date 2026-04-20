@@ -25,7 +25,7 @@
 
 .gallery-item img {
     width: 100%;
-    height: auto; /* Allow dynamic image heights */ /* TODO: Probably needs to be adjusted for visual consistency - horizontal and vertical fixed */
+    height: auto;  /* Allow dynamic image heights */ /* TODO: Probably needs to be adjusted for visual consistency - horizontal and vertical fixed */
     display: block; /* Removes default inline spacing */
     min-height: 150px; /* Ensures a minimum height for the image, preventing layout shifts */ /* TODO: Check if responsive unit can be used instead */
 

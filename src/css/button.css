@@ -46,8 +46,10 @@
     pointer-events: none; /* Prevent interaction when hidden */
 }
 
+/* Show visit button only on hover of the entire item, or if focused inside */
+/* TODO: Make sure you get the rules */
 .gallery-item:hover .btn-visit, 
-.gallery-item .btn-visit:focus {
+.gallery-item:focus .btn-visit {
     opacity: 1; /* Show the button on hover/focus */
     pointer-events: auto; /* Allow interaction when visible */
 }
