@@ -117,17 +117,13 @@
     margin-bottom: auto; /* Align to top */
 }
 
-
-
-
-
-
 /* Bottom Overlay contains profile info and date */
 .gallery-item-bottom-info-section {    
     display: flex;
     flex-direction: column;
     align-items: center; /* Center horizontally */
     text-align: center; /* Center text */
+    padding-top: calc(var(--spacing-sm) + 2.25rem); /* Add top padding to accommodate the overlapping user profile photo (2.25rem is half of the profile photo height) */
     gap: var(--spacing-xs); /* Space between profile and date container */
     position: relative; /* Needed for absolute positioning of the user profile link */
     z-index: 0; /* Ensure it's below the counters and visit button */
@@ -174,7 +170,7 @@
 
 
 .user-profile-name {
-    margin: 0;
+    margin: 0 0 (var(--spacing-xs)) 0; /* Small space below the name */
     white-space: nowrap; /* Prevents the name from breaking into multiple lines */
     overflow: hidden; /* Hides overflow text */
     text-overflow: ellipsis; /* Adds "..." for overflow text */
