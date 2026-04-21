@@ -37,13 +37,14 @@
 
 /* Button btn-visit is used for the visit button in the gallery overlay */
 .btn-visit {
-    position: absolute; 
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for perfect centering */
-    opacity: 0; /* Start hidden */
-    transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
-    pointer-events: none; /* Prevent interaction when hidden */
+  position: absolute; /* Positioned relative to the gallery item */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the button */
+  background-color: var(--color-bg-button-cta);
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
+  pointer-events: none; /* Prevent interaction when hidden */
 }
 
 /* Show visit button only on hover of the entire item, or if focused inside */

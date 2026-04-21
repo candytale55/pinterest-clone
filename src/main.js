@@ -118,7 +118,7 @@ function displayImages(images) {
 
     const galleryImageWrapper = document.createElement("div");
     galleryImageWrapper.classList.add("gallery-image-wrapper"); // New wrapper for the image and its overlay
-    
+
     // Create <img> element and append to the gallery item wrapper
     const img = document.createElement("img");
     img.src = image.urls.small; // Preview size
@@ -166,15 +166,14 @@ function displayImages(images) {
     topOverlay.appendChild(visitButton); // Add visit button to the top overlay
 
     /* Add top overlay to the image overlay (main container for all overlay elements) */
-   imageOverlay.appendChild(topOverlay);
+    imageOverlay.appendChild(topOverlay);
 
-    
+
     /* --- --- --- --- --- */
 
-    
-    // Append the overlay  gallery item
-    galleryItem.appendChild(imageOverlay); // Add the top overlay (visit button) to the gallery item
 
+    // Keep the overlay inside the image wrapper so it sits above the image.
+    galleryImageWrapper.appendChild(imageOverlay);
     galleryItem.appendChild(galleryImageWrapper); // Add the wrapper to the gallery item
 
 
@@ -194,7 +193,7 @@ function displayImages(images) {
     userProfileLink.classList.add("user-profile-link"); // Add class for styling (if needed)
 
     galleryInfoSection.appendChild(userProfileLink); // Add the user profile link to the bottom overlay
-    
+
 
     // User Profile Photo (Circular, centered below the image)
     const userProfilePhoto = document.createElement("div");
@@ -228,12 +227,12 @@ function displayImages(images) {
     downloadIcon.ariaHidden = "true"; // Hide from screen readers
     downloadIcon.classList.add("download-icon");
 
-  
+
     /* Image date - formatted */
     const imageDate = document.createElement("span");
     const dateObj = new Date(image.created_at);
-    imageDate.textContent = dateObj.toLocaleDateString(); 
-    imageDate.classList.add("gallery-image-date"); 
+    imageDate.textContent = dateObj.toLocaleDateString();
+    imageDate.classList.add("gallery-image-date");
 
     imageDateContainer.appendChild(downloadIcon); // Add download icon to the date container
     imageDateContainer.appendChild(imageDate); // Add date text to the date container
@@ -249,7 +248,7 @@ function displayImages(images) {
     galleryInfoSection.appendChild(imageDateContainer); // Add date to the bottom overlay
 
     /* --- */
-    
+
 
 
     /* Append the user info section to the gallery item */
@@ -259,7 +258,7 @@ function displayImages(images) {
 
     // Append the gallery item to the gallery
     imageGallery.appendChild(galleryItem);
-  
+
   });
 
   console.log("Images displayed in the gallery"); // TODO: Remove after testing
@@ -294,13 +293,13 @@ searchBox.addEventListener("keydown", async (e) => {
       const query = searchBox.value.trim(); // Get the value from the search input, remove whitespace
 
       if (query) { // Only search if the query is not empty
-      
+
         console.log(`Performing search for: ${query}`);
         currentPage = 1;
         // Reset currentPage to 1 (important for future pagination)
         const searchResults = await fetchImages(query, currentPage);
         displayImages(searchResults); // Display the new search results
-      
+
 
       } else {
 
@@ -314,7 +313,7 @@ searchBox.addEventListener("keydown", async (e) => {
       console.log("Cannot perform search: Unsplash Access Key is missing.");
     }
   }
-  });
+});
 
 // App logo (reset to initial state)
 appLogo.addEventListener("click", async (e) => {
