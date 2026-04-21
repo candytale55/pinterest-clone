@@ -123,12 +123,27 @@
 
 
 /* Bottom Overlay contains profile info and date */
-.gallery-item-bottom-info-section {
+.gallery-item-bottom-info-section {    
     display: flex;
     flex-direction: column;
     align-items: center; /* Center horizontally */
+    text-align: center; /* Center text */
     gap: var(--spacing-xs); /* Space between profile and date container */
+    position: relative; /* Needed for absolute positioning of the user profile link */
+    z-index: 0; /* Ensure it's below the counters and visit button */
+    
 }
+
+/* Overlapping User Profile Photo */
+.user-profile-link {
+    position: absolute; /* Position relative to .gallery-item-info-section (bottom overlay) */
+    top: -2.25rem; /* Half of the profile photo height to overlap */
+    left: 50%;  /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    z-index: 1; /* Ensure it appears above the bottom overlay */
+}
+
+
 
 .gallery-user-photo{
     height: 4.5rem;
