@@ -31,12 +31,6 @@
   /* ==================================== */
 
 
-  /* TODO: Remove the ones not used */
-  --color-gray-50: #F2F2F2; /* Very light, almost white */
-  --color-gray-100: #ECECEC; /* Slightly darker */
-  --color-gray-150: #E7E7E7; /* Even darker, good for subtle backgrounds */
-  --color-gray-250: #DCDCDC; /* NEW: A slightly darker gray for hover effects */
-
   /* === RED / PINK === */
   --color-red-primary: #FF0000;
   --color-pink-coral: #FF5A79;
@@ -52,11 +46,6 @@
   /* === BLUE / CYAN === */
   --color-cyan-light: #98EBF0;
   --color-blue-electric: #0A22F8;
-
-
-  /* ==================================== */
-  /* ===== COLORS FROM FIGMA PALETTE ==== */
-  /* ==================================== */
 
   /* === NEUTRALS === */
   --color-white: #F0F0F0;
@@ -93,37 +82,4 @@
   --color-bg-button-cta: var(--color-red-primary); /* Call-to-action button (e.g., "Visitar" on pins) */
   --color-bg-button-cta-hover: var(--color-pink-coral);            /* Darker red for CTA hover (slight adjustment from FF0000) */
 
-
-
-
-
-
-/* TODO: Delete unused colors */
-  /* Text Colors */
-  --color-text-link: var(--color-gray-medium);          /* Default navigation links, button text on light background */
-  --color-text-link-hover: var(--color-black);    /* Hover state for links (could be `var(--color-red-primary)` or just `var(--color-black)` for nav) */
-  --color-text-button-on-dark: var(--color-white); /* Text on dark buttons (e.g., "Visitar" on red) */
-  --color-text-button-on-red: var(--color-white);  /* Text on red buttons */
-
-  
-  
-  /* Background Colors */
-  --color-bg-section: var(--color-white);          /* For sections that might have a distinct background */
-  --color-bg-search-button: var(--color-gray-light); /* Background for the small search button */
-  --color-bg-nav-active: var(--color-black);       /* Background for active navigation item (e.g., "Inicio" pill) */
-  --color-bg-nav-item-hover: var(--color-gray-light); /* Background for navigation item on hover */
-
-  --color-bg-button-icon: var(--color-gray-light);   /* Background for notification, message, profile icons */
-
-  
-  
-  --color-bg-overlay: rgba(0, 0, 0, 0.4);          /* Dark overlay on pin hover */
-
-
-
-  /* Border Colors */
-
-  --color-border-medium: var(--color-gray-medium);    /* For more prominent borders if needed */
-  --color-border-avatar-green: var(--color-green-mint); /* Green border for avatars */
-  --color-border-avatar-pink: var(--color-pink-coral);  /* Pink border for avatars */
 }
