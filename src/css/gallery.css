@@ -23,6 +23,13 @@
     flex-direction: column;
 }
 
+
+/* Create main gallery-image-wrapper that will contain the image and its overlay (so that the overlay can be positioned absolutely on top of the image without affecting the layout of the gallery item) */
+.gallery-image-wrapper {
+     
+}
+
+
 .gallery-item img {
     width: 100%;
     height: auto;  /* Allow dynamic image heights */ /* TODO: Probably needs to be adjusted for visual consistency - horizontal and vertical fixed */
@@ -36,8 +43,8 @@
     /* TODO - End of old values - Remove after review */
 }
 
-/* Main Overlay Styles */
-.gallery-item-overlay {
+/* Overlay Styles to add the counters and visit button over the image*/
+.gallery-item-image-overlay {
     position: absolute; 
     top: 0;
     left: 0;   
@@ -47,12 +54,12 @@
 }
 
 .gallery-item-top-overlay {
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: flex-end; /* Aligns the visit button to the top-right corner */
     align-items: center;
     gap: var(--spacing-xs); /* space between visit button and counters */
-    position: relative; /* For absolute positioning of visit button */
-    width: 100%;
     padding-inline: var(--spacing-sm); /* horizontal padding */
     padding-block: var(--spacing-sm); /* vertical padding */
 }
@@ -104,8 +111,13 @@
     margin-bottom: auto; /* Align to top */
 }
 
+
+
+
+
+
 /* Bottom Overlay contains profile info and date */
-.gallery-item-bottom-overlay {
+.gallery-item-bottom-info-section {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center horizontally */

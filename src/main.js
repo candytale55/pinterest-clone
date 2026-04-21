@@ -90,12 +90,9 @@ function createCounterElement(iconPath, count) {
   return counterWrapper;
 }
 
-
-
-
 function displayImages(images) {
   // Clear existing images before displaying new ones
-  // TODO: Important later on when adding search, load more, etc.
+  // TODO: Important later on when adding search, load more, etc. PLEASE EXPLAIN WHY THIS IS IMPORTANT AND HOW IT WORKS (removing old images before adding new ones)
   while (imageGallery.firstChild) {
     imageGallery.removeChild(imageGallery.firstChild);
   }
@@ -108,32 +105,39 @@ function displayImages(images) {
 
 
   images.forEach(image => {
-    // Create container
+
+    // --- 1. Create main gallery-item container ---
+
+    // Each image post unit will be a gallery-item, containing the image and all its associated information (counters, photographer info, etc.)
     const galleryItem = document.createElement("div");
     galleryItem.classList.add("gallery-item");
 
-    // Create <img> element
+    // --- 2. Create gallery-image-wrapper, <img> element and overlay ---
+
+    // This will contain the image and its overlay (so that the overlay can be positioned absolutely on top of the image without affecting the layout of the gallery item)
+
+    const galleryImageWrapper = document.createElement("div");
+    galleryImageWrapper.classList.add("gallery-image-wrapper"); // New wrapper for the image and its overlay
+    
+    // Create <img> element and append to the gallery item wrapper
     const img = document.createElement("img");
     img.src = image.urls.small; // Preview size
     img.alt = image.alt_description || "Unsplash Image"; // Fallback alt text
     img.loading = "lazy"; // for performance improvement (lazy-loading)
-
-    // Append img to its container
-    galleryItem.appendChild(img);
-
-
-
-    // Main overlay container for all elements 
-    const overlay = document.createElement("div");
-    overlay.classList.add("gallery-item-overlay");
-
+    galleryImageWrapper.appendChild(img);
 
     /* --- --- --- --- --- */
 
-    //  Create the TOP section of the overlay for all elements that appear on hover (contains the "Visit" button and counters)
+    // Main overlay container for all elements 
+    // Purpose: This is the main container for everything that appears over the image when you hover. Its job is to cover the entire image area with a semi-transparent background and manage the overall show/hide (opacity, pointer-events) on hover.
+    const imageOverlay = document.createElement("div");
+    imageOverlay.classList.add("gallery-item-image-overlay");
+
+
+    //  Create the TOP section of the overlay
+    // This is a sub-container within itemOverlay specifically designed to hold and lay out the elements that need to appear at the top of the image (the camera counter, heart counter, and the "Visitar" button).
     const topOverlay = document.createElement("div");
     topOverlay.classList.add("gallery-item-top-overlay");
-
 
     // Create counters. Random numbers for now .
     // TODO: Use views from API for one of the counters later.
@@ -141,10 +145,12 @@ function displayImages(images) {
     // Camera counter
     const cameraCounter = createCounterElement("./src/assets/images/camera-icon.svg", Math.floor(Math.random() * 1000));
     cameraCounter.classList.add("camera-counter", "counter-icon-left", "counter-icon"); // Add specific class for camera counter and a general class for left-aligned counters
+    /* //TODO: Maybe remove some of the classes */
 
     // Heart counter
     const heartCounter = createCounterElement("./src/assets/images/heart-icon.svg", Math.floor(Math.random() * 1000));
     heartCounter.classList.add("heart-counter", "counter-icon-right", "counter-icon"); // Add specific class for heart counter and a general class for right-aligned counters
+    /* //TODO: Maybe remove some of the classes */
 
     // Visit button (link to Unsplash page for the image)
     const visitButton = document.createElement("a");
@@ -159,16 +165,25 @@ function displayImages(images) {
     topOverlay.appendChild(heartCounter);
     topOverlay.appendChild(visitButton); // Add visit button to the top overlay
 
-    // Append top section to main overlay
-    overlay.appendChild(topOverlay);
+    /* Add top overlay to the image overlay (main container for all overlay elements) */
+   imageOverlay.appendChild(topOverlay);
+
+    
+    /* --- --- --- --- --- */
+
+    
+    // Append the overlay  gallery item
+    galleryItem.appendChild(imageOverlay); // Add the top overlay (visit button) to the gallery item
+
+    galleryItem.appendChild(galleryImageWrapper); // Add the wrapper to the gallery item
+
 
     /* --- --- --- --- --- */
 
-    // Create the BOTTOM section of the overlay for all elements that appear at the bottom of the image (photographer's name, profile picture and image creation date)
-    const bottomOverlay = document.createElement("div");
-    bottomOverlay.classList.add("gallery-item-bottom-overlay");
-
-    overlay.appendChild(bottomOverlay); // Add bottom overlay to main overlay
+    // Create the BOTTOM section
+    // This will contain the user profile and date information, and sits below the image
+    const galleryInfoSection = document.createElement("div");
+    galleryInfoSection.classList.add("gallery-item-bottom-info-section");
 
     // User Profile Link (wraps the profile picture so that if you click on the profile picture, it takes you to the photographer's Unsplash profile)
     const userProfileLink = document.createElement("a");
@@ -178,7 +193,7 @@ function displayImages(images) {
     userProfileLink.setAttribute("aria-label", `Visit Unsplash profile of photographer ${image.user.name}`); // Accessibility label for the link
     userProfileLink.classList.add("user-profile-link"); // Add class for styling (if needed)
 
-    bottomOverlay.appendChild(userProfileLink); // Add the user profile link to the bottom overlay
+    galleryInfoSection.appendChild(userProfileLink); // Add the user profile link to the bottom overlay
     
 
     // User Profile Photo (Circular, centered below the image)
@@ -190,8 +205,7 @@ function displayImages(images) {
 
     /* --- */
 
-
-    /* Contains all user information */
+    /* User Info Container (name and date) */
     const userInfoContainer = document.createElement("div");
     userInfoContainer.classList.add("user-info-container");
 
@@ -200,8 +214,6 @@ function displayImages(images) {
     userProfileName.textContent = image.user.name; // Photographer's name
     userProfileName.setAttribute("aria-label", `Photographer: ${image.user.name}`); // Accessibility label
 
-    bottomOverlay.appendChild(userProfileName); // Add photographer's name to the bottom overlay
-    
     /* --- */
 
     // Date container (contains download icon + date text)
@@ -226,16 +238,28 @@ function displayImages(images) {
     imageDateContainer.appendChild(downloadIcon); // Add download icon to the date container
     imageDateContainer.appendChild(imageDate); // Add date text to the date container
 
-    bottomOverlay.appendChild(imageDateContainer); // Add image creation date to the bottom overlay
+    /* --- */
 
-    /* --- --- --- --- --- */
+    /* Append elements to the user info container galleryInfoSection */
 
-    // Append the overlay  gallery item
-    galleryItem.appendChild(overlay); // Add the top overlay (visit button) to the gallery item
+    galleryInfoSection.appendChild(userProfileLink); // Add the user profile link (with photo) to the info section
 
-        
+    galleryInfoSection.appendChild(userProfileName); // Add photographer's name to the bottom overlay
+
+    galleryInfoSection.appendChild(imageDateContainer); // Add date to the bottom overlay
+
+    /* --- */
+    
+
+
+    /* Append the user info section to the gallery item */
+    galleryItem.appendChild(galleryInfoSection); // Add the bottom info section to the gallery item
+
+    /* --- */
+
     // Append the gallery item to the gallery
     imageGallery.appendChild(galleryItem);
+  
   });
 
   console.log("Images displayed in the gallery"); // TODO: Remove after testing
