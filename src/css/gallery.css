@@ -73,32 +73,40 @@
 /* Counters' Styling  */
 /* Camera and Heart container */
 .counter-wrapper {
-    display: flex; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    /* gap: var(--spacing-xxs); */ /* space between icon and count */
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    padding-inline: var(--spacing-xxs);
-    padding-block: var(--spacing-xs);
-    font-size: var(--font-size-sm);
-    z-index: 1; /* Ensure they are above other overlay content */
+    width: 5rem;
+    height: 5rem;
+    opacity: 0; /* Hide the whole counter unit by default */
+    transition: opacity 0.2s ease-in-out;
 }
 
 /* TODO: make them clickable links? - if not remove pointer events*/
 .counter-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1rem;
+    height: 1rem;
     object-fit: contain;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
     /* pointer-events: none; */ /* Prevent interaction when hidden */
 }
 
-.gallery-item:hover .counter-icon,
-.gallery-item:focus .counter-icon {
-    opacity: 1; /* Show counters on hover/focus */
+.gallery-item:hover .counter-wrapper,
+.gallery-item:focus-within .counter-wrapper {
+    opacity: 1; /* Show full counter unit on hover/focus */
     /* pointer-events: auto; */ /* Allow interaction when visible */
 }
+
+
+.counter-text {
+    margin-top: 0;
+    line-height: 1;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+}
+
 
 
 /* Specific positioning for camera/heart counters */

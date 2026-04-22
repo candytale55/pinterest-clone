@@ -81,12 +81,12 @@ function createCounterElement(iconPath, count) {
   icon.ariaHidden = "true"; // Hide from screen readers
   icon.classList.add("counter-icon");
 
-  const countSpan = document.createElement("span");
-  countSpan.textContent = count;
-  countSpan.classList.add("counter-text");
+  const counterText = document.createElement("p");
+  counterText.textContent = count;
+  counterText.classList.add("counter-text");
 
   counterWrapper.appendChild(icon);
-  counterWrapper.appendChild(countSpan);
+  counterWrapper.appendChild(counterText);
   return counterWrapper;
 }
 
