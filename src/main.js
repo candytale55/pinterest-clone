@@ -20,6 +20,7 @@ const appLogo = document.getElementById("app-logo");
 let currentPage = 1; // 
 const imagesPerPage = 16; //
 let url;
+const gridAutoRowsHeight = 10; // Corresponds to grid-auto-rows in gallery.css
 
 
 /*  //TODO (remove when done): The query="latest" default is just a placeholder that isn't affecting the API call yet. */
@@ -103,6 +104,8 @@ function displayImages(images) {
     return;
   }
 
+  // Create a document fragment to append all items, then add to DOM once
+  const fragment = document.createDocumentFragment();
 
   images.forEach(image => {
 
@@ -124,6 +127,9 @@ function displayImages(images) {
     img.src = image.urls.small; // Preview size
     img.alt = image.alt_description || "Unsplash Image"; // Fallback alt text
     img.loading = "lazy"; // for performance improvement (lazy-loading)
+    img.addEventListener("load", () => {
+      adjustGalleryItemRowSpans();
+    });
     galleryImageWrapper.appendChild(img);
 
     /* --- --- --- --- --- */
@@ -256,14 +262,34 @@ function displayImages(images) {
 
     /* --- */
 
-    // Append the gallery item to the gallery
-    imageGallery.appendChild(galleryItem);
+    // Append the gallery item to the fragment instead of directly to imageGallery
+    fragment.appendChild(galleryItem);
 
   });
+
+  // Append all gallery items to the DOM at once for better performance
+  imageGallery.appendChild(fragment);
+
+  // New: After all images are in the DOM, adjust their row spans
+  adjustGalleryItemRowSpans();
 
   console.log("Images displayed in the gallery"); // TODO: Remove after testing
 }
 
+// New function to adjust row spans for masonry layout
+function adjustGalleryItemRowSpans() {
+  window.setTimeout(() => {
+    const galleryItems = document.querySelectorAll(".gallery-item");
+
+    galleryItems.forEach((item) => {
+      const itemHeight = item.offsetHeight;
+      const rowSpan = Math.ceil(itemHeight / gridAutoRowsHeight);
+      item.style.gridRowEnd = `span ${rowSpan}`;
+    });
+
+    console.log("Adjusted gallery item row spans for masonry layout"); // TODO: Remove after testing
+  }, 100);
+}
 
 
 // Call fetchImages on page load to display initial set of images
@@ -278,6 +304,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Cannot fetch images: Unsplash API Key is missing")
   }
 });
+
+/* ======================= */
+/* ====  Dynamic Grid ==== */
+/* ======================= */
+
+
+
+
 
 
 /* ======================= */

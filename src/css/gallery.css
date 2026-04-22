@@ -3,23 +3,31 @@
 .gallery-container {
     display: grid;
     /* auto-fill creates as many 250px+ columns as fit; 1fr distributes leftover space */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: var(--spacing-sm);
+    padding: 20px; /* space around the gallery */
     max-width: 1200px;
     margin: 20px auto;
+
+    grid-auto-rows: 10px; /* Base row height for masonry */
+    /* Each row is 10px high, items will span multiples of this */
+    align-items: start; /* Align items to the top of their grid area */
 }
 
 
 /* Individual pin card */
 .gallery-item {
     background-color: var(--color-bg-gallery-item);
+    border-radius: var(--border-radius-md);
     overflow: hidden; /*clips child img corners to match border-radius */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
     transition: transform 0.2s ease-in-out; /* smooth hover effect */
     position: relative; /* Needed for absolute positioning of the overlay */
     display: flex; /* Helps to manage height, important when image height is auto */
     flex-direction: column;
+
+        /* Important for Masonry: Set grid-row-end dynamically via JS */
+    /* We'll set this in JavaScript based on content height */
 }
 
 
@@ -28,16 +36,15 @@
     position: relative; /* Needed for absolute positioning of the overlay */
     width: 100%;
     /* height is determined by the image inside, which allows for dynamic heights based on image aspect ratio */
-    border-radius: var(--border-radius-md); /* Match the gallery item border radius */
-    overflow: hidden; /* Ensure the image and overlay are clipped to the rounded corners */
+    /* TODO: border-radius: var(--border-radius-md) and    overflow: hidden; - moved to gallery-item */
 }
 
 
 .gallery-item img {
     width: 100%;
-    height: auto;  /* Allow dynamic image heights */ /* TODO: Probably needs to be adjusted for visual consistency - horizontal and vertical fixed */
+    height: auto;  /* Allow dynamic image heights */
     display: block; /* Removes default inline spacing */
-    min-height: 10rem; /* Ensures a minimum height for the image, preventing layout shifts */ 
+    
 
     /* TODO: Old values removed - Left for reference */
     /* height: 250px;  /* fixed height keeps grid uniform; adjust if varying heights needed */
