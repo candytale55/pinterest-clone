@@ -4,13 +4,14 @@
     display: grid;
     /* auto-fill creates as many 250px+ columns as fit; 1fr distributes leftover space */
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: var(--spacing-sm);
+    gap: 15px; /* space between gallery items */
     padding: 20px; /* space around the gallery */
     max-width: 1200px;
     margin: 20px auto;
 
     grid-auto-rows: 10px; /* Base row height for masonry */
     /* Each row is 10px high, items will span multiples of this */
+    grid-auto-flow: dense; /* Fill in gaps in the grid for a tighter masonry layout */
     align-items: start; /* Align items to the top of their grid area */
 }
 
@@ -26,7 +27,7 @@
     display: flex; /* Helps to manage height, important when image height is auto */
     flex-direction: column;
 
-        /* Important for Masonry: Set grid-row-end dynamically via JS */
+    /* Important for Masonry: Set grid-row-end dynamically via JS */
     /* We'll set this in JavaScript based on content height */
 }
 
@@ -44,7 +45,7 @@
     width: 100%;
     height: auto;  /* Allow dynamic image heights */
     display: block; /* Removes default inline spacing */
-    
+    border-radius: var(--border-radius-md);
 
     /* TODO: Old values removed - Left for reference */
     /* height: 250px;  /* fixed height keeps grid uniform; adjust if varying heights needed */
