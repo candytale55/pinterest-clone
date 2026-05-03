@@ -23,6 +23,30 @@ let url;
 const gridAutoRowsHeight = 10; // Corresponds to grid-auto-rows in gallery.css
 
 
+
+
+// Array of colors for user profile photo borders
+const borderColors = [
+  "var(--color-green-lime)",
+  "var(--color-blue)",
+  "var(--color-cyan)",
+  "var(--color-green-dark)",
+  "var(--color-fuchsia)",
+  "var(--color-orange)",
+  "var(--color-cyan)",
+  "var(--color-pink-lilac)",
+  "var(--color-green-mint)",
+  "var(--color-green-teal)",
+  "var(--color-red-primary)",
+  "var(--color-fuchsia)",
+  "var(--color-pink-coral)"
+];
+let currentColorIndex = 0;
+
+
+
+
+
 /*  //TODO (remove when done): The query="latest" default is just a placeholder that isn't affecting the API call yet. */
 async function fetchImages(query = "latest", page = 1) {
   console.log(`Attempting to get images for query: ${query} on page: ${page}`);
@@ -206,6 +230,10 @@ function displayImages(images) {
     userProfilePhoto.classList.add("gallery-user-photo");
     userProfilePhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`; // Photographer's profile picture
 
+    // Apply rotating border color from the array for each profile photo
+    userProfilePhoto.style.borderColor = borderColors[currentColorIndex];
+    currentColorIndex = (currentColorIndex + 1) % borderColors.length; // Move to the next color, loop back to start if at the end
+
     userProfileLink.appendChild(userProfilePhoto); // Add profile picture to the user profile link
 
     /* --- */
@@ -364,3 +392,5 @@ appLogo.addEventListener("click", async (e) => {
   }
 
 });
+
+

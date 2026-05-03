@@ -163,7 +163,7 @@
     width: 4.5rem;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid green; /* TODO: In variables, there are a number of color options. When the design is finalized, the green should be replaced by those colors so that the border color matches the design (changing colors) */
+    border: 5px solid green; /* TODO: In variables, there are a number of color options. When the design is finalized, the green should be replaced by those colors so that the border color matches the design (changing colors) */
 }
 
 .user-profile-link:hover .gallery-user-photo,

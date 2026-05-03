@@ -34,19 +34,20 @@
 
   /* === RED / PINK === */
   --color-red-primary: #FF0000;
+  --color-orange: #FB6F0A;
   --color-pink-coral: #FF5A79;
   --color-pink-lilac: #F27DED;
-  --color-fuchsia-vivid: #DA00ED;
+  --color-fuchsia: #DA00ED;
 
   /* === YELLOW / GREEN === */
-  --color-green-lime-light: #D3F27D;
+  --color-green-lime: #D3F27D;
   --color-green-mint: #7DF288;
-  --color-green-forest-dark: #1F6726;
-  --color-green-teal-muted: #3DA7A7;
+  --color-green-dark: #1F6726;
+  --color-green-teal: #3DA7A7;
 
   /* === BLUE / CYAN === */
-  --color-cyan-light: #98EBF0;
-  --color-blue-electric: #0A22F8;
+  --color-cyan: #98EBF0;
+  --color-blue: #0A22F8;
 
   /* === NEUTRALS === */
   --color-white: #F0F0F0;
