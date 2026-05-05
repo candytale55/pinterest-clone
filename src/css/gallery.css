@@ -163,7 +163,8 @@
     width: 4.5rem;
     object-fit: cover;
     border-radius: 50%;
-    border: 5px solid green; /* TODO: In variables, there are a number of color options. When the design is finalized, the green should be replaced by those colors so that the border color matches the design (changing colors) */
+    border: 5px solid transparent; /* Replaced by rotating border colors in JS */
+    background-color: var(--color-gray-light); /* Fallback background color while image loads / if failed */
 }
 
 .user-profile-link:hover .gallery-user-photo,

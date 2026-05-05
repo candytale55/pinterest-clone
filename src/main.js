@@ -232,7 +232,8 @@ function displayImages(images) {
 
     // Apply rotating border color from the array for each profile photo
     userProfilePhoto.style.borderColor = borderColors[currentColorIndex];
-    currentColorIndex = (currentColorIndex + 1) % borderColors.length; // Move to the next color, loop back to start if at the end
+    currentColorIndex = (currentColorIndex + 1) % borderColors.length;
+    // TODO: Add to dev notes for future self:  The line currentColorIndex = (currentColorIndex + 1) % borderColors.length; increments currentColorIndex to select the next color. The modulo operator (%) then ensures this index remains within the array's valid bounds (0 to length - 1). When currentColorIndex + 1 equals borderColors.length (i.e., it attempts to go one past the last index), the modulo operation X % length will yield 0, effectively resetting the index to the first element and initiating the color cycle anew.
 
     userProfileLink.appendChild(userProfilePhoto); // Add profile picture to the user profile link
 
