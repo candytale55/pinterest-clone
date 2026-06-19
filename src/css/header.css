@@ -12,6 +12,8 @@
     /* Keeps the header at the top of the viewport when scrolling */
     position: sticky; 
     top: 0; /* required for position: sticky to work */
+    z-index: 1000; /* Keep header above gallery cards while scrolling */
+    isolation: isolate; /* Create local stacking context for reliable layering */
 
     background-color: var(--color-bg-page); /* same as page background for seamless look */
 

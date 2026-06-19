@@ -20,7 +20,6 @@ const appLogo = document.getElementById("app-logo");
 let currentPage = 1; // 
 const imagesPerPage = 16; //
 let url;
-const gridAutoRowsHeight = 10; // Corresponds to grid-auto-rows in gallery.css
 
 
 
@@ -307,18 +306,26 @@ function displayImages(images) {
 
 // New function to adjust row spans for masonry layout
 function adjustGalleryItemRowSpans() {
-  window.setTimeout(() => {
-    const galleryItems = document.querySelectorAll(".gallery-item");
+  const galleryStyles = window.getComputedStyle(imageGallery);
+  const rowHeight = parseFloat(galleryStyles.getPropertyValue("grid-auto-rows"));
+  const rowGap = parseFloat(galleryStyles.getPropertyValue("row-gap"));
 
-    galleryItems.forEach((item) => {
-      const itemHeight = item.offsetHeight;
-      const rowSpan = Math.ceil(itemHeight / gridAutoRowsHeight);
-      item.style.gridRowEnd = `span ${rowSpan}`;
-    });
+  if (!rowHeight || Number.isNaN(rowHeight)) {
+    return;
+  }
 
-    console.log("Adjusted gallery item row spans for masonry layout"); // TODO: Remove after testing
-  }, 100);
+  const galleryItems = imageGallery.querySelectorAll(".gallery-item");
+
+  galleryItems.forEach((item) => {
+    const itemHeight = item.getBoundingClientRect().height;
+    const rowSpan = Math.ceil((itemHeight + rowGap) / (rowHeight + rowGap));
+    item.style.gridRowEnd = `span ${rowSpan}`;
+  });
+
+  console.log("Adjusted gallery item row spans for masonry layout"); // TODO: Remove after testing
 }
+
+window.addEventListener("resize", adjustGalleryItemRowSpans);
 
 
 // Call fetchImages on page load to display initial set of images
