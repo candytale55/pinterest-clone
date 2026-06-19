@@ -41,7 +41,7 @@
 }
 
 
-.gallery-item img {
+.gallery-image-wrapper > img {
     width: 100%;
     height: auto;  /* Allow dynamic image heights */
     display: block; /* Removes default inline spacing */
@@ -81,23 +81,32 @@
 /* Counters' Styling  */
 /* Camera and Heart container */
 .counter-wrapper {
+    --counter-icon-size: 1rem;
+    --counter-gap: 0.2rem;
+    --counter-padding: 0.45rem;
+    --counter-size: clamp(2.6rem, 8vw, 3.2rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: var(--counter-gap);
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    width: 5rem;
-    height: 5rem;
+    width: var(--counter-size);
+    height: var(--counter-size);
+    flex: 0 0 var(--counter-size);
+    padding: var(--counter-padding);
+    box-sizing: border-box;
     opacity: 0; /* Hide the whole counter unit by default */
     transition: opacity 0.2s ease-in-out;
 }
 
 /* TODO: make them clickable links? - if not remove pointer events*/
 .counter-icon {
-    width: 1rem;
-    height: 1rem;
+    width: var(--counter-icon-size);
+    height: var(--counter-icon-size);
     object-fit: contain;
+    flex-shrink: 0;
     /* pointer-events: none; */ /* Prevent interaction when hidden */
 }
 
@@ -109,7 +118,7 @@
 
 
 .counter-text {
-    margin-top: 0;
+    margin: 0;
     line-height: 1;
     font-size: var(--font-size-xs);
     font-weight: 700;
@@ -119,18 +128,14 @@
 
 /* Specific positioning for camera/heart counters */
 
-/* Left-aligned counter icon - Camera */
-.counter-icon-left {
-    order: -1; /* Place it before other items in flex container */
+/* Left-aligned counter circle - Camera */
+.counter-left {
     margin-right: auto; /* Push it to the left */
-    margin-bottom: auto; /* Align to top */
 }
 
-/* Right-aligned counter icon - Heart */
-.counter-icon-right {
-    /* Additional styling for right-aligned counter if needed */
+/* Right-aligned counter circle - Heart */
+.counter-right {
     margin-left: auto; /* Push it to the right */
-    margin-bottom: auto; /* Align to top */
 }
 
 /* Bottom Overlay contains profile info and date */

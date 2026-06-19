@@ -173,12 +173,12 @@ function displayImages(images) {
 
     // Camera counter
     const cameraCounter = createCounterElement("./src/assets/images/camera-icon.svg", Math.floor(Math.random() * 1000));
-    cameraCounter.classList.add("camera-counter", "counter-icon-left", "counter-icon"); // Add specific class for camera counter and a general class for left-aligned counters
+    cameraCounter.classList.add("camera-counter", "counter-left");
     /* //TODO: Maybe remove some of the classes */
 
     // Heart counter
     const heartCounter = createCounterElement("./src/assets/images/heart-icon.svg", Math.floor(Math.random() * 1000));
-    heartCounter.classList.add("heart-counter", "counter-icon-right", "counter-icon"); // Add specific class for heart counter and a general class for right-aligned counters
+    heartCounter.classList.add("heart-counter", "counter-right");
     /* //TODO: Maybe remove some of the classes */
 
     // Visit button (link to Unsplash page for the image)
