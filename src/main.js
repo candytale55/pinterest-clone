@@ -1,15 +1,10 @@
 import './styles/index.css'
 import { createHeader } from './components/header/Header.js'
 import { fetchImages, isUnsplashConfigured } from './services/unsplashApi.js'
+import { getCurrentPage, resetCurrentPage } from './state/galleryState.js'
 
 const imageGallery = document.getElementById("image-gallery");
 const headerRoot = document.getElementById("header-root");
-
-
-let currentPage = 1; // 
-
-
-
 
 // Array of colors for user profile photo borders
 const borderColors = [
@@ -296,17 +291,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* Search action passed to the Header component. */
 async function handleSearch(query) {
   if (isUnsplashConfigured()) {
-    currentPage = 1; // Reset currentPage to 1 (important for future pagination).
+    resetCurrentPage(); // Reset currentPage to 1 (important for future pagination).
 
     if (query) { // Only search if the query is not empty.
       console.log(`Performing search for: ${query}`);
-      const searchResults = await fetchImages(query, currentPage);
+      const searchResults = await fetchImages(query, getCurrentPage());
       displayImages(searchResults); // Display the new search results.
       return;
     }
 
     console.log("Search is empty, fetching latest photos"); // TODO: REMOVE after testing
-    const latestPhotos = await fetchImages("latest", currentPage);
+    const latestPhotos = await fetchImages("latest", getCurrentPage());
     displayImages(latestPhotos);
   } else {
     console.log("Cannot perform search: Unsplash Access Key is missing.");
@@ -322,7 +317,7 @@ async function handleReset() {
     return;
   }
 
-  currentPage = 1; // Reset page for initial load.
-  const latestPhotos = await fetchImages("latest", currentPage);
+  resetCurrentPage(); // Reset page for initial load.
+  const latestPhotos = await fetchImages("latest", getCurrentPage());
   displayImages(latestPhotos);
 }
