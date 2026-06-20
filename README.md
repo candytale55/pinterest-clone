@@ -35,7 +35,7 @@ The project is built with Vite and should use components to organize and reuse c
 - Search by keyword using the search input.
 - Search input clears after each search.
 - Logo resets the page to the initial gallery state.
-- Responsive masonry-style image gallery.
+- Responsive variable-height image grid.
 - Image cards display:
   - Unsplash image.
   - Photographer name.
@@ -153,7 +153,7 @@ src/
 |   |   `-- header.css
 |   |-- gallery/
 |   |   |-- Gallery.js
-|   |   |-- MasonryLayout.js
+|   |   |-- DynamicGridLayout.js
 |   |   `-- gallery.css
 |   |-- pin-card/
 |   |   |-- PinCard.js

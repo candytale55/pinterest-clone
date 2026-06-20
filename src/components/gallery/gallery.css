@@ -8,8 +8,8 @@
     max-width: 1200px;
     margin: 20px auto;
 
-    grid-auto-rows: 10px; /* Base row height for masonry */
+    grid-auto-rows: 10px; /* Base row height for the dynamic grid */
     /* Each row is 10px high, items will span multiples of this */
-    grid-auto-flow: dense; /* Fill in gaps in the grid for a tighter masonry layout */
+    grid-auto-flow: dense; /* Fill in gaps in the grid for a tighter dynamic layout */
     align-items: start; /* Align items to the top of their grid area */
 }

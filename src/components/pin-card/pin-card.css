@@ -9,7 +9,7 @@
     display: flex; /* Helps to manage height, important when image height is auto */
     flex-direction: column;
 
-    /* Important for Masonry: Set grid-row-end dynamically via JS */
+    /* Important for the dynamic grid: Set grid-row-end dynamically via JS */
     /* We'll set this in JavaScript based on content height */
 }
 
