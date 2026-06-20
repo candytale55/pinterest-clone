@@ -133,29 +133,45 @@ npm run preview
 
 ## Project Structure
 
-```text
-pinterest-clone/
-|-- public/
-|   |-- favicon.ico
-|   `-- favicon.svg
-|-- src/
-|   |-- assets/
-|   |   `-- images/
-|   |-- css/
-|   |   |-- button.css
-|   |   |-- gallery.css
-|   |   |-- header.css
-|   |   |-- style.css
-|   |   |-- utilities.css
-|   |   `-- variables.css
-|   `-- main.js
-|-- .env.example
-|-- index.html
-|-- package.json
-`-- README.md
-```
+PROPOSED STRUCTURE: DONT FORGET TO REMOVE COMMENT ONCE THE FINAL STRUCTURE IS IN PLACE
 
-TODO: Update this structure if/when the JavaScript is split into reusable component files.
+```text
+src/
+|-- main.js
+|-- app.js
+|-- config/
+|   `-- unsplash.config.js
+|-- services/
+|   `-- unsplashApi.js
+|-- state/
+|   `-- galleryState.js
+|-- components/
+|   |-- header/
+|   |   |-- Header.js
+|   |   |-- SearchBar.js
+|   |   |-- Navigation.js
+|   |   `-- header.css
+|   |-- gallery/
+|   |   |-- Gallery.js
+|   |   |-- MasonryLayout.js
+|   |   `-- gallery.css
+|   |-- pin-card/
+|   |   |-- PinCard.js
+|   |   |-- PinOverlay.js
+|   |   |-- Counter.js
+|   |   |-- UserInfo.js
+|   |   `-- pin-card.css
+|   `-- ui/
+|       |-- Button.js
+|       `-- button.css
+|-- styles/
+|   |-- index.css
+|   |-- tokens.css
+|   |-- base.css
+|   `-- utilities.css
+`-- assets/
+    `-- images/
+```
 
 ## Design
 
