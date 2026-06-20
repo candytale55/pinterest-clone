@@ -1,4 +1,4 @@
-import './css/style.css'
+import './css/base.css'
 import './css/header.css'
 import './css/gallery.css'
 
