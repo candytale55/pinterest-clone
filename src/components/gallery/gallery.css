@@ -1,0 +1,15 @@
+/* Gallery Container (main) */
+.gallery-container {
+    display: grid;
+    /* auto-fill creates as many 250px+ columns as fit; 1fr distributes leftover space */
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 15px; /* space between gallery items */
+    padding: 20px; /* space around the gallery */
+    max-width: 1200px;
+    margin: 20px auto;
+
+    grid-auto-rows: 10px; /* Base row height for masonry */
+    /* Each row is 10px high, items will span multiples of this */
+    grid-auto-flow: dense; /* Fill in gaps in the grid for a tighter masonry layout */
+    align-items: start; /* Align items to the top of their grid area */
+}

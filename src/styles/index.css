@@ -4,4 +4,5 @@
 @import "./utilities.css";
 @import "../components/ui/button.css";
 @import "../components/header/header.css";
-@import "../css/gallery.css";
+@import "../components/gallery/gallery.css";
+@import "../components/pin-card/pin-card.css";
