@@ -1,0 +1,7 @@
+/* Single stylesheet entry point. Import order matters: foundations load before components. */
+@import "./tokens.css";
+@import "./base.css";
+@import "./utilities.css";
+@import "../components/ui/button.css";
+@import "../css/header.css";
+@import "../css/gallery.css";

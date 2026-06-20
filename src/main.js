@@ -1,6 +1,4 @@
-import './css/base.css'
-import './css/header.css'
-import './css/gallery.css'
+import './styles/index.css'
 
 // Access the Unsplash Access Key from Vite's environment variables
 // Vite exposes .env variables prefixed with VITE_ via import.meta.env
@@ -13,7 +11,6 @@ if (!UNSPLASH_ACCESS_KEY) {
 
 const imageGallery = document.getElementById("image-gallery");
 const searchBox = document.getElementById("search-box");
-const searchButton = document.getElementById("search-button");
 const appLogo = document.getElementById("app-logo");
 
 
@@ -239,9 +236,6 @@ function displayImages(images) {
     /* --- */
 
     /* User Info Container (name and date) */
-    const userInfoContainer = document.createElement("div");
-    userInfoContainer.classList.add("user-info-container");
-
     const userProfileName = document.createElement("p");
     userProfileName.classList.add("user-profile-name");
     userProfileName.textContent = image.user.name; // Photographer's name

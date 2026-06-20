@@ -1,0 +1,36 @@
+.btn {
+  display: inline-flex; /* Allows the button to size based on its content and padding */
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 500; 
+  color: var(--color-text-primary);
+  padding-block: var(--spacing-xs);
+  padding-inline: var(--spacing-md);
+}
+
+.btn:hover,
+.btn:focus {
+  color: var(--color-text-primary-hover);
+}
+
+.btn-pill {
+  border-radius: var(--border-radius-pill);
+}
+
+.btn-dark {
+  background-color: var(--color-bg-button-primary);
+  color: var(--color-white);
+  font-weight: 400;
+}
+
+.btn-cta {
+  background-color: var(--color-bg-button-cta);
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+.btn-cta:hover,
+.btn-cta:focus {
+  background-color: var(--color-bg-button-cta-hover);
+  color: var(--color-white);
+}

@@ -77,6 +77,26 @@
     padding-block: var(--spacing-sm); /* vertical padding */
 }
 
+/* Button btn-visit is used for the visit button in the gallery overlay */
+.btn-visit {
+    position: absolute; /* Positioned relative to the gallery item */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the button */
+    background-color: var(--color-bg-button-cta);
+    opacity: 0; /* Start hidden */
+    transition: opacity 0.2s ease-in-out; /* Smooth fade-in */
+    pointer-events: none; /* Prevent interaction when hidden */
+}
+
+/* Show visit button only on hover of the entire item, or if focused inside */
+/* TODO: Make sure you get the rules */
+.gallery-item:hover .btn-visit,
+.gallery-item:focus-within .btn-visit {
+    opacity: 1; /* Show the button on hover/focus */
+    pointer-events: auto; /* Allow interaction when visible */
+}
+
 /* Counters' Styling  */
 /* Camera and Heart container */
 .counter-wrapper {

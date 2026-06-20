@@ -80,8 +80,3 @@ input, button, textarea, select {
 .vertical-padding {
   padding-block: var(--spacing-md); 
 }
-
-
-#app {
-  min-height: 100vh; /* ensures app fills viewport even with little content */
-}
