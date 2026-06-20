@@ -16,56 +16,7 @@
 </head>
 
 <body>
-  <header class="header" id="header">
-
-    <div class="header-left">
-      <a href="#" id="app-logo" class="logo" aria-label="Gallery Home">
-        <img src="./src/assets/images/pintrest-logo.png" alt="Logo">
-      </a>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="#header" class="btn btn-pill btn-dark nav-link nav-link-active">Inicio</a></li>
-          <li><a href="#header" class="btn btn-pill">Explorar</a></li>
-          <li><a href="#header" class="btn btn-pill">Crear</a></li>
-        </ul>
-      </nav>
-    </div>
-
-
-    <div class="search-container">
-      <label for="search-box" class="sr-only">Buscar en Galería </label>
-      <div class="search-input-wrapper">
-        <img 
-          src="./src/assets/images/search-icon.png" 
-          alt="" 
-          aria-hidden="true" 
-          class="search-icon">
-        <input 
-          type="text" 
-          id="search-box" 
-          class="search-input" 
-          placeholder="Buscar">
-      </div>
-    </div>
-
-    <div class="header-right">
-      <!-- Bell Icon Button -->
-      <button class="icon-button" aria-label="Ver notificaciones">
-        <img src="./src/assets/images/bell-svg.svg" alt="bell icon">
-      </button>
-      <!-- Blurb Icon Button -->
-      <button class="icon-button" aria-label="Abrir mensajes">
-        <img src="./src/assets/images/blurb-svg.svg " alt="blurb icon">
-      </button>
-    </div>
-
-    <a 
-      href="#header" 
-      class="profile-circle" 
-      aria-label="Ver perfil de usuario">
-      <span class="profile-text">CT</span>
-    </a>
-  </header>
+  <div id="header-root"></div>
 
   <main class="gallery-container" id="image-gallery">
   </main>
