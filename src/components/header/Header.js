@@ -33,13 +33,13 @@ function createLink({ text, className, href = "#header" }) {
   return link;
 }
 
-function createIconButton(src, label) {
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = "icon-button";
-  button.setAttribute("aria-label", label);
-  button.append(createImage({ src, ariaHidden: true }));
-  return button;
+function createIconLink(src, label) {
+  const link = document.createElement("a");
+  link.href = "#header";
+  link.className = "icon-button";
+  link.setAttribute("aria-label", label);
+  link.append(createImage({ src, ariaHidden: true }));
+  return link;
 }
 
 export function createHeader({ onSearch, onReset }) {
@@ -104,8 +104,8 @@ export function createHeader({ onSearch, onReset }) {
   const headerRight = document.createElement("div");
   headerRight.className = "header-right";
   headerRight.append(
-    createIconButton(bellSvg, "Ver notificaciones"),
-    createIconButton(blurbSvg, "Abrir mensajes")
+    createIconLink(bellSvg, "Ver notificaciones"),
+    createIconLink(blurbSvg, "Abrir mensajes")
   );
 
   const profile = document.createElement("a");
