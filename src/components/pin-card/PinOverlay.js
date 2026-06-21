@@ -17,15 +17,13 @@ function createVisitLink(image) {
   return visitLink;
 }
 
-function createCounter(iconUrl, positionClass) {
-  const counter = createCounterElement(
-    iconUrl,
-    Math.floor(Math.random() * 1000)
-  );
+function createCounter(iconUrl, count, positionClass) {
+  const counter = createCounterElement(iconUrl, count ?? 0);
   counter.classList.add(positionClass);
   return counter;
 }
 
+/* Uses users.total_photos to use a value that is readily available, unlike downloads or views which may require additional API calls = KAPUT Unsplash Limit */
 export function createPinOverlay(image) {
   const overlay = document.createElement("div");
   overlay.classList.add("gallery-item-image-overlay");
@@ -33,8 +31,8 @@ export function createPinOverlay(image) {
   const actions = document.createElement("div");
   actions.classList.add("gallery-item-top-overlay");
   actions.append(
-    createCounter(cameraIconUrl, "counter-left"),
-    createCounter(heartIconUrl, "counter-right"),
+    createCounter(cameraIconUrl, image.user.total_photos, "counter-left"),
+    createCounter(heartIconUrl, image.likes, "counter-right"),
     createVisitLink(image)
   );
 
