@@ -5,7 +5,7 @@
 Este proyecto es una galeria de imagenes estilo Pinterest creada con Vite, JavaScript, HTML y CSS. La aplicacion consulta la API de Unsplash, monta sus componentes desde JavaScript y distribuye las tarjetas en una cuadricula de altura variable.
 
 `main.js` es el punto de entrada y solo carga los estilos e inicia la aplicacion. `app.js` funciona como coordinador: conecta la cabecera, la galeria, el servicio de Unsplash y el estado de paginacion sin mezclar sus responsabilidades internas.
-
+ 
 ## Flujo de la aplicacion
 
 1. `index.html` proporciona los puntos de montaje `header-root` y `gallery-root`.
