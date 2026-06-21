@@ -4,7 +4,7 @@ import downloadIconUrl from "../../assets/images/download-icon.svg";
 import { createCounterElement } from "./Counter.js";
 import { getNextProfileColor } from "../../utils/profileColors.js";
 
-export function createPinCard(image, { onImageLoad }) {
+export function createPinCard(image, { onImageLoad, prioritizeImage = false }) {
   // --- 1. Create main gallery-item container ---
 
   // Each image post unit will be a gallery-item, containing the image and all its associated information (counters, photographer info, etc.).
@@ -21,7 +21,21 @@ export function createPinCard(image, { onImageLoad }) {
   const img = document.createElement("img");
   img.src = image.urls.small; // Preview size.
   img.alt = image.alt_description || "Unsplash Image"; // Fallback alt text.
-  img.loading = "lazy"; // For performance improvement (lazy-loading).
+  // Unsplash supplies the original dimensions. Setting them reserves the
+  // correct aspect ratio before download, so the grid does not collapse and
+  // native lazy-loading can correctly identify off-screen cards.
+  img.width = image.width;
+  img.height = image.height;
+  // Decode off the main rendering path. Only the first row loads eagerly;
+  // cards farther down wait until the browser considers them nearby.
+  img.decoding = "async";
+  img.loading = prioritizeImage ? "eager" : "lazy";
+
+  if (prioritizeImage) {
+    // Schedule visible photos ahead of nonessential image requests.
+    img.fetchPriority = "high";
+  }
+
   img.addEventListener("load", onImageLoad);
   galleryImageWrapper.appendChild(img);
 

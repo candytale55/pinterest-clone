@@ -7,6 +7,12 @@ export function getCurrentPage() {
   return currentPage;
 }
 
+export function incrementCurrentPage() {
+  // Infinite scrolling calls this before requesting each additional page.
+  currentPage += 1;
+  return currentPage;
+}
+
 export function resetCurrentPage() {
   currentPage = INITIAL_PAGE;
   return currentPage;

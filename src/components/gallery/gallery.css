@@ -14,3 +14,69 @@
     grid-auto-flow: dense; /* Fill in gaps in the grid for a tighter dynamic layout */
     align-items: start; /* Align items to the top of their grid area */
 }
+
+.infinite-scroll-trigger {
+    width: 100%;
+    height: 1px;
+}
+
+.gallery-skeleton {
+    pointer-events: none;
+}
+
+.gallery-skeleton-image,
+.gallery-skeleton-avatar,
+.gallery-skeleton-line {
+    background: linear-gradient(
+        100deg,
+        var(--color-gray-light) 30%,
+        var(--color-bg-gallery-item) 50%,
+        var(--color-gray-light) 70%
+    );
+    background-size: 200% 100%;
+    animation: gallery-skeleton-shimmer 1.2s ease-in-out infinite;
+}
+
+.gallery-skeleton-image {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+}
+
+.gallery-skeleton-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+}
+
+.gallery-skeleton-avatar {
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-top: -3rem;
+    border: 5px solid var(--color-bg-gallery-item);
+    border-radius: 50%;
+}
+
+.gallery-skeleton-line {
+    width: 65%;
+    height: 0.75rem;
+    border-radius: var(--border-radius-md);
+}
+
+.gallery-skeleton-line-short {
+    width: 40%;
+}
+
+@keyframes gallery-skeleton-shimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gallery-skeleton-image,
+    .gallery-skeleton-avatar,
+    .gallery-skeleton-line {
+        animation: none;
+    }
+}

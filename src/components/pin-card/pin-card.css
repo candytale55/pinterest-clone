@@ -142,7 +142,7 @@
     gap: var(--spacing-xs); /* Space between profile and date container */
     position: relative; /* Needed for absolute positioning of the user profile link */
     z-index: 0; /* Ensure it's below the counters and visit button */
-    
+    margin-bottom: var(--spacing-sm); /* Optional: Add some space below the bottom info section */
 }
    
 
@@ -193,7 +193,7 @@
     gap: var(--spacing-xs); /* Space between download icon and date text */
 }
 
-/* TODO: Why img.download-icon ? it doesn't work other ways */
+
 img.download-icon {
     width: 16px;
     height: 16px;

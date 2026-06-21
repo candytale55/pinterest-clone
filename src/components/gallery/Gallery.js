@@ -1,6 +1,9 @@
 import { createPinCard } from "../pin-card/PinCard.js";
 import { createDynamicGridLayout } from "./DynamicGridLayout.js";
 
+const SKELETON_COUNT = 8; // Enough placeholders to fill most initial viewports.
+const PRIORITY_IMAGE_COUNT = 4; // Prioritize roughly the first desktop row.
+
 export function createGallery() {
   const element = document.createElement("main");
   element.classList.add("gallery-container");
@@ -8,12 +11,14 @@ export function createGallery() {
 
   const dynamicGridLayout = createDynamicGridLayout(element);
 
-  function renderImages(images) {
-    // Clear existing images before displaying new ones.
-    // TODO: Important later on when adding search, load more, etc. PLEASE EXPLAIN WHY THIS IS IMPORTANT AND HOW IT WORKS (removing old images before adding new ones).
-    while (element.firstChild) {
-      element.removeChild(element.firstChild);
+  function renderImages(images, { append = false } = {}) {
+    // New searches replace the gallery; pagination keeps the current cards.
+    if (!append) {
+      element.replaceChildren();
     }
+
+    // Tell assistive technology that the loading operation has completed.
+    element.setAttribute("aria-busy", "false");
 
     if (images.length === 0) {
       console.log("No images to display");
@@ -24,9 +29,11 @@ export function createGallery() {
     // Create a document fragment to append all items, then add to DOM once.
     const fragment = document.createDocumentFragment();
 
-    images.forEach((image) => {
+    images.forEach((image, index) => {
       const galleryItem = createPinCard(image, {
-        onImageLoad: dynamicGridLayout.recalculateLayout
+        onImageLoad: dynamicGridLayout.recalculateLayout,
+        // Appended/off-screen results keep native lazy-loading.
+        prioritizeImage: !append && index < PRIORITY_IMAGE_COUNT
       });
 
       // Append the gallery item to the fragment instead of directly to the gallery.
@@ -38,13 +45,38 @@ export function createGallery() {
 
     // After all images are in the DOM, adjust their row spans.
     dynamicGridLayout.recalculateLayout();
+  }
 
-    console.log("Images displayed in the gallery"); // TODO: Remove after testing.
+  function showLoading() {
+    // Build placeholders in memory, then update the DOM in one operation.
+    const fragment = document.createDocumentFragment();
+
+    for (let index = 0; index < SKELETON_COUNT; index += 1) {
+      const skeleton = document.createElement("div");
+      skeleton.classList.add("gallery-item", "gallery-skeleton");
+      skeleton.setAttribute("aria-hidden", "true");
+      skeleton.innerHTML = `
+        <div class="gallery-skeleton-image"></div>
+        <div class="gallery-skeleton-info">
+          <span class="gallery-skeleton-avatar"></span>
+          <span class="gallery-skeleton-line"></span>
+          <span class="gallery-skeleton-line gallery-skeleton-line-short"></span>
+        </div>
+      `;
+      fragment.appendChild(skeleton);
+    }
+
+    // Replacing old cards provides immediate feedback and lets the browser
+    // stop obsolete image downloads from the previous results.
+    element.setAttribute("aria-busy", "true");
+    element.replaceChildren(fragment);
+    dynamicGridLayout.recalculateLayout();
   }
 
   return {
     element,
     renderImages,
+    showLoading,
     destroy: dynamicGridLayout.destroy
   };
 }
