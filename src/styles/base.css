@@ -46,7 +46,7 @@ a {
 }
 
 a:hover,
-a:focus {
+a:focus-visible {
   color: var(--color-text-link-hover);
   /* text-decoration: underline; */ /* TODO: Check where and how to add underline to elements - here or in each one on hover/focus for better affordance */ 
 }
@@ -63,6 +63,13 @@ img {
 input, button, textarea, select {
   font: inherit; /* Inherit font from body */
   color: inherit; /* Inherit color from body */
+}
+
+/* Consistent fallback for every keyboard-focusable control. Components may
+   change the shape of the feedback, but should reuse these focus tokens. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* Layout Primitives (as per your rules) */

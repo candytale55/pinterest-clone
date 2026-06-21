@@ -9,7 +9,7 @@
 }
 
 .btn:hover,
-.btn:focus {
+.btn:focus-visible {
   color: var(--color-text-primary-hover);
 }
 
@@ -30,7 +30,7 @@
 }
 
 .btn-cta:hover,
-.btn-cta:focus {
+.btn-cta:focus-visible {
   background-color: var(--color-bg-button-cta-hover);
   color: var(--color-white);
 }

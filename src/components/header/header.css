@@ -83,13 +83,12 @@ nav ul {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     border-radius: var(--border-radius-pill);
 
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Added for focus effect */
 }
 
-/* Accessibility focus feedback */
-.search-input-wrapper:focus-within {
-    border-color: var(--color-focusable-outline);  /* Highlights the entire search bar when focused */
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05); /* Subtle shadow to enhance focus visibility */
+/* Apply the shared focus ring to the wrapper so it surrounds both the icon and input. */
+.search-input-wrapper:has(.search-input:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
 }
 
 .search-icon {
@@ -106,13 +105,10 @@ nav ul {
     
     padding: var(--spacing-xs) var(--spacing-xs); /* vertical and horizontal padding */
     border: none;
+    /* Suppress the input ring because the wrapper represents the complete control. */
+    outline: none;
     border-radius: var(--border-radius-pill); /* match the wrapper's rounded shape */
     flex-grow: 1; /* Make input take remaining space in wrapper */
-}
-
-/* Remove default focus outline => search-input-wrapper:focus-within does the job */
-.search-input:focus {
-    outline: none;  /* Removes the default browser focus outline for ALL interactions */
 }
 
 .search-input::placeholder {
@@ -142,6 +138,7 @@ nav ul {
 
 .icon-button:hover img,
 .icon-button:focus-visible img {
+    background-color: var(--color-bg-button-icon-hover); /* Optional: change background on hover/focus */
     filter: brightness(0.8); /* Darken the icon on hover/focus for better affordance */
 }
 
@@ -160,10 +157,9 @@ nav ul {
     flex-shrink: 0; /* Prevent shrinking */
 }
 
-.profile-circle:hover, .profile-circle:focus-visible {
+.profile-circle:hover,
+.profile-circle:focus-visible {
     background-color: var(--color-bg-button-primary-hover);
-    outline: 0.125rem solid var(--color-text-link);
-    outline-offset: 0.125rem;
 }
 
 

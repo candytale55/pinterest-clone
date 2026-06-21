@@ -71,10 +71,9 @@
     pointer-events: none; /* Prevent interaction when hidden */
 }
 
-/* Show visit button only on hover of the entire item, or if focused inside */
-/* TODO: Make sure you get the rules */
+/* Reveal the action on hover or when a descendant has keyboard-visible focus. */
 .gallery-item:hover .btn-visit,
-.gallery-item:focus-within .btn-visit {
+.gallery-item:has(:focus-visible) .btn-visit {
     opacity: 1; /* Show the button on hover/focus */
     pointer-events: auto; /* Allow interaction when visible */
 }
@@ -112,7 +111,7 @@
 }
 
 .gallery-item:hover .counter-wrapper,
-.gallery-item:focus-within .counter-wrapper {
+.gallery-item:has(:focus-visible) .counter-wrapper {
     opacity: 1; /* Show full counter unit on hover/focus */
     /* pointer-events: auto; */ /* Allow interaction when visible */
 }
