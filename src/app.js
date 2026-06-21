@@ -1,8 +1,9 @@
 /**
- * Coordinates the static header, gallery rendering, Unsplash requests and
+ * Coordinates the header component, gallery rendering, Unsplash requests and
  * infinite-scroll state for the application.
  */
 import { createGallery } from "./components/gallery/Gallery.js";
+import { createHeader } from "./components/header/Header.js";
 import { fetchImages, isUnsplashConfigured } from "./services/unsplashApi.js";
 import {
   getCurrentPage,
@@ -12,11 +13,17 @@ import {
 
 /** Initializes the gallery, search interactions and infinite pagination. */
 export function startApp() {
+  const headerRoot = document.getElementById("header-root");
   const galleryRoot = document.getElementById("gallery-root");
-  const searchInput = document.getElementById("search-box");
-  const appLogo = document.querySelector("[data-app-logo]");
 
+  const header = createHeader({
+    onSearch: handleSearch,
+    onReset: handleReset
+  });
   const gallery = createGallery();
+
+  // Replacing the mount point keeps the sticky header at the body level.
+  headerRoot.replaceWith(header);
 
   // This invisible sentinel sits after the gallery. When it approaches the
   // viewport, IntersectionObserver requests the next page of results.
@@ -42,22 +49,6 @@ export function startApp() {
   });
 
   loadMoreObserver.observe(loadMoreTrigger);
-
-  searchInput.addEventListener("keydown", async (event) => {
-    if (event.key !== "Enter") {
-      return;
-    }
-
-    event.preventDefault();
-    await handleSearch(searchInput.value.trim());
-    searchInput.value = "";
-  });
-
-  appLogo.addEventListener("click", async (event) => {
-    event.preventDefault();
-    searchInput.value = "";
-    await handleReset();
-  });
 
   // Call fetchImages on page load to display initial set of images.
   document.addEventListener("DOMContentLoaded", async () => {

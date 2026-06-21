@@ -1,4 +1,4 @@
-<!-- Main document: defines metadata and the static header consumed by src/app.js. -->
+<!-- Main document: defines metadata and mount points populated by src/app.js. -->
 <!doctype html>
 <html lang="es">
 
@@ -54,43 +54,8 @@
 </head>
 
 <body>
-  <!-- Header and primary navigation -->
-  <header class="header" id="header">
-      <div class="header-left">
-        <a href="#" class="logo" data-app-logo aria-label="Gallery Home">
-          <img src="/src/assets/images/pintrest-logo.png" alt="Pinterest">
-        </a>
-
-        <nav class="main-nav" aria-label="Navegación principal">
-          <ul>
-            <li><a href="#header" class="btn btn-pill btn-dark">Inicio</a></li>
-            <li><a href="#header" class="btn btn-pill">Explorar</a></li>
-            <li><a href="#header" class="btn btn-pill">Crear</a></li>
-          </ul>
-        </nav>
-      </div>
-
-      <div class="search-container">
-        <label for="search-box" class="sr-only">Buscar en galería</label>
-        <div class="search-input-wrapper">
-          <img src="/src/assets/images/search-icon.png" alt="" aria-hidden="true" class="search-icon">
-          <input type="search" id="search-box" class="search-input" placeholder="Buscar">
-        </div>
-      </div>
-
-      <div class="header-right">
-        <a href="#header" class="icon-button" aria-label="Ver notificaciones">
-          <img src="/src/assets/images/bell-svg.svg" alt="" aria-hidden="true">
-        </a>
-        <a href="#header" class="icon-button" aria-label="Abrir mensajes">
-          <img src="/src/assets/images/blurb-svg.svg" alt="" aria-hidden="true">
-        </a>
-      </div>
-
-      <a href="#header" class="profile-circle" aria-label="Ver perfil de usuario">
-        <span class="profile-text">CT</span>
-      </a>
-  </header>
+  <!-- Replaced by the header component during application startup -->
+  <div id="header-root"></div>
 
   <!-- Dynamic gallery populated by src/app.js -->
   <div id="gallery-root"></div>

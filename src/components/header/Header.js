@@ -1,6 +1,5 @@
 /**
- * Programmatic alternative to the static header in index.html.
- * Kept as a reusable DOM-based component for future integration.
+ * Builds the application header mounted by app.js into index.html.
  */
 
 import pintrestLogo from "../../assets/images/pintrest-logo.png";
