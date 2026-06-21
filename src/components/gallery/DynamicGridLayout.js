@@ -19,8 +19,6 @@ export function createDynamicGridLayout(galleryElement) {
       const rowSpan = Math.ceil((itemHeight + rowGap) / (rowHeight + rowGap));
       item.style.gridRowEnd = `span ${rowSpan}`;
     });
-
-    console.log("Adjusted gallery item row spans for dynamic grid layout"); // TODO: Remove after testing.
   }
 
   window.addEventListener("resize", recalculateLayout);

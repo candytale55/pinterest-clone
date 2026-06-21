@@ -1,4 +1,5 @@
 /* Gallery Container (main) */
+
 .gallery-container {
     display: grid;
     /* auto-fill creates as many 250px+ columns as fit; 1fr distributes leftover space */
