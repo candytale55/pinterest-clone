@@ -22,7 +22,7 @@ function createCounter(iconUrl, count, positionClass) {
   counter.classList.add(positionClass);
   return counter;
 }
-
+ 
 /* Uses users.total_photos to use a value that is readily available, unlike downloads or views which may require additional API calls = KAPUT Unsplash Limit */
 export function createPinOverlay(image) {
   const overlay = document.createElement("div");
