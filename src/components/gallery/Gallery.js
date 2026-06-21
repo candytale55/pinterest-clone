@@ -1,9 +1,15 @@
+/** Builds and updates the gallery UI using pin cards and the dynamic grid. */
+
 import { createPinCard } from "../pin-card/PinCard.js";
 import { createDynamicGridLayout } from "./DynamicGridLayout.js";
 
 const SKELETON_COUNT = 8; // Enough placeholders to fill most initial viewports.
 const PRIORITY_IMAGE_COUNT = 4; // Prioritize roughly the first desktop row.
 
+/**
+ * Creates a gallery controller with rendering, loading and cleanup operations.
+ * @returns {{element: HTMLElement, renderImages: Function, showLoading: Function, destroy: Function}}
+ */
 export function createGallery() {
   const element = document.createElement("main");
   element.classList.add("gallery-container");
@@ -11,6 +17,11 @@ export function createGallery() {
 
   const dynamicGridLayout = createDynamicGridLayout(element);
 
+  /**
+   * Renders image records as cards, replacing or extending existing results.
+   * @param {Array} images - Unsplash photo records.
+   * @param {{append?: boolean}} options - Whether to preserve existing cards.
+   */
   function renderImages(images, { append = false } = {}) {
     // New searches replace the gallery; pagination keeps the current cards.
     if (!append) {
@@ -22,7 +33,6 @@ export function createGallery() {
 
     if (images.length === 0) {
       console.log("No images to display");
-      // TODO: Fix message later.
       return;
     }
 
@@ -47,6 +57,7 @@ export function createGallery() {
     dynamicGridLayout.recalculateLayout();
   }
 
+  /** Replaces current content with skeleton cards while a request is pending. */
   function showLoading() {
     // Build placeholders in memory, then update the DOM in one operation.
     const fragment = document.createDocumentFragment();

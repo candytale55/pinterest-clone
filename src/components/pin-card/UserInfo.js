@@ -1,6 +1,13 @@
+/** Builds the photographer identity and publication details below each pin. */
+
 import downloadIconUrl from "../../assets/images/download-icon.svg";
 import { getNextProfileColor } from "../../utils/profileColors.js";
 
+/**
+ * Creates the linked photographer avatar and assigns its rotating border color.
+ * @param {Object} user - Unsplash user record.
+ * @returns {HTMLAnchorElement}
+ */
 function createProfileLink(user) {
   const profileLink = document.createElement("a");
   profileLink.href = user.links.html;
@@ -21,6 +28,11 @@ function createProfileLink(user) {
   return profileLink;
 }
 
+/**
+ * Creates the photographer name label.
+ * @param {string} name - Photographer display name.
+ * @returns {HTMLParagraphElement}
+ */
 function createPhotographerName(name) {
   const photographerName = document.createElement("p");
   photographerName.classList.add("user-profile-name");
@@ -29,6 +41,11 @@ function createPhotographerName(name) {
   return photographerName;
 }
 
+/**
+ * Creates the localized publication-date row.
+ * @param {string} createdAt - Date value supplied by Unsplash.
+ * @returns {HTMLDivElement}
+ */
 function createImageDate(createdAt) {
   const dateContainer = document.createElement("div");
   dateContainer.classList.add("image-date-container");
@@ -47,6 +64,11 @@ function createImageDate(createdAt) {
   return dateContainer;
 }
 
+/**
+ * Builds the author and date section for a pin card.
+ * @param {Object} image - Unsplash photo record.
+ * @returns {HTMLDivElement}
+ */
 export function createUserInfo(image) {
   const userInfo = document.createElement("div");
   userInfo.classList.add("gallery-item-bottom-info-section");

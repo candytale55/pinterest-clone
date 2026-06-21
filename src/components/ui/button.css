@@ -1,11 +1,16 @@
+/* Shared button variants used by header navigation and pin-card actions. */
+
+/* Base button */
 .btn {
-  display: inline-flex; /* Allows the button to size based on its content and padding */
-  font-family: inherit;
-  font-size: 1.1rem;
-  font-weight: 500; 
-  color: var(--color-text-primary);
+  display: inline-flex;
+
   padding-block: var(--spacing-xs);
   padding-inline: var(--spacing-md);
+
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
 }
 
 .btn:hover,
@@ -13,10 +18,12 @@
   color: var(--color-text-primary-hover);
 }
 
+/* Shape variants */
 .btn-pill {
   border-radius: var(--border-radius-pill);
 }
 
+/* Color variants */
 .btn-dark {
   background-color: var(--color-bg-button-primary);
   color: var(--color-white);

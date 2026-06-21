@@ -1,3 +1,4 @@
+<!-- Main document: defines metadata and the static header consumed by src/app.js. -->
 <!doctype html>
 <html lang="es">
 
@@ -53,14 +54,7 @@
 </head>
 
 <body>
-
-  <!--TODO: Remove before submitting-->
-  <!--
-    Programmatic alternative retained for future reference:
-    <script type="module" src="/src/components/header/Header.js"></script>
-    It is intentionally disconnected; the header markup lives here for this project.
-  -->
-
+  <!-- Header and primary navigation -->
   <header class="header" id="header">
       <div class="header-left">
         <a href="#" class="logo" data-app-logo aria-label="Gallery Home">
@@ -98,8 +92,10 @@
       </a>
   </header>
 
+  <!-- Dynamic gallery populated by src/app.js -->
   <div id="gallery-root"></div>
 
+  <!-- Application entry point -->
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

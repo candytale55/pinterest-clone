@@ -1,5 +1,6 @@
+/* Responsive styling for the static header defined in index.html. */
 
-/* ======== HEADER ======= */
+/* Header layout */
 
 .header {
     width: 100%;
@@ -40,7 +41,7 @@
     object-fit: contain; /* Ensure the image fits within the container without distortion */
 }
 
-/* ====== Navigation elements - Main ======*/
+/* Primary navigation */
 
 /* Hidden by default on mobile */
 .main-nav,
@@ -63,7 +64,7 @@ nav ul {
 }
 
 
-/* ======== SEARCH BAR ======= */
+/* Search */
 
 .search-container {
     display: flex;
@@ -116,7 +117,7 @@ nav ul {
     opacity: 1; /* ensure placeholder is fully opaque */
 }
 
-/* ======== RIGHT NAVIGATION SECTION ======= */
+/* Header actions */
 
 .header-right {
     align-items: center; /* Vertically center items */
@@ -142,7 +143,7 @@ nav ul {
     filter: brightness(0.8); /* Darken the icon on hover/focus for better affordance */
 }
 
-/* ======== USER PROFILE CIRCLE ======= */
+/* Profile */
 
 .profile-circle {
     width: 2.5rem; /* 40px */
@@ -171,17 +172,11 @@ nav ul {
     transition: color 0.2s ease-in-out; /* Smooth color change */
 }
 
-/* TODO: Remove before final deployment - 
-This is a descendant selector. It means: "When .profile-circle is hovered OR focused, apply this style to any .profile-text element inside it."*/
 .profile-circle:hover .profile-text,
 .profile-circle:focus-visible .profile-text {
     color: var(--color-white); /* Change text color on hover/focus for better contrast */
 }
-
-
-
-
-
+/* Responsive navigation */
 @media (min-width:768px) {
 
     .header {

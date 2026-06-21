@@ -1,3 +1,11 @@
+/** Creates the compact icon-and-value counters displayed over pin images. */
+
+/**
+ * Builds a counter from an icon and display value.
+ * @param {string} iconPath - Counter icon asset URL.
+ * @param {number} count - Value shown beneath the icon.
+ * @returns {HTMLDivElement}
+ */
 export function createCounterElement(iconPath, count) {
   const counterWrapper = document.createElement("div");
   counterWrapper.classList.add("counter-wrapper");

@@ -1,3 +1,7 @@
+/**
+ * Coordinates the static header, gallery rendering, Unsplash requests and
+ * infinite-scroll state for the application.
+ */
 import { createGallery } from "./components/gallery/Gallery.js";
 import { fetchImages, isUnsplashConfigured } from "./services/unsplashApi.js";
 import {
@@ -6,6 +10,7 @@ import {
   resetCurrentPage
 } from "./state/galleryState.js";
 
+/** Initializes the gallery, search interactions and infinite pagination. */
 export function startApp() {
   const galleryRoot = document.getElementById("gallery-root");
   const searchInput = document.getElementById("search-box");
@@ -63,7 +68,11 @@ export function startApp() {
     }
   });
 
-  /* Search action used by the static header in index.html. */
+  /**
+   * Starts a new search or restores the latest-photo feed for an empty query.
+   * @param {string} query - Normalized text entered in the search field.
+   * @returns {Promise<void>}
+   */
   async function handleSearch(query) {
     if (isUnsplashConfigured()) {
       if (query) { // Only search if the query is not empty.
@@ -72,16 +81,16 @@ export function startApp() {
         return;
       }
 
-      console.log("Search is empty, fetching latest photos"); // TODO: REMOVE after testing.
+      console.log("Search is empty, fetching latest photos");
       await loadFirstPage("");
     } else {
       console.log("Cannot perform search: Unsplash Access Key is missing.");
     }
   }
 
-  // App logo action passed to the Header component (reset to initial state).
+  /** Restores the initial latest-photo feed when the app logo is selected. */
   async function handleReset() {
-    console.log("Logo clicked. Resetting to initial state (latest photos)"); // TODO: REMOVE after testing.
+    console.log("Logo clicked. Resetting to initial state (latest photos)");
 
     if (!isUnsplashConfigured()) {
       console.error("Cannot reset to initial state: Unsplash Access Key is missing.");
@@ -91,6 +100,11 @@ export function startApp() {
     await loadFirstPage("");
   }
 
+  /**
+   * Replaces the current results with page one of a query.
+   * @param {string} query - Search term, or an empty string for latest photos.
+   * @returns {Promise<void>}
+   */
   async function loadFirstPage(query) {
     // A new search/reset always starts a fresh result set at page one.
     activeQuery = query;
@@ -139,6 +153,7 @@ export function startApp() {
     }
   }
 
+  /** Appends the next result page unless loading is active or exhausted. */
   async function loadNextPage() {
     // Avoid duplicate requests and stop after the API reaches its final page.
     if (!isUnsplashConfigured() || isLoading || !hasMoreImages) {

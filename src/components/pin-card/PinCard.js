@@ -1,6 +1,14 @@
+/** Composes each Unsplash result from its image, overlay and author details. */
+
 import { createPinOverlay } from "./PinOverlay.js";
 import { createUserInfo } from "./UserInfo.js";
 
+/**
+ * Creates a responsive pin image with appropriate loading priority.
+ * @param {Object} image - Unsplash photo record.
+ * @param {{onImageLoad?: Function, prioritizeImage: boolean}} options
+ * @returns {HTMLImageElement}
+ */
 function createPinImage(image, { onImageLoad, prioritizeImage }) {
   const img = document.createElement("img");
   img.src = image.urls.small;
@@ -21,6 +29,12 @@ function createPinImage(image, { onImageLoad, prioritizeImage }) {
   return img;
 }
 
+/**
+ * Builds a complete gallery card for an Unsplash photo.
+ * @param {Object} image - Unsplash photo record.
+ * @param {{onImageLoad?: Function, prioritizeImage?: boolean}} options
+ * @returns {HTMLDivElement}
+ */
 export function createPinCard(image, { onImageLoad, prioritizeImage = false } = {}) {
   const galleryItem = document.createElement("div");
   galleryItem.classList.add("gallery-item");

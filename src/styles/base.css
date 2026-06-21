@@ -1,68 +1,73 @@
-/* Global element defaults and reset styles. */
+/* Global reset, typography, element defaults and simple layout primitives. */
 
-/* Basic reset */
+/* Reset */
 * {
-  box-sizing: border-box; 
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-
+/* Base document */
 body {
+  width: 100vw;
+
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
-  background-color: var(--color-bg-page);
   color: var(--color-text-primary);
-  width: 100vw; /* TODO: caution: can cause horizontal scroll if content overflows */
-  /* //TODO: check if these are still needed */
-  -webkit-font-smoothing: antialiased; /* Improves font rendering on macOS/iOS */
-  -moz-osx-font-smoothing: grayscale; /* Improves font rendering on macOS/iOS */
+  background-color: var(--color-bg-page);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings */
-
-h1, h2, h3, h4, h5, h6 {
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0;
   margin-bottom: var(--spacing-sm);
-  line-height: 1.2; /* Tighter line-height for headings */
+  line-height: 1.2;
 }
-
-/* Paragraphs */
 
 p {
   margin-top: 0;
   margin-bottom: var(--spacing-md);
 }
 
-b, strong {
+b,
+strong {
   font-weight: 700;
 }
 
-/* Links (base styling) */
+/* Interactive elements */
 a {
   color: var(--color-text-link);
-  text-decoration: none; /* Remove default underline */
+  text-decoration: none;
 }
 
 a:hover,
 a:focus-visible {
   color: var(--color-text-link-hover);
-  /* text-decoration: underline; */ /* TODO: Check where and how to add underline to elements - here or in each one on hover/focus for better affordance */ 
 }
 
-/* Images */
+/* Media */
 img {
-  max-width: 100%; /* Ensures images don't overflow their containers */
-  height: auto;    /* Maintains aspect ratio */
-  display: block;  /* Removes extra space below images */
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
-/* TODO: Check duplicated values with gallery.css and decide if it makes sense to consolidate or keep separated */
 
-/* Forms - basic reset for consistency */
-input, button, textarea, select {
-  font: inherit; /* Inherit font from body */
-  color: inherit; /* Inherit color from body */
+/* Forms */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
 }
 
 /* Consistent fallback for every keyboard-focusable control. Components may
@@ -72,18 +77,15 @@ input, button, textarea, select {
   outline-offset: var(--focus-ring-offset);
 }
 
-/* Layout Primitives (as per your rules) */
-
+/* Layout utilities */
 .section {
-  padding-block: var(--spacing-xl); /* Vertical spacing between major regions */
+  padding-block: var(--spacing-xl);
 }
 
-/* Add horizontal-padding and vertical-padding */
 .horizontal-padding {
   padding-inline: var(--spacing-md);
 }
 
-/* For flow content within a section */
 .vertical-padding {
-  padding-block: var(--spacing-md); 
+  padding-block: var(--spacing-md);
 }

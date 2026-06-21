@@ -1,4 +1,6 @@
-/* Individual pin card */
+/* Pin-card layout, overlays, counters and photographer details. */
+
+/* Card shell */
 .gallery-item {
     background-color: var(--color-bg-gallery-item);
     border-radius: var(--border-radius-md);
@@ -9,17 +11,15 @@
     display: flex; /* Helps to manage height, important when image height is auto */
     flex-direction: column;
 
-    /* Important for the dynamic grid: Set grid-row-end dynamically via JS */
-    /* We'll set this in JavaScript based on content height */
+    /* DynamicGridLayout.js assigns grid-row-end after measuring the card. */
 }
 
 
-/* Create main gallery-image-wrapper that will contain the image and its overlay (so that the overlay can be positioned absolutely on top of the image without affecting the layout of the gallery item) */
+/* Image and overlay */
 .gallery-image-wrapper {
     position: relative; /* Needed for absolute positioning of the overlay */
     width: 100%;
     /* height is determined by the image inside, which allows for dynamic heights based on image aspect ratio */
-    /* TODO: border-radius: var(--border-radius-md) and    overflow: hidden; - moved to gallery-item */
 }
 
 
@@ -30,7 +30,6 @@
     border-radius: var(--border-radius-md);
 }
 
-/* Overlay Styles to add the counters and visit button over the image*/
 .gallery-item-image-overlay {
     position: absolute; 
     top: 0;
@@ -53,7 +52,7 @@
     padding-block: var(--spacing-sm); /* vertical padding */
 }
 
-/* Button btn-visit is used for the visit button in the gallery overlay */
+/* Overlay actions */
 .btn-visit {
     position: absolute; /* Positioned relative to the gallery item */
     top: 50%;
@@ -72,8 +71,7 @@
     pointer-events: auto; /* Allow interaction when visible */
 }
 
-/* Counters' Styling  */
-/* Camera and Heart container */
+/* Counters */
 .counter-wrapper {
     --counter-icon-size: 1rem;
     --counter-gap: 0.2rem;
@@ -95,19 +93,16 @@
     transition: opacity 0.2s ease-in-out;
 }
 
-/* TODO: make them clickable links? - if not remove pointer events*/
 .counter-icon {
     width: var(--counter-icon-size);
     height: var(--counter-icon-size);
     object-fit: contain;
     flex-shrink: 0;
-    /* pointer-events: none; */ /* Prevent interaction when hidden */
 }
 
 .gallery-item:hover .counter-wrapper,
 .gallery-item:has(:focus-visible) .counter-wrapper {
     opacity: 1; /* Show full counter unit on hover/focus */
-    /* pointer-events: auto; */ /* Allow interaction when visible */
 }
 
 
@@ -120,9 +115,7 @@
 
 
 
-/* Specific positioning for camera/heart counters */
-
-/* Left-aligned counter circle - Camera */
+/* Counter positioning */
 .counter-left {
     margin-right: auto; /* Push it to the left */
 }
@@ -132,7 +125,7 @@
     margin-left: auto; /* Push it to the right */
 }
 
-/* Bottom Overlay contains profile info and date */
+/* Photographer details */
 .gallery-item-bottom-info-section {    
     display: flex;
     flex-direction: column;
@@ -146,7 +139,7 @@
 }
    
 
-/* Overlapping User Profile Photo */
+/* Avatar overlaps the image edge while remaining part of the details block. */
 .user-profile-link {
     position: absolute; /* Position relative to .gallery-item-info-section (bottom overlay) */
     top: -2.25rem; /* Half of the profile photo height to overlap */
@@ -184,7 +177,7 @@
     max-width: 120px; /* Adjust based on design needs */
 }
 
-/* Date container (contains download icon + date text) */
+/* Image date */
 
 .image-date-container {
     display: flex;

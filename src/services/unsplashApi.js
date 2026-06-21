@@ -1,3 +1,5 @@
+/** Handles configuration checks and photo requests to the Unsplash API. */
+
 // Access the Unsplash Access Key from Vite's environment variables.
 // Vite exposes .env variables prefixed with VITE_ via import.meta.env.
 const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
@@ -8,10 +10,18 @@ if (!UNSPLASH_ACCESS_KEY) {
   console.error("Unsplash Access Key is missing! Please set VITE_UNSPLASH_ACCESS_KEY in your .env file.");
 }
 
+/** @returns {boolean} Whether an Unsplash access key is available. */
 export function isUnsplashConfigured() {
   return Boolean(UNSPLASH_ACCESS_KEY);
 }
 
+/**
+ * Fetches a page of search results or latest photos from Unsplash.
+ * @param {string} query - Search text; an empty value requests latest photos.
+ * @param {number} page - One-based result page.
+ * @param {{signal?: AbortSignal}} options - Optional request cancellation signal.
+ * @returns {Promise<Array>} Unsplash photo records, or an empty array on failure.
+ */
 export async function fetchImages(query = "", page = 1, { signal } = {}) {
   const normalizedQuery = query.trim();
   const params = new URLSearchParams({
