@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinterest Clone</title>
   
@@ -16,7 +16,50 @@
 </head>
 
 <body>
-  <div id="header-root"></div>
+
+  <!--TODO: Remove before submitting-->
+  <!--
+    Programmatic alternative retained for future reference:
+    <script type="module" src="/src/components/header/Header.js"></script>
+    It is intentionally disconnected; the header markup lives here for this project.
+  -->
+
+  <header class="header" id="header">
+      <div class="header-left">
+        <a href="#" class="logo" data-app-logo aria-label="Gallery Home">
+          <img src="/src/assets/images/pintrest-logo.png" alt="Pinterest">
+        </a>
+
+        <nav class="main-nav" aria-label="Navegación principal">
+          <ul>
+            <li><a href="#header" class="btn btn-pill btn-dark">Inicio</a></li>
+            <li><a href="#header" class="btn btn-pill">Explorar</a></li>
+            <li><a href="#header" class="btn btn-pill">Crear</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="search-container">
+        <label for="search-box" class="sr-only">Buscar en galería</label>
+        <div class="search-input-wrapper">
+          <img src="/src/assets/images/search-icon.png" alt="" aria-hidden="true" class="search-icon">
+          <input type="search" id="search-box" class="search-input" placeholder="Buscar">
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button type="button" class="icon-button" aria-label="Ver notificaciones">
+          <img src="/src/assets/images/bell-svg.svg" alt="" aria-hidden="true">
+        </button>
+        <button type="button" class="icon-button" aria-label="Abrir mensajes">
+          <img src="/src/assets/images/blurb-svg.svg" alt="" aria-hidden="true">
+        </button>
+      </div>
+
+      <a href="#header" class="profile-circle" aria-label="Ver perfil de usuario">
+        <span class="profile-text">CT</span>
+      </a>
+  </header>
 
   <div id="gallery-root"></div>
 

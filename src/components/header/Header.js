@@ -1,3 +1,8 @@
+/* //TODO: Remove this file before submitting */
+/* This is an alternative to having the header
+   component inside the index.html */
+/* There's a commented link in index.html */
+
 import pintrestLogo from "../../assets/images/pintrest-logo.png";
 import searchIcon from "../../assets/images/search-icon.png";
 import bellSvg from "../../assets/images/bell-svg.svg";

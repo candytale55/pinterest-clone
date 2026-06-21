@@ -1,20 +1,31 @@
 import { createGallery } from "./components/gallery/Gallery.js";
-import { createHeader } from "./components/header/Header.js";
 import { fetchImages, isUnsplashConfigured } from "./services/unsplashApi.js";
 import { getCurrentPage, resetCurrentPage } from "./state/galleryState.js";
 
 export function startApp() {
   const galleryRoot = document.getElementById("gallery-root");
-  const headerRoot = document.getElementById("header-root");
+  const searchInput = document.getElementById("search-box");
+  const appLogo = document.querySelector("[data-app-logo]");
 
   const gallery = createGallery();
 
   galleryRoot.replaceChildren(gallery.element);
 
-  headerRoot.replaceChildren(createHeader({
-    onSearch: handleSearch,
-    onReset: handleReset
-  }));
+  searchInput.addEventListener("keydown", async (event) => {
+    if (event.key !== "Enter") {
+      return;
+    }
+
+    event.preventDefault();
+    await handleSearch(searchInput.value.trim());
+    searchInput.value = "";
+  });
+
+  appLogo.addEventListener("click", async (event) => {
+    event.preventDefault();
+    searchInput.value = "";
+    await handleReset();
+  });
 
   // Call fetchImages on page load to display initial set of images.
   document.addEventListener("DOMContentLoaded", async () => {
@@ -27,7 +38,7 @@ export function startApp() {
     }
   });
 
-  /* Search action passed to the Header component. */
+  /* Search action used by the static header in index.html. */
   async function handleSearch(query) {
     if (isUnsplashConfigured()) {
       resetCurrentPage(); // Reset currentPage to 1 (important for future pagination).
