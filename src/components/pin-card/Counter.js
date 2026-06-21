@@ -1,13 +1,12 @@
-/* Function to create a counter element with an icon and count. */
 export function createCounterElement(iconPath, count) {
   const counterWrapper = document.createElement("div");
   counterWrapper.classList.add("counter-wrapper");
-  counterWrapper.setAttribute("aria-label", `Counter with ${count} items`); // Accessibility label.
+  counterWrapper.setAttribute("aria-label", `Counter with ${count} items`);
 
   const icon = document.createElement("img");
   icon.src = iconPath;
-  icon.alt = ""; // Decorative icon, so alt is empty.
-  icon.ariaHidden = "true"; // Hide from screen readers.
+  icon.alt = "";
+  icon.ariaHidden = "true";
   icon.classList.add("counter-icon");
 
   const counterText = document.createElement("p");
