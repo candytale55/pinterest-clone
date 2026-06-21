@@ -1,6 +1,15 @@
 
 /* ======== HEADER - Top navigation bar ======= */
 
+#header-root {
+    /* Sticky belongs on the wrapper so its scroll area is the whole page, not
+       only the height of the header element. */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    isolation: isolate;
+}
+
 .header {
     width: 100%;
     display: flex;
@@ -8,12 +17,6 @@
     align-items: center;
 
     min-height: 3.5rem; /* Slightly larger than logo */
-
-    /* Keeps the header at the top of the viewport when scrolling */
-    position: sticky; 
-    top: 0; /* required for position: sticky to work */
-    z-index: 1000; /* Keep header above gallery cards while scrolling */
-    isolation: isolate; /* Create local stacking context for reliable layering */
 
     background-color: var(--color-bg-page); /* same as page background for seamless look */
 

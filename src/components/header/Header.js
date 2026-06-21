@@ -1,69 +1,133 @@
-﻿import logoUrl from "../../assets/images/pintrest-logo.png";
-import searchIconUrl from "../../assets/images/search-icon.png";
-import bellIconUrl from "../../assets/images/bell-svg.svg";
-import blurbIconUrl from "../../assets/images/blurb-svg.svg";
+import pintrestLogo from "../../assets/images/pintrest-logo.png";
+import searchIcon from "../../assets/images/search-icon.png";
+import bellSvg from "../../assets/images/bell-svg.svg";
+import blurbSvg from "../../assets/images/blurb-svg.svg";
+
+
+function createImage({ src, alt = "", className, ariaHidden = false }) {
+  const image = document.createElement("img");
+  image.src = src;
+  image.alt = alt;
+
+  if (className) {
+    image.className = className;
+  }
+
+  if (ariaHidden) {
+    image.setAttribute("aria-hidden", "true");
+  }
+
+  return image;
+}
+
+function createLink({ text, className, href = "#header" }) {
+  const link = document.createElement("a");
+  link.href = href;
+  link.className = className;
+  link.textContent = text;
+  return link;
+}
+
+function createIconButton(src, label) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "icon-button";
+  button.setAttribute("aria-label", label);
+  button.append(createImage({ src, ariaHidden: true }));
+  return button;
+}
 
 export function createHeader({ onSearch, onReset }) {
   const header = document.createElement("header");
-  header.classList.add("header");
+  header.className = "header";
   header.id = "header";
 
-  header.innerHTML = `
-    <div class="header-left">
-      <a href="#" class="logo" data-app-logo aria-label="Gallery Home">
-        <img src="${logoUrl}" alt="Logo">
-      </a>
+  const headerLeft = document.createElement("div");
+  headerLeft.className = "header-left";
 
-      <nav class="main-nav" aria-label="Navegacion principal">
-        <ul>
-          <li><a href="#header" class="btn btn-pill btn-dark">Inicio</a></li>
-          <li><a href="#header" class="btn btn-pill">Explorar</a></li>
-          <li><a href="#header" class="btn btn-pill">Crear</a></li>
-        </ul>
-      </nav>
-    </div>
+  const appLogo = document.createElement("a");
+  appLogo.href = "#";
+  appLogo.className = "logo";
+  appLogo.dataset.appLogo = "";
+  appLogo.setAttribute("aria-label", "Gallery Home");
+  appLogo.append(createImage({ src: pintrestLogo, alt: "Pinterest" }));
 
-    <div class="search-container">
-      <label for="search-box" class="sr-only">Buscar en galeria</label>
-      <div class="search-input-wrapper">
-        <img src="${searchIconUrl}" alt="" aria-hidden="true" class="search-icon">
-        <input type="search" id="search-box" class="search-input" placeholder="Buscar">
-      </div>
-    </div>
+  const nav = document.createElement("nav");
+  nav.className = "main-nav";
+  nav.setAttribute("aria-label", "Navegación principal");
 
-    <div class="header-right">
-      <!-- Bell Icon Button -->
-      <button type="button" class="icon-button" aria-label="Ver notificaciones">
-        <img src="${bellIconUrl}" alt="" aria-hidden="true">
-      </button>
+  const navList = document.createElement("ul");
+  const navItems = [
+    ["Inicio", "btn btn-pill btn-dark"],
+    ["Explorar", "btn btn-pill"],
+    ["Crear", "btn btn-pill"]
+  ];
 
-      <!-- Blurb Icon Button -->
-      <button type="button" class="icon-button" aria-label="Abrir mensajes">
-        <img src="${blurbIconUrl}" alt="" aria-hidden="true">
-      </button>
-    </div>
+  navItems.forEach(([text, className]) => {
+    const item = document.createElement("li");
+    item.append(createLink({ text, className }));
+    navList.append(item);
+  });
 
-    <a href="#header" class="profile-circle" aria-label="Ver perfil de usuario">
-      <span class="profile-text">CT</span>
-    </a>
-  `;
+  nav.append(navList);
+  headerLeft.append(appLogo, nav);
 
-  const searchInput = header.querySelector("#search-box");
-  const appLogo = header.querySelector("[data-app-logo]");
+  const searchContainer = document.createElement("div");
+  searchContainer.className = "search-container";
+
+  const searchLabel = document.createElement("label");
+  searchLabel.htmlFor = "search-box";
+  searchLabel.className = "sr-only";
+  searchLabel.textContent = "Buscar en galería";
+
+  const searchWrapper = document.createElement("div");
+  searchWrapper.className = "search-input-wrapper";
+  searchWrapper.append(createImage({
+    src: searchIcon,
+    className: "search-icon",
+    ariaHidden: true
+  }));
+
+  const searchInput = document.createElement("input");
+  searchInput.type = "search";
+  searchInput.id = "search-box";
+  searchInput.className = "search-input";
+  searchInput.placeholder = "Buscar";
+  searchWrapper.append(searchInput);
+  searchContainer.append(searchLabel, searchWrapper);
+
+  const headerRight = document.createElement("div");
+  headerRight.className = "header-right";
+  headerRight.append(
+    createIconButton(bellSvg, "Ver notificaciones"),
+    createIconButton(blurbSvg, "Abrir mensajes")
+  );
+
+  const profile = document.createElement("a");
+  profile.href = "#header";
+  profile.className = "profile-circle";
+  profile.setAttribute("aria-label", "Ver perfil de usuario");
+
+  const profileText = document.createElement("span");
+  profileText.className = "profile-text";
+  profileText.textContent = "CT";
+  profile.append(profileText);
+
+  header.append(headerLeft, searchContainer, headerRight, profile);
 
   searchInput.addEventListener("keydown", async (event) => {
     if (event.key !== "Enter") {
       return;
     }
 
-    event.preventDefault(); // Prevent form-like Enter behavior from reloading the page.
+    event.preventDefault();
     await onSearch(searchInput.value.trim());
-    searchInput.value = ""; // Clear the search box after performing the search.
+    searchInput.value = "";
   });
 
   appLogo.addEventListener("click", async (event) => {
-    event.preventDefault(); // Prevent the empty link from changing the page position.
-    searchInput.value = ""; // Clear the input when returning to the initial state.
+    event.preventDefault();
+    searchInput.value = "";
     await onReset();
   });
 
