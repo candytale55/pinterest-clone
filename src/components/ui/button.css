@@ -23,6 +23,12 @@
   font-weight: 400;
 }
 
+.btn-dark:hover,
+.btn-dark:focus-visible {
+  background-color: var(--color-bg-button-primary-hover);
+  color: var(--color-white);
+}
+
 .btn-cta {
   background-color: var(--color-bg-button-cta);
   color: var(--color-white);

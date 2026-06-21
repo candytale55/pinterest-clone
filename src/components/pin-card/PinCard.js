@@ -2,25 +2,7 @@ import cameraIconUrl from "../../assets/images/camera-icon.svg";
 import heartIconUrl from "../../assets/images/heart-icon.svg";
 import downloadIconUrl from "../../assets/images/download-icon.svg";
 import { createCounterElement } from "./Counter.js";
-
-// Array of colors for user profile photo borders.
-const borderColors = [
-  "var(--color-green-lime)",
-  "var(--color-blue)",
-  "var(--color-cyan)",
-  "var(--color-green-dark)",
-  "var(--color-fuchsia)",
-  "var(--color-orange)",
-  "var(--color-cyan)",
-  "var(--color-pink-lilac)",
-  "var(--color-green-mint)",
-  "var(--color-green-teal)",
-  "var(--color-red-primary)",
-  "var(--color-fuchsia)",
-  "var(--color-pink-coral)"
-];
-
-let currentColorIndex = 0;
+import { getNextProfileColor } from "../../utils/profileColors.js";
 
 export function createPinCard(image, { onImageLoad }) {
   // --- 1. Create main gallery-item container ---
@@ -107,10 +89,8 @@ export function createPinCard(image, { onImageLoad }) {
   userProfilePhoto.classList.add("gallery-user-photo");
   userProfilePhoto.style.backgroundImage = `url(${image.user.profile_image.medium})`;
 
-  // Apply rotating border color from the array for each profile photo.
-  userProfilePhoto.style.borderColor = borderColors[currentColorIndex];
-  currentColorIndex = (currentColorIndex + 1) % borderColors.length;
-  // TODO: Add to dev notes for future self: currentColorIndex increments to select the next color. The modulo operator keeps it inside the array bounds and resets it to 0 after the last color.
+  // Use the next shared palette color, preserving the gallery's repeating order.
+  userProfilePhoto.style.borderColor = getNextProfileColor();
 
   userProfileLink.appendChild(userProfilePhoto);
 

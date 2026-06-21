@@ -148,7 +148,8 @@ nav ul {
     width: 2.5rem; /* 40px */
     height: 2.5rem; /* 40px */
     border-radius: 50%; /* makes it a circle */
-    background-color: var(--color-bg-button-icon); /* background for profile icon */
+    /* A softer relative of the Pinterest red keeps the profile visible without competing with the logo. */
+    background-color: var(--color-red-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,12 +160,12 @@ nav ul {
 
 .profile-circle:hover,
 .profile-circle:focus-visible {
-    background-color: var(--color-bg-button-primary-hover);
+    background-color: var(--color-pink-coral);
 }
 
 
 .profile-text {
-    color: var(--color-gray-medium); /* lighter text color for profile initials */
+    color: var(--color-white);
     font-size: 0.875rem; /* smaller font size for initials */
     font-weight: 600; /* semi-bold for better readability */
     transition: color 0.2s ease-in-out; /* Smooth color change */

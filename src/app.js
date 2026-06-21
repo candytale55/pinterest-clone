@@ -11,6 +11,7 @@ export function startApp() {
 
   galleryRoot.replaceChildren(gallery.element);
 
+
   searchInput.addEventListener("keydown", async (event) => {
     if (event.key !== "Enter") {
       return;

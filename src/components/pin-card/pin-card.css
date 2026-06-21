@@ -28,12 +28,6 @@
     height: auto;  /* Allow dynamic image heights */
     display: block; /* Removes default inline spacing */
     border-radius: var(--border-radius-md);
-
-    /* TODO: Old values removed - Left for reference */
-    /* height: 250px;  /* fixed height keeps grid uniform; adjust if varying heights needed */
-    /* width: 100%; */
-    /* object-fit: cover; */ /* Ensures the image covers the area without distortion */
-    /* TODO - End of old values - Remove after review */
 }
 
 /* Overlay Styles to add the counters and visit button over the image*/
