@@ -6,11 +6,10 @@ This project is still in progress, so some sections include placeholders to comp
 
 ## Screenshots
 
-<!-- Add screenshots here when the UI is ready. -->
 
 | Desktop | Mobile |
 | --- | --- |
-| TODO: Add desktop screenshot | TODO: Add mobile screenshot |
+| ![](./docs/shots/scsh-01-wide.png) | ![](./docs/shots/scsh-02-narrow.png) |
 
 ## Project Description
 
