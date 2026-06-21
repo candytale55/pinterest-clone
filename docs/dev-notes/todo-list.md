@@ -8,3 +8,7 @@
 Unsplash
 - Fix the "Latest" issue.
 - Do something with the buttons in the header? 
+
+
+Estrategias de diseño snippets
+- Estrategia para focus-visible styles and shared focus ring tokens.  Todos los elementos tienen un estilo visualmente igual cuando focus.
