@@ -1,73 +1,160 @@
-# Notas para el revisor
+# Notas de desarrollo
 
-## Resumen
+## Descripción
 
-Este proyecto es una galeria de imagenes estilo Pinterest creada con Vite, JavaScript, HTML y CSS. La aplicacion consulta la API de Unsplash, monta sus componentes desde JavaScript y distribuye las tarjetas en una cuadricula de altura variable.
+Clon de una galería de Pinterest desarrollado con Vite, JavaScript, HTML y CSS.
+Obtiene fotografías de Unsplash, permite buscar por texto y carga nuevas páginas
+mediante desplazamiento infinito. Las tarjetas se distribuyen en una cuadrícula
+responsive de altura variable.
 
-`main.js` es el punto de entrada y solo carga los estilos e inicia la aplicacion. `app.js` funciona como coordinador: conecta la cabecera, la galeria, el servicio de Unsplash y el estado de paginacion sin mezclar sus responsabilidades internas.
- 
-## Flujo de la aplicacion
+El proyecto utiliza módulos ES y componentes construidos con la API del DOM, sin
+framework de interfaz ni dependencias de producción.
 
-1. `index.html` proporciona los puntos de montaje `header-root` y `gallery-root`.
-2. `main.js` carga `styles/index.css` y ejecuta `startApp()`.
-3. `app.js` crea `Header` y `Gallery`, y solicita las imagenes mediante `unsplashApi.js`.
-4. `Header.js` comunica las busquedas y el reinicio mediante los callbacks `onSearch` y `onReset`.
-5. `Gallery.js` recibe la lista de imagenes y crea un `PinCard` por cada resultado.
-6. `PinCard.js` compone la imagen, los datos del autor, el enlace y los componentes `Counter`.
-7. `DynamicGridLayout.js` mide las tarjetas y calcula su `grid-row-end` cuando cargan las imagenes o cambia el ancho de la ventana.
+## Puesta en marcha
 
-## Diagrama de arquitectura
+1. Copiar `.env.example` como `.env` y asignar una clave válida a
+   `VITE_UNSPLASH_ACCESS_KEY`.
+2. Instalar las dependencias con `npm install`.
+3. Iniciar el entorno local con `npm run dev`.
+
+`npm run build` genera la versión de producción y `npm run preview` permite
+revisarla localmente.
+
+## Arquitectura
+
+`main.js` carga los estilos e inicia la aplicación. A partir de ahí, `app.js`
+coordina los componentes, el estado de paginación y las peticiones; los módulos
+especializados no conocen el flujo completo de la aplicación.
+
+```mermaid
+flowchart LR
+    HTML["index.html<br/>Puntos de montaje"] --> MAIN["main.js<br/>Arranque"]
+    MAIN --> APP["app.js<br/>Coordinador"]
+
+    HEADER["Header"] -- "onSearch / onReset" --> APP
+    APP --> HEADER
+    APP <--> STATE["Estado de paginación"]
+    APP -- "consulta" --> SERVICE["Servicio Unsplash"]
+    SERVICE <--> API[("Unsplash API")]
+    SERVICE -- "images[]" --> APP
+    APP -- "showLoading / renderImages" --> GALLERY["Gallery"]
+
+    MAIN -. "carga" .-> STYLES["Estilos globales<br/>y de componentes"]
+```
+
+### Funcionamiento de `Gallery`
+
+La galería puede sustituir sus resultados —al iniciar, buscar o reiniciar— o
+añadirlos durante la paginación. El uso de un `DocumentFragment` agrupa las
+inserciones en el DOM. Después, el layout calcula la cantidad de filas que debe
+ocupar cada tarjeta según su altura renderizada.
 
 ```mermaid
 flowchart TD
-    HTML["index.html<br/>header-root + gallery-root"] --> MAIN["src/main.js<br/>Bootstrap"]
-    MAIN --> APP["src/app.js<br/>Coordinador"]
-    MAIN --> STYLE_INDEX["src/styles/index.css"]
+    APP["app.js"] -- "createGallery()" --> GALLERY["Gallery.js"]
+    GALLERY --> ELEMENT["main.gallery-container"]
+    GALLERY --> LAYOUT["DynamicGridLayout.js"]
 
-    APP --> HEADER["components/header/Header.js"]
-    APP --> GALLERY["components/gallery/Gallery.js"]
-    APP --> SERVICE["services/unsplashApi.js"]
-    APP --> STATE["state/galleryState.js"]
+    APP -- "showLoading()" --> LOADING["8 tarjetas skeleton"]
+    LOADING -- "replaceChildren" --> ELEMENT
 
-    HEADER -- "onSearch(query) / onReset()" --> APP
-    SERVICE --> UNSPLASH[("Unsplash API")]
-    UNSPLASH -- "JSON" --> SERVICE
-    SERVICE -- "images[]" --> APP
-    STATE -- "currentPage" --> APP
-    APP -- "renderImages(images)" --> GALLERY
+    APP -- "renderImages(images, append)" --> RENDER{"¿Añadir resultados?"}
+    RENDER -- "No" --> REPLACE["Limpia el contenido"]
+    RENDER -- "Sí" --> KEEP["Conserva las tarjetas"]
+    REPLACE --> LOOP["Recorre images[]"]
+    KEEP --> LOOP
+    LOOP -- "createPinCard(image)" --> CARD["PinCard"]
+    CARD --> FRAGMENT["DocumentFragment"]
+    FRAGMENT -- "una inserción en el DOM" --> ELEMENT
 
-    GALLERY --> PIN_CARD["components/pin-card/PinCard.js"]
-    GALLERY --> GRID["components/gallery/DynamicGridLayout.js"]
-    PIN_CARD --> COUNTER["components/pin-card/Counter.js"]
-    PIN_CARD --> ASSETS["assets/images"]
-    HEADER --> ASSETS
-    PIN_CARD -- "onImageLoad" --> GRID
-    GRID -- "gridRowEnd" --> PIN_CARD
-
-    STYLE_INDEX -. "importa" .-> GLOBAL_STYLES["tokens.css<br/>base.css<br/>utilities.css"]
-    STYLE_INDEX -. "importa" .-> COMPONENT_STYLES["button.css<br/>header.css<br/>gallery.css<br/>pin-card.css"]
-    COMPONENT_STYLES -. "estilos" .-> HEADER
-    COMPONENT_STYLES -. "estilos" .-> GALLERY
-    COMPONENT_STYLES -. "estilos" .-> PIN_CARD
+    CARD -- "imagen cargada" --> RECALCULATE["recalculateLayout()"]
+    RESIZE["window.resize"] --> RECALCULATE
+    RECALCULATE --> MEASURE["Mide cada .gallery-item"]
+    MEASURE -- "grid-row-end: span N" --> ELEMENT
+    GALLERY -- "destroy()" --> CLEANUP["Elimina el listener resize"]
 ```
 
-## Responsabilidades principales
+### Composición de `PinCard`
 
-- `app.js`: coordina el flujo de datos y las acciones de la interfaz.
-- `unsplashApi.js`: contiene configuracion, peticiones, errores y normalizacion de respuestas de Unsplash.
-- `galleryState.js`: conserva el numero de pagina actual.
-- `Header.js`: crea la navegacion y emite acciones de busqueda o reinicio.
-- `Gallery.js`: crea el contenedor, limpia resultados anteriores y renderiza tarjetas.
-- `PinCard.js`: construye cada tarjeta y sus datos visuales.
-- `DynamicGridLayout.js`: calcula la ocupacion vertical y limpia su listener global mediante `destroy()`.
-- `styles/index.css`: define el orden unico de carga de estilos globales y de componentes.
+Cada resultado se divide en una imagen con acciones superpuestas y una zona con
+la información del fotógrafo.
 
-## Pendientes conocidos
+```mermaid
+flowchart TD
+    DATA["image<br/>Datos de Unsplash"] --> PIN["PinCard.js<br/>.gallery-item"]
 
-Los comentarios `TODO` del codigo conservan decisiones todavia abiertas, principalmente la llamada inicial de Unsplash, los contadores temporales, los estados de carga/error/vacio y algunas revisiones de CSS y accesibilidad.
+    PIN --> WRAPPER[".gallery-image-wrapper"]
+    WRAPPER --> IMAGE["img<br/>eager o lazy"]
+    WRAPPER --> OVERLAY["PinOverlay.js"]
+    OVERLAY --> PHOTOS["Counter.js<br/>Total de fotos"]
+    OVERLAY --> LIKES["Counter.js<br/>Likes"]
+    OVERLAY --> VISIT["Enlace Visitar<br/>Foto en Unsplash"]
+
+    PIN --> USER["UserInfo.js"]
+    USER --> PROFILE["Avatar + enlace<br/>Perfil de Unsplash"]
+    USER --> NAME["Nombre del fotógrafo"]
+    USER --> DATE["Icono + fecha"]
+
+    IMAGE -- "evento load" --> CALLBACK["onImageLoad"]
+    CALLBACK --> GRID["DynamicGridLayout<br/>recalcula la altura"]
+```
+
+## Flujo de peticiones y paginación
+
+- La carga inicial y el reinicio muestran las fotografías más recientes.
+- Una búsqueda reinicia la página y sustituye los resultados anteriores.
+- Un `IntersectionObserver` solicita la página siguiente antes de llegar al
+  final de la galería y la añade sin borrar las tarjetas existentes.
+- `AbortController` cancela una petición cuando una nueva búsqueda la reemplaza.
+  Además, un identificador de versión impide renderizar respuestas obsoletas.
+- La observación se detiene cuando Unsplash devuelve una página vacía.
+
+## Integración con Unsplash
+
+`unsplashApi.js` encapsula la configuración, la construcción de las URL y la
+normalización de las dos respuestas utilizadas:
+
+| Operación | Endpoint | Respuesta normalizada |
+| --- | --- | --- |
+| Fotografías recientes | `GET /photos?order_by=latest` | El array recibido |
+| Búsqueda | `GET /search/photos?query=...` | El contenido de `results` |
+
+Ambas peticiones incluyen la clave, la página actual y `per_page=16`. El resto
+de la aplicación siempre recibe un array `images[]`, independientemente del
+endpoint. De cada fotografía se consumen únicamente estos datos:
+
+- imagen: `urls.small`, `width`, `height` y `alt_description`;
+- fotografía: `links.html`, `created_at` y `likes`;
+- autor: `name`, `total_photos`, `profile_image.medium` y `links.html`.
+
+## Decisiones de interfaz y rendimiento
+
+- Mientras se carga la primera página se muestran ocho tarjetas skeleton y
+  `aria-busy` informa del estado a las tecnologías de asistencia.
+- Las primeras cuatro imágenes usan carga prioritaria; el resto utiliza
+  `loading="lazy"` y decodificación asíncrona.
+- Los enlaces externos se abren con `noopener noreferrer`.
+- Las acciones que aparecen al pasar el cursor también están disponibles al
+  navegar con el teclado.
+- Los estilos se importan desde `styles/index.css`, que centraliza el orden de
+  los tokens, estilos base, utilidades y estilos de componentes.
+
+## Limitaciones actuales
+
+- Los errores de red, la ausencia de clave y las búsquedas sin resultados se
+  registran en la consola, pero todavía no tienen un mensaje visual específico.
+- La aplicación no incluye pruebas automatizadas.
+- `Gallery` expone `destroy()` para retirar el listener de `resize`, aunque la
+  instancia actual permanece montada durante toda la sesión y no necesita
+  ejecutar esa limpieza.
 
 ## Uso de IA
 
-Utilicé Codex como apoyo para refactorizar y reorganizar el proyecto en módulos más claros y fáciles de mantener. Durante ese proceso no cambié la lógica funcional, salvo ajustes puntuales necesarios para conservar el comportamiento existente.
+Codex se utilizó como apoyo para revisar y refactorizar el proyecto. La lógica,
+que inicialmente estaba concentrada en `main.js`, se separó en componentes,
+servicios, estado y estilos con responsabilidades definidas. Los cambios se
+revisaron de forma incremental para conservar el comportamiento existente.
 
-La asistencia de IA se usó de forma guiada: revisé cada cambio paso a paso antes de consolidarlo, en lugar de aplicar una actualización masiva sin validación. Antes del refactor, el proyecto ya incluía un clon de Pinterest alineado con el diseño de Figma: cabecera responsive con navegación, buscador, iconos y perfil; galería dinámica conectada a Unsplash con búsqueda y reinicio desde el logo; tarjetas de altura variable con imagen, autor, fecha, enlace, perfil y contadores superpuestos; y cálculo automático de filas para reducir huecos en la cuadrícula. La principal mejora del refactor fue separar responsabilidades, ya que gran parte de la lógica estaba concentrada en main.js y los estilos se encontraban repartidos en varios archivos CSS.  
+Antes del refactor ya estaban implementados el diseño basado en Figma, la
+cabecera responsive, la búsqueda y el reinicio, la conexión con Unsplash, las
+tarjetas de altura variable y el cálculo de la cuadrícula.
