@@ -1,8 +1,10 @@
-/** Maintains the current Unsplash page across searches and pagination. */
+/** Remembers which page of Unsplash results you are currently on. */
+/*  A function increments the page number when more results are requested */
+/*  and another resets the page number when a new search is initiated */
 
 const INITIAL_PAGE = 1;
 
-// Gallery state that changes as users search, reset, and eventually paginate.
+// This variable remembers the current page of Unsplash results.
 let currentPage = INITIAL_PAGE;
 
 /** @returns {number} The page currently selected for API requests. */
