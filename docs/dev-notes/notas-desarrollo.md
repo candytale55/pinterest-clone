@@ -81,22 +81,49 @@ la información del fotógrafo.
 
 ```mermaid
 flowchart TD
-    DATA["image<br/>Datos de Unsplash"] --> PIN["PinCard.js<br/>.gallery-item"]
+    RENDER["Gallery.js<br/>renderImages(images)"] --> CARD["PinCard.js<br/>createPinCard(image)"]
 
-    PIN --> WRAPPER[".gallery-image-wrapper"]
-    WRAPPER --> IMAGE["img<br/>eager o lazy"]
-    WRAPPER --> OVERLAY["PinOverlay.js"]
-    OVERLAY --> PHOTOS["Counter.js<br/>Total de fotos"]
-    OVERLAY --> LIKES["Counter.js<br/>Likes"]
-    OVERLAY --> VISIT["Enlace Visitar<br/>Foto en Unsplash"]
+    CARD --> IMAGE["createPinImage(image)<br/>Fotografía principal"]
+    CARD --> OVERLAY["createPinOverlay(image)"]
+    CARD --> USER["createUserInfo(image)"]
 
-    PIN --> USER["UserInfo.js"]
-    USER --> PROFILE["Avatar + enlace<br/>Perfil de Unsplash"]
-    USER --> NAME["Nombre del fotógrafo"]
-    USER --> DATE["Icono + fecha"]
+    OVERLAY --> PHOTOS["createCounter(total_photos)<br/>Contador de cámara"]
+    OVERLAY --> LIKES["createCounter(likes)<br/>Contador de corazón"]
+    OVERLAY --> VISIT["createVisitLink(image)<br/>Botón Visitar"]
 
-    IMAGE -- "evento load" --> CALLBACK["onImageLoad"]
-    CALLBACK --> GRID["DynamicGridLayout<br/>recalcula la altura"]
+    PHOTOS --> COUNTER["Counter.js<br/>createCounterElement()"]
+    LIKES --> COUNTER
+
+    USER --> PROFILE["createProfileLink(user)<br/>Avatar y enlace"]
+    USER --> NAME["createPhotographerName()<br/>Nombre del fotógrafo"]
+    USER --> DATE["createImageDate()<br/>Icono y fecha"]
+
+    IMAGE --> WRAPPER[".gallery-image-wrapper"]
+    OVERLAY --> WRAPPER
+    PROFILE --> INFO[".gallery-item-bottom-info-section"]
+    NAME --> INFO
+    DATE --> INFO
+    WRAPPER --> RESULT[".gallery-item<br/>PinCard completa"]
+    INFO --> RESULT
+```
+
+La misma composición expresada como estructura del elemento final:
+
+```text
+.gallery-item                         ← createPinCard()
+├── .gallery-image-wrapper
+│   ├── imagen principal             ← createPinImage()
+│   └── overlay                      ← createPinOverlay()
+│       └── .gallery-item-top-overlay
+│           ├── contador de cámara   ← createCounter(total_photos)
+│           │                           └── createCounterElement()
+│           ├── contador de corazón  ← createCounter(likes)
+│           │                           └── createCounterElement()
+│           └── botón Visitar        ← createVisitLink()
+└── información del fotógrafo        ← createUserInfo()
+    ├── avatar y enlace al perfil    ← createProfileLink()
+    ├── nombre del fotógrafo         ← createPhotographerName()
+    └── icono y fecha                ← createImageDate()
 ```
 
 ## Flujo de peticiones y paginación

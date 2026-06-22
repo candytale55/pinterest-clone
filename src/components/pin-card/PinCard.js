@@ -1,10 +1,13 @@
 /** Composes each Unsplash result from its image, overlay and author details. */
 
+/* https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding */
+/* https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/fetchpriority */
+
 import { createPinOverlay } from "./PinOverlay.js";
 import { createUserInfo } from "./UserInfo.js";
 
 /**
- * Creates a responsive pin image with appropriate loading priority.
+ * Creates an HTML <img> element for one Pinterest-style card/pin
  * @param {Object} image - Unsplash photo record.
  * @param {{onImageLoad?: Function, prioritizeImage: boolean}} options
  * @returns {HTMLImageElement}
@@ -15,16 +18,16 @@ function createPinImage(image, { onImageLoad, prioritizeImage }) {
   img.alt = image.alt_description || "Unsplash Image";
   img.width = image.width;
   img.height = image.height;
-  img.decoding = "async";
-  img.loading = prioritizeImage ? "eager" : "lazy";
+  img.decoding = "async";  // Async to avoid blocking other content updates
+  img.loading = prioritizeImage ? "eager" : "lazy";  // Will load faster high priority images, lazy-load the rest
 
   if (prioritizeImage) {
     img.fetchPriority = "high";
-  }
+  } // Images near the top of the page, esp. if visible immediately
 
   if (onImageLoad) {
     img.addEventListener("load", onImageLoad);
-  }
+  } // Add a listener to recalculate the layout when the image has loaded
 
   return img;
 }

@@ -73,6 +73,7 @@
 
 /* Counters */
 .counter-wrapper {
+    /* Local variables to control the size and spacing in one go*/
     --counter-icon-size: 1rem;
     --counter-gap: 0.2rem;
     --counter-padding: 0.45rem;
@@ -84,7 +85,7 @@
     gap: var(--counter-gap);
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    width: var(--counter-size);
+    width: var(--counter-size); /* This is why local variables were a good idea */
     height: var(--counter-size);
     flex: 0 0 var(--counter-size);
     padding: var(--counter-padding);
@@ -94,7 +95,7 @@
 }
 
 .counter-icon {
-    width: var(--counter-icon-size);
+    width: var(--counter-icon-size); /* This is why local variables were a good idea */
     height: var(--counter-icon-size);
     object-fit: contain;
     flex-shrink: 0;
@@ -124,6 +125,8 @@
 .counter-right {
     margin-left: auto; /* Push it to the right */
 }
+
+
 
 /* Photographer details */
 .gallery-item-bottom-info-section {    

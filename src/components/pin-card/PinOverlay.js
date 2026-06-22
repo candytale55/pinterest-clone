@@ -9,6 +9,8 @@ import { createCounterElement } from "./Counter.js";
  * @param {Object} image - Unsplash photo record.
  * @returns {HTMLAnchorElement}
  */
+
+// Creates the link button to visit the Unsplash page   
 function createVisitLink(image) {
   const visitLink = document.createElement("a");
   visitLink.href = image.links.html;
@@ -25,7 +27,7 @@ function createVisitLink(image) {
 }
 
 /**
- * Creates and positions one overlay counter.
+ * Creates and positions an overlay counter.
  * @param {string} iconUrl - Counter icon asset URL.
  * @param {number|null|undefined} count - Value supplied by Unsplash.
  * @param {string} positionClass - CSS class controlling horizontal placement.
@@ -36,7 +38,7 @@ function createCounter(iconUrl, count, positionClass) {
   counter.classList.add(positionClass);
   return counter;
 }
- 
+
 /**
  * Builds the action overlay for a photo card.
  * @param {Object} image - Unsplash photo record used for links and counters.
@@ -46,15 +48,14 @@ export function createPinOverlay(image) {
   const overlay = document.createElement("div");
   overlay.classList.add("gallery-item-image-overlay");
 
-  const actions = document.createElement("div");
-  actions.classList.add("gallery-item-top-overlay");
-  actions.append(
-    // total_photos is available in this response; downloads/views need another API call.
+  const overlayElement = document.createElement("div");
+  overlayElement.classList.add("gallery-item-top-overlay");
+  overlayElement.append(
     createCounter(cameraIconUrl, image.user.total_photos, "counter-left"),
+    // total_photos by the user; downloads/views need another API call.
     createCounter(heartIconUrl, image.likes, "counter-right"),
     createVisitLink(image)
   );
-
-  overlay.appendChild(actions);
+  overlay.appendChild(overlayElement);
   return overlay;
 }
