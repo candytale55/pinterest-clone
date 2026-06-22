@@ -1,47 +1,68 @@
 /* Gallery grid, loading placeholders and motion preferences. */
 
-/* Gallery layout */
+/* ==================== */
+/* === Gallery grid === */
+/* ==================== */
 
 .gallery-container {
     display: grid;
+
+    /* Add as many columns as the available width allows. Each card keeps a
+       useful minimum width and grows to share any remaining row space. */
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+    /* DynamicGridLayout.js measures each completed card and converts its
+       height into a multiple of this small row unit (grid-row-end: span N). */
     grid-auto-rows: 10px;
-    grid-auto-flow: dense;
+    grid-auto-flow: dense; /* Backfill gaps left by cards of different heights. */
     align-items: start;
     gap: 15px;
 
+    /* Keep the gallery centred and readable on very wide screens. */
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
 }
 
-/* Infinite-scroll sentinel */
+/* ======================= */
+/* === Infinite scroll === */
+/* ======================= */
+
+/* IntersectionObserver watches this almost invisible element after the
+   gallery and requests another page when it approaches the viewport. 
+   It's used in app.js */
 .infinite-scroll-trigger {
     width: 100%;
     height: 1px;
 }
 
-/* Loading skeleton */
+/* ======================== */
+/* === Loading skeleton === */
+/* ======================== */
+
+/* Skeleton cards are visual placeholders, not interactive content. */
 .gallery-skeleton {
     pointer-events: none;
 }
 
+/* Share one animated shimmer treatment between every placeholder shape. */
 .gallery-skeleton-image,
 .gallery-skeleton-avatar,
 .gallery-skeleton-line {
+    /* The light centre band becomes the moving highlight. */
     background: linear-gradient(
         100deg,
         var(--color-gray-light) 30%,
         var(--color-bg-gallery-item) 50%,
         var(--color-gray-light) 70%
     );
-    background-size: 200% 100%;
+    background-size: 200% 100%; /* Extra width gives the gradient room to move. */
     animation: gallery-skeleton-shimmer 1.2s ease-in-out infinite;
 }
 
 .gallery-skeleton-image {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 5; /* Reserve photo space before real content arrives. */
 }
 
 .gallery-skeleton-info {
@@ -55,7 +76,7 @@
 .gallery-skeleton-avatar {
     width: 4.5rem;
     height: 4.5rem;
-    margin-top: -3rem;
+    margin-top: -3rem; /* Pull the avatar over the lower edge of the image. */
     border: 5px solid var(--color-bg-gallery-item);
     border-radius: 50%;
 }
@@ -80,7 +101,11 @@
     }
 }
 
-/* Motion preferences */
+/* ========================== */
+/* === Motion preferences === */
+/* ========================== */
+
+/* Respect the operating-system preference while keeping placeholders visible. */
 @media (prefers-reduced-motion: reduce) {
     .gallery-skeleton-image,
     .gallery-skeleton-avatar,

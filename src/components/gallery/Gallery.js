@@ -1,13 +1,29 @@
-/** Builds and updates the gallery UI using pin cards and the dynamic grid. */
+/**
+* Builds and manages the image gallery for the Pinterest-style grid.
+* This module creates the main gallery element, shows skeleton loading cards
+* while images are being fetched, and renders Unsplash image records as pin cards.
+* It either replaces the current results for a new search or appends more cards
+* for pagination/infinite scroll.
+* It also connects the gallery to the dynamic grid layout so card heights
+* are recalculated after images load or the layout changes, helping
+* variable-height cards fit together cleanly.
+*/
+
+/* https://developer.mozilla.org/es/docs/Web/API/Document/createDocumentFragment */
+/* https://developer.mozilla.org/en-US/docs/Web/API/Element/replaceChildren */
+/* https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-busy */
 
 import { createPinCard } from "../pin-card/PinCard.js";
 import { createDynamicGridLayout } from "./DynamicGridLayout.js";
 
-const SKELETON_COUNT = 8; // Enough placeholders to fill most initial viewports.
+// DynamicGridLayout is a layout controller that recalculates each card's row span from its rendered height.
+
+const SKELETON_COUNT = 8; // Gray loading cards you see before the real images arrive.
 const PRIORITY_IMAGE_COUNT = 4; // Prioritize roughly the first desktop row.
 
 /**
  * Creates a gallery controller with rendering, loading and cleanup operations.
+ * Creates the HTML element and returns functions to manage the gallery.
  * @returns {{element: HTMLElement, renderImages: Function, showLoading: Function, destroy: Function}}
  */
 export function createGallery() {
@@ -16,19 +32,23 @@ export function createGallery() {
   element.id = "image-gallery";
 
   const dynamicGridLayout = createDynamicGridLayout(element);
+  /* This connects the gallery element to the dynamic grid layout logic. */
 
   /**
    * Renders image records as cards, replacing or extending existing results.
    * @param {Array} images - Unsplash photo records.
    * @param {{append?: boolean}} options - Whether to preserve existing cards.
+   * append: false → clear the gallery first
+   * append: true  → keep the existing cards
    */
   function renderImages(images, { append = false } = {}) {
-    // New searches replace the gallery; pagination keeps the current cards.
     if (!append) {
       element.replaceChildren();
     }
+    
 
     // Tell assistive technology that the loading operation has completed.
+    // Prevents assistive technologies from announcing changes before updates are done.
     element.setAttribute("aria-busy", "false");
 
     if (images.length === 0) {
@@ -36,7 +56,10 @@ export function createGallery() {
       return;
     }
 
-    // Create a document fragment to append all items, then add to DOM once.
+    /**
+     * Create all the pin cards first, store them in the fragment, 
+     * and then add them all to the gallery in one operation.
+     */
     const fragment = document.createDocumentFragment();
 
     images.forEach((image, index) => {
