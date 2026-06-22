@@ -1,30 +1,10 @@
 # Notas de desarrollo
 
-## Descripción
-
-Clon de una galería de Pinterest desarrollado con Vite, JavaScript, HTML y CSS.
-Obtiene fotografías de Unsplash, permite buscar por texto y carga nuevas páginas
-mediante desplazamiento infinito. Las tarjetas se distribuyen en una cuadrícula
-responsive de altura variable.
-
-El proyecto utiliza módulos ES y componentes construidos con la API del DOM, sin
-framework de interfaz ni dependencias de producción.
-
-## Puesta en marcha
-
-1. Copiar `.env.example` como `.env` y asignar una clave válida a
-   `VITE_UNSPLASH_ACCESS_KEY`.
-2. Instalar las dependencias con `npm install`.
-3. Iniciar el entorno local con `npm run dev`.
-
-`npm run build` genera la versión de producción y `npm run preview` permite
-revisarla localmente.
+Este documento explica la arquitectura y las decisiones técnicas del proyecto. La instalación y el stack están en el [README](../../README.md); la correspondencia con los criterios de evaluación está en la [justificación de requisitos](./justificacion-requisitos.md).
 
 ## Arquitectura
 
-`main.js` carga los estilos e inicia la aplicación. A partir de ahí, `app.js`
-coordina los componentes, el estado de paginación y las peticiones; los módulos
-especializados no conocen el flujo completo de la aplicación.
+`main.js` carga los estilos e inicia la aplicación. `app.js` coordina los componentes, las peticiones y la paginación. Los módulos especializados reciben solo los datos o callbacks que necesitan.
 
 ```mermaid
 flowchart LR
@@ -42,12 +22,9 @@ flowchart LR
     MAIN -. "carga" .-> STYLES["Estilos globales<br/>y de componentes"]
 ```
 
-### Funcionamiento de `Gallery`
+## Funcionamiento de `Gallery`
 
-La galería puede sustituir sus resultados —al iniciar, buscar o reiniciar— o
-añadirlos durante la paginación. El uso de un `DocumentFragment` agrupa las
-inserciones en el DOM. Después, el layout calcula la cantidad de filas que debe
-ocupar cada tarjeta según su altura renderizada.
+La galería sustituye sus resultados al iniciar, buscar o reiniciar, y los añade durante la paginación. Un `DocumentFragment` agrupa las tarjetas antes de insertarlas en el DOM. Después, el layout mide cada tarjeta y calcula cuántas filas debe ocupar.
 
 ```mermaid
 flowchart TD
@@ -65,19 +42,17 @@ flowchart TD
     KEEP --> LOOP
     LOOP -- "createPinCard(image)" --> CARD["PinCard"]
     CARD --> FRAGMENT["DocumentFragment"]
-    FRAGMENT -- "una inserción en el DOM" --> ELEMENT
+    FRAGMENT -- "una inserción" --> ELEMENT
 
     CARD -- "imagen cargada" --> RECALCULATE["recalculateLayout()"]
     RESIZE["window.resize"] --> RECALCULATE
     RECALCULATE --> MEASURE["Mide cada .gallery-item"]
     MEASURE -- "grid-row-end: span N" --> ELEMENT
-    GALLERY -- "destroy()" --> CLEANUP["Elimina el listener resize"]
 ```
 
-### Composición de `PinCard`
+## Composición de `PinCard`
 
-Cada resultado se divide en una imagen con acciones superpuestas y una zona con
-la información del fotógrafo.
+`createPinCard()` combina la fotografía y sus acciones superpuestas con la información del fotógrafo.
 
 ```mermaid
 flowchart TD
@@ -95,7 +70,7 @@ flowchart TD
     LIKES --> COUNTER
 
     USER --> PROFILE["createProfileLink(user)<br/>Avatar y enlace"]
-    USER --> NAME["createPhotographerName()<br/>Nombre del fotógrafo"]
+    USER --> NAME["createPhotographerName()<br/>Nombre"]
     USER --> DATE["createImageDate()<br/>Icono y fecha"]
 
     IMAGE --> WRAPPER[".gallery-image-wrapper"]
@@ -106,8 +81,6 @@ flowchart TD
     WRAPPER --> RESULT[".gallery-item<br/>PinCard completa"]
     INFO --> RESULT
 ```
-
-La misma composición expresada como estructura del elemento final:
 
 ```text
 .gallery-item                         ← createPinCard()
@@ -126,62 +99,50 @@ La misma composición expresada como estructura del elemento final:
     └── icono y fecha                ← createImageDate()
 ```
 
-## Flujo de peticiones y paginación
+## Peticiones, búsqueda y scroll infinito
 
-- La carga inicial y el reinicio muestran las fotografías más recientes.
-- Una búsqueda reinicia la página y sustituye los resultados anteriores.
-- Un `IntersectionObserver` solicita la página siguiente antes de llegar al
-  final de la galería y la añade sin borrar las tarjetas existentes.
-- `AbortController` cancela una petición cuando una nueva búsqueda la reemplaza.
-  Además, un identificador de versión impide renderizar respuestas obsoletas.
-- La observación se detiene cuando Unsplash devuelve una página vacía.
+`unsplashApi.js` normaliza dos respuestas distintas para que el resto de la aplicación siempre reciba un array `images[]`:
 
-## Integración con Unsplash
-
-`unsplashApi.js` encapsula la configuración, la construcción de las URL y la
-normalización de las dos respuestas utilizadas:
-
-| Operación | Endpoint | Respuesta normalizada |
+| Operación | Endpoint | Resultado utilizado |
 | --- | --- | --- |
-| Fotografías recientes | `GET /photos?order_by=latest` | El array recibido |
-| Búsqueda | `GET /search/photos?query=...` | El contenido de `results` |
+| Fotografías recientes | `GET /photos?order_by=latest` | Array recibido |
+| Búsqueda | `GET /search/photos?query=...` | Propiedad `results` |
 
-Ambas peticiones incluyen la clave, la página actual y `per_page=16`. El resto
-de la aplicación siempre recibe un array `images[]`, independientemente del
-endpoint. De cada fotografía se consumen únicamente estos datos:
+Cada petición incluye la clave, la página actual y `per_page=16`. Una búsqueda o un reinicio sustituye los resultados y vuelve a la página 1.
 
-- imagen: `urls.small`, `width`, `height` y `alt_description`;
-- fotografía: `links.html`, `created_at` y `likes`;
-- autor: `name`, `total_photos`, `profile_image.medium` y `links.html`.
+Para el scroll infinito, `app.js` coloca después de la galería un elemento invisible llamado `infinite-scroll-trigger`. Un `IntersectionObserver` detecta cuándo se acerca a la pantalla y ejecuta `loadNextPage()`. La nueva página se añade sin borrar las tarjetas anteriores. El proceso no inicia peticiones duplicadas y se detiene cuando Unsplash deja de devolver resultados.
+
+`AbortController` cancela una petición cuando una búsqueda nueva la reemplaza. Además, `requestVersion` impide renderizar una respuesta antigua si llega tarde.
+
+## Datos utilizados de Unsplash
+
+- Imagen: `urls.small`, `width`, `height` y `alt_description`.
+- Fotografía: `links.html`, `created_at` y `likes`.
+- Autor: `name`, `total_photos`, `profile_image.medium` y `links.html`.
+
+`views` y `downloads` solo aparecen en peticiones de detalle. No se solicitan para evitar una llamada adicional por cada tarjeta y consumir rápidamente el límite de la API.
 
 ## Decisiones de interfaz y rendimiento
 
-- Mientras se carga la primera página se muestran ocho tarjetas skeleton y
-  `aria-busy` informa del estado a las tecnologías de asistencia.
-- Las primeras cuatro imágenes usan carga prioritaria; el resto utiliza
-  `loading="lazy"` y decodificación asíncrona.
-- Los enlaces externos se abren con `noopener noreferrer`.
-- Las acciones que aparecen al pasar el cursor también están disponibles al
-  navegar con el teclado.
-- Los estilos se importan desde `styles/index.css`, que centraliza el orden de
-  los tokens, estilos base, utilidades y estilos de componentes.
+- Se muestran ocho skeletons mientras carga una primera página; `aria-busy` comunica el estado a las tecnologías de asistencia.
+- Las primeras cuatro imágenes tienen prioridad. Las demás utilizan `loading="lazy"` y decodificación asíncrona.
+- Los enlaces externos usan `noopener noreferrer`.
+- Las acciones visibles al pasar el cursor también aparecen al navegar con teclado.
+- `DynamicGridLayout.js` recalcula las alturas al cargar imágenes y al redimensionar la ventana.
+- Los estilos entran por `styles/index.css`, que mantiene el orden entre tokens, base, utilidades y componentes.
 
 ## Limitaciones actuales
 
-- Los errores de red, la ausencia de clave y las búsquedas sin resultados se
-  registran en la consola, pero todavía no tienen un mensaje visual específico.
-- La aplicación no incluye pruebas automatizadas.
-- `Gallery` expone `destroy()` para retirar el listener de `resize`, aunque la
-  instancia actual permanece montada durante toda la sesión y no necesita
-  ejecutar esa limpieza.
+- Los errores de red, la falta de clave y las búsquedas sin resultados se registran en consola, pero no tienen un mensaje visual específico.
+- El proyecto no incluye pruebas automatizadas.
+- `Gallery` expone `destroy()` para retirar el listener de `resize`, aunque la instancia actual permanece montada toda la sesión.
 
 ## Uso de IA
 
-Codex se utilizó como apoyo para revisar y refactorizar el proyecto. La lógica,
-que inicialmente estaba concentrada en `main.js`, se separó en componentes,
-servicios, estado y estilos con responsabilidades definidas. Los cambios se
-revisaron de forma incremental para conservar el comportamiento existente.
+La primera versión del proyecto se desarrolló manualmente. Antes de utilizar Codex ya estaban implementados el layout basado en Figma, la mayor parte del HTML y CSS, la cabecera responsive, las tarjetas de altura variable, las peticiones a Unsplash, la búsqueda y el reinicio mediante el logo.
 
-Antes del refactor ya estaban implementados el diseño basado en Figma, la
-cabecera responsive, la búsqueda y el reinicio, la conexión con Unsplash, las
-tarjetas de altura variable y el cálculo de la cuadrícula.
+Codex empezó a utilizarse cuando la aplicación ya funcionaba, como apoyo para revisar y refactorizar el código. La lógica que estaba más concentrada se repartió en componentes, servicio de API, estado y estilos con responsabilidades más claras, procurando conservar el diseño y el comportamiento existentes.
+
+También se utilizó Codex como apoyo para implementar el scroll infinito, incluyendo la paginación, el `IntersectionObserver`, la prevención de peticiones duplicadas y la cancelación de respuestas obsoletas. Cada cambio se revisó de forma incremental antes de integrarlo en el proyecto.
+
+Esto está reflejado en la historia de los commit y puedo mostrar el chat con Codex si es necesario. 
